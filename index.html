@@ -1,0 +1,1303 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARC Raiders Crafting Trees</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+    :root {
+      --bg: #121212;
+      --sidebar-bg: rgba(22, 22, 24, 0.95);
+      --border: rgba(255, 255, 255, 0.06);
+      --ink: #e0e0e0;
+      --muted: #71717a;
+      --accent: #ff4d00;
+      --accent-glow: rgba(255, 77, 0, 0.3);
+      --accent-2: #00ffa3;
+      --craft: #00ffa3;
+      --loot: #ffb800;
+      --common: #8e949e;
+      --uncommon: #4ade80;
+      --rare: #60a5fa;
+      --epic: #c084fc;
+      --legendary: #fbbf24;
+      --line: rgba(255, 255, 255, 0.08);
+      --sidebar-width: 340px;
+      --speed: 0.35s;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: var(--line) transparent;
+    }
+
+    *::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 10px;
+    }
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: "Outfit", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Textured Background - Dark Grid / Dots */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 1.5px 1.5px, rgba(255, 255, 255, 0.06) 1.5px, transparent 0);
+      background-size: 30px 30px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Removed previous title overlay and header related styles */
+    .app-title-overlay {
+      display: none;
+    }
+
+    main {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      z-index: 1;
+    }
+
+    /* Sidebar - Flush mount */
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100%;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      backdrop-filter: blur(25px);
+      transition: transform var(--speed) var(--ease), margin var(--speed) var(--ease);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 50;
+      flex: 0 0 auto;
+    }
+
+    body.menu-collapsed .sidebar {
+      transform: translateX(-100%);
+      margin-right: calc(-1 * var(--sidebar-width));
+    }
+
+    /* Toggle Button - Arrow style */
+    .toggle-sidebar-btn,
+    .toggle-summary-btn {
+      position: absolute;
+      top: 50%;
+      width: 24px;
+      height: 48px;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+      z-index: 60;
+      transform: translateY(-50%);
+    }
+
+    .toggle-sidebar-btn {
+      right: -24px;
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .toggle-summary-btn {
+      left: -24px;
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+    }
+
+    .toggle-sidebar-btn:hover,
+    .toggle-summary-btn:hover {
+      color: var(--ink);
+      background: #1e1e20;
+    }
+
+    .toggle-sidebar-btn svg,
+    .toggle-summary-btn svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.3s var(--ease);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    body.menu-collapsed .toggle-sidebar-btn svg {
+      transform: rotate(180deg);
+    }
+
+    body.summary-collapsed .toggle-summary-btn svg {
+      transform: rotate(180deg);
+    }
+
+    .sidebar-inner {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .sidebar h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filters {
+      margin-bottom: 20px;
+    }
+
+    input[type="search"] {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    input[type="search"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .filter-options {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    details.category {
+      margin-bottom: 5px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    details.category summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      list-style: none;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    details.category summary:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    details.category summary::after {
+      content: "\203A";
+      font-size: 1.4rem;
+      color: var(--muted);
+      transition: transform 0.3s;
+    }
+
+    details.category[open] summary::after {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    .item-list {
+      padding: 4px;
+      display: grid;
+      gap: 4px;
+      list-style: none;
+      margin: 0;
+    }
+
+    .item-list li {
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .item-list li:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .item-list img {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      background: #000;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-left: auto;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    .tag.craft {
+      background: rgba(0, 255, 163, 0.1);
+      color: var(--craft);
+    }
+
+    .tag.loot {
+      background: rgba(255, 184, 0, 0.1);
+      color: var(--loot);
+    }
+
+    /* Workspace - The Pizarra */
+    .workspace {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .workspace-header {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .selected-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: rgba(22, 22, 24, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      max-width: 90%;
+    }
+
+    .selected-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 4px;
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      padding: 5px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chip button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      font-size: 1.2rem;
+    }
+
+    .chip button:hover {
+      color: #fff;
+    }
+
+    #tree {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      cursor: crosshair;
+    }
+
+    /* Summary - Minimal Float & Collapsible */
+    .summary-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 280px;
+      background: var(--sidebar-bg);
+      border-left: 1px solid var(--border);
+      padding: 20px;
+      backdrop-filter: blur(25px);
+      transition: transform var(--speed) var(--ease);
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.summary-collapsed .summary-panel {
+      transform: translateX(100%);
+    }
+
+    .summary-scroll {
+      flex: 1;
+      overflow-y: auto;
+      margin-right: -10px;
+      padding-right: 10px;
+    }
+
+    .summary-panel h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+
+    .summary-panel h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 24px 0 12px;
+    }
+
+    .summary-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+    }
+
+    .summary-item img {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+    }
+
+    .summary-item .qty {
+      margin-left: auto;
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    .button {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .button.secondary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 20px var(--accent-glow);
+    }
+
+    .button.secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px var(--accent-glow);
+    }
+
+    .button.ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+
+    .button.ghost:hover {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.15);
+    }
+
+    /* D3 Nodes */
+    .link {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 1.5px;
+    }
+
+    .node circle {
+      stroke: #000;
+      stroke-width: 2.5px;
+      filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    }
+
+    .node text {
+      fill: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      stroke: #000;
+      stroke-width: 4px;
+      paint-order: stroke;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .node .status {
+      fill: var(--muted);
+      font-size: 10px;
+      stroke: none;
+    }
+
+    /* Rarity Icons / Colors with Transparent backgrounds */
+    .rarity-common {
+      --r: var(--common);
+    }
+
+    .rarity-uncommon {
+      --r: var(--uncommon);
+    }
+
+    .rarity-rare {
+      --r: var(--rare);
+    }
+
+    .rarity-epic {
+      --r: var(--epic);
+    }
+
+    .rarity-legendary {
+      --r: var(--legendary);
+    }
+
+    .chip[class*="rarity-"],
+    .summary-item[class*="rarity-"],
+    .item-list li[class*="rarity-"] {
+      border-color: var(--r) !important;
+      background: color-mix(in srgb, var(--r), transparent 92%) !important;
+      border: 1px solid color-mix(in srgb, var(--r), transparent 70%);
+    }
+
+    .item-list li[class*="rarity-"]:hover {
+      background: color-mix(in srgb, var(--r), transparent 85%) !important;
+      border-color: var(--r) !important;
+    }
+
+    .node[class*="rarity-"] circle {
+      stroke: var(--r);
+    }
+
+    #data-meta {
+      display: none;
+    }
+
+    #dropzone {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      border: 4px dashed var(--accent);
+      margin: 20px;
+      border-radius: 30px;
+    }
+
+    #dropzone.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <aside class="sidebar">
+      <button id="toggle-sidebar" class="toggle-sidebar-btn" title="Toggle Sidebar">
+        <svg viewBox="0 0 24 24">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <div class="sidebar-inner">
+        <div class="sidebar-header">
+          <h2 id="categories-title">Categories</h2>
+          <button id="toggle-lang" class="button ghost">ES</button>
+        </div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search materials...">
+        </div>
+        <div id="category-list" class="category-list"></div>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <div id="dropzone">Drop to add to tree</div>
+      <svg id="tree"></svg>
+
+      <div class="selected-bar">
+        <div id="selected-chips" class="selected-chips"></div>
+        <button id="clear-selection" class="button secondary">Clear Selection</button>
+      </div>
+
+      <aside class="summary-panel">
+        <button id="toggle-summary" class="toggle-summary-btn" title="Toggle Summary">
+          <svg viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+        <div class="summary-scroll">
+          <h3 id="summary-title">Base Materials</h3>
+          <div id="summary-empty" class="summary-empty">Select items to see requirements</div>
+          <ul id="summary-base" class="summary-list"></ul>
+          <h4 id="summary-subtitle">Intermediate Steps</h4>
+          <ul id="summary-list" class="summary-list"></ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="data.js"></script>
+  <script>
+    const DATA = window.ARCDATA;
+    const imageMap = DATA.images || {};
+
+    const ui = {
+      search: document.getElementById("search"),
+      categoryList: document.getElementById("category-list"),
+      dropzone: document.getElementById("dropzone"),
+      tree: document.getElementById("tree"),
+      dataMeta: document.getElementById("data-meta"),
+      selectedChips: document.getElementById("selected-chips"),
+      clearSelection: document.getElementById("clear-selection"),
+      summaryList: document.getElementById("summary-list"),
+      summaryBase: document.getElementById("summary-base"),
+      summaryEmpty: document.getElementById("summary-empty"),
+      toggleSidebar: document.getElementById("toggle-sidebar"),
+      toggleSummary: document.getElementById("toggle-summary"),
+      categoriesTitle: document.getElementById("categories-title"),
+      summaryTitle: document.getElementById("summary-title"),
+      summarySubtitle: document.getElementById("summary-subtitle"),
+      langToggle: document.getElementById("toggle-lang")
+    };
+
+    const items = DATA.items || [];
+    const itemsMap = new Map(items.map(item => [item.name, item]));
+    const categories = DATA.categories || { order: [], labels: {}, members: {} };
+    const categoryLabels = {
+      en: {
+        "Weapons": "Weapons",
+        "Attachments": "Attachments",
+        "Augments": "Augments",
+        "Shields": "Shields",
+        "Healing": "Healing",
+        "Quick Use": "Quick Use",
+        "Grenades": "Grenades",
+        "Traps": "Traps"
+      },
+      es: categories.labels || {}
+    };
+    const state = {
+      lang: "es"
+    };
+    const selection = new Map();
+    const treePositions = new Map();
+    let zoomTransform = d3.zoomIdentity;
+
+    const uiStrings = {
+      en: {
+        categories: "Categories",
+        searchPlaceholder: "Search materials...",
+        dropzone: "Drop to add to tree",
+        clearSelection: "Clear Selection",
+        summaryBase: "Base Materials",
+        summaryIntermediate: "Intermediate Steps",
+        summaryEmpty: "Select items to see requirements",
+        noFilterItems: "No items matching this filter.",
+        others: "Others",
+        craftTag: "CRAFT",
+        lootTag: "LOOT",
+        craftable: "craftable",
+        lootOnly: "loot-only",
+        noMaterials: "No materials required.",
+        noBaseLoot: "No base loot-only items.",
+        toggleSidebar: "Toggle Sidebar",
+        toggleSummary: "Toggle Summary",
+        langLabel: "EN",
+        title: "ARC Raiders Crafting Trees"
+      },
+      es: {
+        categories: "Categorias",
+        searchPlaceholder: "Buscar materiales...",
+        dropzone: "Suelta para agregar al arbol",
+        clearSelection: "Limpiar seleccion",
+        summaryBase: "Materiales base",
+        summaryIntermediate: "Pasos intermedios",
+        summaryEmpty: "Selecciona items para ver requisitos",
+        noFilterItems: "No hay items con este filtro.",
+        others: "Otros",
+        craftTag: "FAB",
+        lootTag: "BOTIN",
+        craftable: "crafteable",
+        lootOnly: "solo loot",
+        noMaterials: "No hay materiales requeridos.",
+        noBaseLoot: "No hay items base solo loot.",
+        toggleSidebar: "Mostrar/Ocultar menu",
+        toggleSummary: "Mostrar/Ocultar resumen",
+        langLabel: "ES",
+        title: "ARC Raiders Arboles de crafteo"
+      }
+    };
+
+    function t(key) {
+      return uiStrings[state.lang][key] || key;
+    }
+
+    function getItemLabel(item) {
+      if (!item) return "";
+      if (state.lang === "es" && item.name_es) return item.name_es;
+      return item.name;
+    }
+
+    function getItemLabelByName(name) {
+      const item = itemsMap.get(name);
+      if (!item) return name;
+      return getItemLabel(item);
+    }
+
+    function matchesQuery(item, query) {
+      if (!query) return true;
+      const q = query.toLowerCase();
+      const candidates = [item.name, item.name_es].filter(Boolean).map(name => name.toLowerCase());
+      return candidates.some(name => name.includes(q));
+    }
+
+    function getBaseName(name) {
+      return name.replace(/\s+(?:L\d+|I{1,3}|IV|V|Mk\.\s*\d+.*)$/i, "").trim();
+    }
+
+    function getItemImage(name) {
+      if (imageMap[name]) return imageMap[name];
+      const baseName = getBaseName(name);
+      return imageMap[baseName] || null;
+    }
+
+    function normalizeRarity(rarity) {
+      if (!rarity) return "";
+      const lower = String(rarity).toLowerCase();
+      if (lower.includes("legend")) return "legendary";
+      if (lower.includes("epic")) return "epic";
+      if (lower.includes("rare")) return "rare";
+      if (lower.includes("uncommon")) return "uncommon";
+      if (lower.includes("common")) return "common";
+      return "";
+    }
+
+    function buildTreeData(name, qty = 1, visited = new Set()) {
+      const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+      const node = {
+        name: item.name,
+        qty,
+        craftable: !!item.craftable,
+        station: item.station || "",
+        recipe: item.recipe || [],
+        image: getItemImage(item.name),
+        rarity: item.rarity || null,
+        children: []
+      };
+
+      if (node.craftable && node.recipe.length && !visited.has(node.name)) {
+        const next = new Set(visited);
+        next.add(node.name);
+        node.children = node.recipe.map(ing => buildTreeData(ing.item, ing.qty * qty, next));
+      }
+
+      return node;
+    }
+
+    function buildForestData() {
+      const children = [];
+      selection.forEach((qty, name) => {
+        children.push(buildTreeData(name, qty));
+      });
+      return {
+        name: "Selected",
+        qty: 1,
+        craftable: false,
+        station: "",
+        recipe: [],
+        image: null,
+        children
+      };
+    }
+
+    function addSelection(name, delta = 1) {
+      const current = selection.get(name) || 0;
+      const next = current + delta;
+      if (next <= 0) {
+        selection.delete(name);
+      } else {
+        selection.set(name, next);
+      }
+      renderAll();
+    }
+
+    function clearSelection() {
+      selection.clear();
+      renderAll();
+    }
+
+    function syncTreePositions() {
+      Array.from(treePositions.keys()).forEach(name => {
+        if (!selection.has(name)) treePositions.delete(name);
+      });
+      const names = Array.from(selection.keys());
+      const spacingX = 420;
+      const spacingY = 280;
+      names.forEach((name, index) => {
+        if (!treePositions.has(name)) {
+          const col = index % 2;
+          const row = Math.floor(index / 2);
+          treePositions.set(name, { x: 80 + col * spacingX, y: 80 + row * spacingY });
+        }
+      });
+    }
+
+    function renderList() {
+      const query = ui.search.value.trim().toLowerCase();
+      ui.categoryList.innerHTML = "";
+
+      // Hide loot items by default (anything non-craftable)
+      const eligible = items.filter(item => {
+        if (!item.craftable) return false;
+        return matchesQuery(item, query);
+      });
+      const assigned = new Set();
+
+      function createItemRow(item) {
+        const rarity = normalizeRarity(item.rarity);
+        const li = document.createElement("li");
+        if (rarity) li.classList.add(`rarity-${rarity}`);
+        li.draggable = true;
+        li.dataset.name = item.name;
+        const img = document.createElement("img");
+        const imgSrc = getItemImage(item.name);
+        if (imgSrc) {
+          img.src = imgSrc;
+        } else {
+          img.alt = "";
+          img.style.visibility = "hidden";
+        }
+        li.appendChild(img);
+        li.appendChild(document.createTextNode(getItemLabel(item)));
+        const tag = document.createElement("span");
+        tag.className = `tag ${item.craftable ? "craft" : "loot"}`;
+        tag.textContent = item.craftable ? t("craftTag") : t("lootTag");
+        li.appendChild(tag);
+
+        li.addEventListener("dragstart", event => {
+          event.dataTransfer.setData("text/plain", item.name);
+        });
+
+        li.addEventListener("click", () => {
+          addSelection(item.name, 1);
+        });
+
+        return li;
+      }
+
+      function addCategory(key, members, forceShow) {
+        const label = (categoryLabels[state.lang] && categoryLabels[state.lang][key]) ? categoryLabels[state.lang][key] : key;
+
+        // Match explicit members AND their upgrades
+        const categoryMembers = new Set(members);
+        const filteredNames = eligible
+          .filter(item => {
+            if (assigned.has(item.name)) return false;
+            const baseName = getBaseName(item.name);
+            const isMatch = categoryMembers.has(item.name) || categoryMembers.has(baseName);
+
+            // Smarter interpretation for Grenades
+            if (key === "Grenades") {
+              const nameLower = item.name.toLowerCase();
+              const nameEsLower = (item.name_es || "").toLowerCase();
+              if (nameLower.includes("grenade") || nameEsLower.includes("granada")) return true;
+            }
+
+            return isMatch;
+          })
+          .map(item => item.name);
+
+        if (!filteredNames.length && !forceShow) return;
+
+        const detail = document.createElement("details");
+        detail.className = "category";
+        if (query) detail.open = true;
+        const summary = document.createElement("summary");
+        summary.textContent = `${label} (${filteredNames.length})`;
+        detail.appendChild(summary);
+
+        if (filteredNames.length) {
+          filteredNames.forEach(name => assigned.add(name));
+          const list = document.createElement("ul");
+          list.className = "item-list";
+          filteredNames
+            .map(name => itemsMap.get(name))
+            .filter(Boolean)
+            .sort((a, b) => getItemLabel(a).localeCompare(getItemLabel(b)))
+            .forEach(item => list.appendChild(createItemRow(item)));
+          detail.appendChild(list);
+        } else {
+          const empty = document.createElement("div");
+          empty.className = "summary-empty";
+          empty.textContent = t("noFilterItems");
+          detail.appendChild(empty);
+        }
+
+        ui.categoryList.appendChild(detail);
+      }
+
+      const order = (categories.order && categories.order.length) ? categories.order : [];
+      order
+        .filter(key => key !== "Grenades" && key !== "Traps")
+        .forEach(key => {
+          const members = (categories.members && categories.members[key]) ? categories.members[key] : [];
+          addCategory(key, members, !query);
+        });
+
+      const remaining = eligible.filter(item => !assigned.has(item.name));
+      if (remaining.length) {
+        const detail = document.createElement("details");
+        detail.className = "category";
+        if (query) detail.open = true;
+        const summary = document.createElement("summary");
+        summary.textContent = `${t("others")} (${remaining.length})`;
+        detail.appendChild(summary);
+        const list = document.createElement("ul");
+        list.className = "item-list";
+        remaining
+          .sort((a, b) => getItemLabel(a).localeCompare(getItemLabel(b)))
+          .forEach(item => list.appendChild(createItemRow(item)));
+        detail.appendChild(list);
+        ui.categoryList.appendChild(detail);
+      }
+    }
+
+    function renderSelection() {
+      ui.selectedChips.innerHTML = "";
+      const entries = Array.from(selection.entries());
+      entries.forEach(([name, qty]) => {
+        const item = itemsMap.get(name) || {};
+        const rarity = normalizeRarity(item.rarity);
+        const chip = document.createElement("span");
+        chip.className = `chip${rarity ? " rarity-" + rarity : ""}`;
+        const label = getItemLabel(item) || name;
+        chip.textContent = `${label}${qty > 1 ? " x" + qty : ""}`;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "x";
+        remove.addEventListener("click", () => {
+          selection.delete(name);
+          renderAll();
+        });
+        chip.appendChild(remove);
+        ui.selectedChips.appendChild(chip);
+      });
+    }
+
+    function renderTree() {
+      if (selection.size === 0) {
+        const svg = d3.select(ui.tree);
+        svg.selectAll("*").remove();
+        return;
+      }
+
+      syncTreePositions();
+
+      const svg = d3.select(ui.tree);
+      svg.selectAll("*").remove();
+      zoomTransform = d3.zoomIdentity;
+
+      const width = svg.node().clientWidth || 900;
+      const height = svg.node().clientHeight || 600;
+      svg.attr("viewBox", `0 0 ${width} ${height}`);
+
+      const defs = svg.append("defs");
+      const board = svg.append("g").attr("class", "board");
+
+      let clipIndex = 0;
+      function makeClipId(name) {
+        clipIndex += 1;
+        return `clip-${name.replace(/[^a-z0-9]/gi, "")}-${clipIndex}`;
+      }
+
+      const dragTree = d3.drag()
+        .on("start", function (event) {
+          if (event.sourceEvent) event.sourceEvent.stopPropagation();
+        })
+        .on("drag", function (event, d) {
+          const pos = treePositions.get(d.name) || { x: 0, y: 0 };
+          pos.x += event.dx / zoomTransform.k;
+          pos.y += event.dy / zoomTransform.k;
+          treePositions.set(d.name, pos);
+          d3.select(this)
+            .attr("transform", `translate(${pos.x},${pos.y})`);
+        });
+
+      selection.forEach((qty, name) => {
+        const rootData = buildTreeData(name, qty);
+        const root = d3.hierarchy(rootData, d => d.children);
+        const treeLayout = d3.tree().nodeSize([70, 190]);
+        treeLayout(root);
+
+        const offsetX = root.x;
+        const offsetY = root.y;
+        root.descendants().forEach(node => {
+          node.x -= offsetX;
+          node.y -= offsetY;
+        });
+
+        const group = board.append("g")
+          .attr("class", "tree-group")
+          .datum({ name })
+          .call(dragTree);
+
+        const pos = treePositions.get(name) || { x: 60, y: 60 };
+        group.attr("transform", `translate(${pos.x},${pos.y})`);
+
+        group.append("g")
+          .selectAll("path")
+          .data(root.links())
+          .join("path")
+          .attr("class", "link")
+          .attr("d", d3.linkHorizontal()
+            .x(d => d.y)
+            .y(d => d.x));
+
+        const node = group.append("g")
+          .selectAll("g")
+          .data(root.descendants())
+          .join("g")
+          .attr("class", d => {
+            const rarity = normalizeRarity(d.data.rarity);
+            return `node ${d.data.craftable ? "craft" : "loot"}${rarity ? " rarity-" + rarity : ""}`;
+          })
+          .attr("transform", d => `translate(${d.y},${d.x})`);
+
+        node.each(function (d) {
+          if (!d.data.image) return;
+          const clipId = makeClipId(d.data.name);
+          d.data.clipId = clipId;
+          defs.append("clipPath")
+            .attr("id", clipId)
+            .append("circle")
+            .attr("r", 14)
+            .attr("cx", 0)
+            .attr("cy", 0);
+        });
+
+        node.append("circle")
+          .attr("r", 16);
+
+        node.filter(d => d.data.image)
+          .append("image")
+          .attr("href", d => d.data.image)
+          .attr("width", 28)
+          .attr("height", 28)
+          .attr("x", -14)
+          .attr("y", -14)
+          .attr("clip-path", d => d.data.clipId ? `url(#${d.data.clipId})` : null);
+
+        node.append("text")
+          .attr("x", 24)
+          .attr("y", -4)
+          .text(d => `${d.data.qty > 1 ? "x" + d.data.qty + " " : ""}${getItemLabelByName(d.data.name)}`);
+
+        node.append("text")
+          .attr("x", 24)
+          .attr("y", 12)
+          .attr("class", "status")
+          .text(d => d.data.craftable ? t("craftable") : t("lootOnly"));
+      });
+
+      svg.call(d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
+        zoomTransform = event.transform;
+        board.attr("transform", zoomTransform);
+      })).on("dblclick.zoom", null);
+    }
+
+    function accumulateRequirements(name, qty, totals, baseTotals, stack) {
+      const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+      const craftable = !!(item.craftable && item.recipe && item.recipe.length);
+      if (!totals.has(name)) {
+        totals.set(name, { name, qty: 0, craftable, rarity: item.rarity || null });
+      }
+      totals.get(name).qty += qty;
+
+      if (craftable && !stack.has(name)) {
+        const next = new Set(stack);
+        next.add(name);
+        item.recipe.forEach(ing => {
+          accumulateRequirements(ing.item, ing.qty * qty, totals, baseTotals, next);
+        });
+      } else {
+        if (!baseTotals.has(name)) {
+          baseTotals.set(name, { name, qty: 0, rarity: item.rarity || null });
+        }
+        baseTotals.get(name).qty += qty;
+      }
+    }
+
+    function renderSummary() {
+      ui.summaryList.innerHTML = "";
+      ui.summaryBase.innerHTML = "";
+
+      if (selection.size === 0) {
+        ui.summaryEmpty.style.display = "block";
+        return;
+      }
+      ui.summaryEmpty.style.display = "none";
+
+      const totals = new Map();
+      const baseTotals = new Map();
+
+      selection.forEach((qty, name) => {
+        const item = itemsMap.get(name);
+        if (!item || !item.recipe || !item.recipe.length) {
+          return;
+        }
+        item.recipe.forEach(ing => {
+          accumulateRequirements(ing.item, ing.qty * qty, totals, baseTotals, new Set([name]));
+        });
+      });
+
+      const totalList = Array.from(totals.values()).sort((a, b) => b.qty - a.qty || a.name.localeCompare(b.name));
+      const baseList = Array.from(baseTotals.values()).sort((a, b) => b.qty - a.qty || a.name.localeCompare(b.name));
+
+      if (totalList.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "summary-item";
+        empty.textContent = t("noMaterials");
+        ui.summaryList.appendChild(empty);
+      } else {
+        totalList.forEach(entry => {
+          const li = document.createElement("li");
+          const rarity = normalizeRarity(entry.rarity);
+          li.className = `summary-item${rarity ? " rarity-" + rarity : ""}`;
+          const img = document.createElement("img");
+          const imgSrc = getItemImage(entry.name);
+          if (imgSrc) {
+            img.src = imgSrc;
+          } else {
+            img.alt = "";
+            img.style.visibility = "hidden";
+          }
+          li.appendChild(img);
+          li.appendChild(document.createTextNode(getItemLabelByName(entry.name)));
+          const tag = document.createElement("span");
+          tag.className = `tag ${entry.craftable ? "craft" : "loot"}`;
+          tag.textContent = entry.craftable ? t("craftTag") : t("lootTag");
+          li.appendChild(tag);
+          const qty = document.createElement("span");
+          qty.className = "qty";
+          qty.textContent = `x${entry.qty}`;
+          li.appendChild(qty);
+          ui.summaryList.appendChild(li);
+        });
+      }
+
+      if (baseList.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "summary-item";
+        empty.textContent = t("noBaseLoot");
+        ui.summaryBase.appendChild(empty);
+      } else {
+        baseList.forEach(entry => {
+          const li = document.createElement("li");
+          const rarity = normalizeRarity(entry.rarity);
+          li.className = `summary-item${rarity ? " rarity-" + rarity : ""}`;
+          const img = document.createElement("img");
+          const imgSrc = getItemImage(entry.name);
+          if (imgSrc) {
+            img.src = imgSrc;
+          } else {
+            img.alt = "";
+            img.style.visibility = "hidden";
+          }
+          li.appendChild(img);
+          li.appendChild(document.createTextNode(getItemLabelByName(entry.name)));
+          const qty = document.createElement("span");
+          qty.className = "qty";
+          qty.textContent = `x${entry.qty}`;
+          li.appendChild(qty);
+          ui.summaryBase.appendChild(li);
+        });
+      }
+    }
+
+    function bindDrop() {
+      function handleDrop(event) {
+        event.preventDefault();
+        ui.dropzone.classList.remove("active");
+        const name = event.dataTransfer.getData("text/plain");
+        if (name) addSelection(name, 1);
+      }
+
+      function handleOver(event) {
+        event.preventDefault();
+        ui.dropzone.classList.add("active");
+      }
+
+      function handleLeave() {
+        ui.dropzone.classList.remove("active");
+      }
+
+      ui.dropzone.addEventListener("dragover", handleOver);
+      ui.dropzone.addEventListener("dragleave", handleLeave);
+      ui.dropzone.addEventListener("drop", handleDrop);
+      ui.tree.addEventListener("dragover", handleOver);
+      ui.tree.addEventListener("dragleave", handleLeave);
+      ui.tree.addEventListener("drop", handleDrop);
+    }
+
+    function renderAll() {
+      renderSelection();
+      renderTree();
+      renderSummary();
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = state.lang;
+      document.title = t("title");
+      ui.categoriesTitle.textContent = t("categories");
+      ui.search.placeholder = t("searchPlaceholder");
+      ui.dropzone.textContent = t("dropzone");
+      ui.clearSelection.textContent = t("clearSelection");
+      ui.summaryTitle.textContent = t("summaryBase");
+      ui.summarySubtitle.textContent = t("summaryIntermediate");
+      ui.summaryEmpty.textContent = t("summaryEmpty");
+      ui.toggleSidebar.title = t("toggleSidebar");
+      ui.toggleSummary.title = t("toggleSummary");
+      ui.langToggle.textContent = state.lang === "es" ? "EN" : "ES";
+      renderList();
+      renderAll();
+    }
+
+    function init() {
+      bindDrop();
+      ui.search.addEventListener("input", renderList);
+      ui.clearSelection.addEventListener("click", clearSelection);
+      ui.langToggle.addEventListener("click", () => {
+        state.lang = state.lang === "es" ? "en" : "es";
+        applyLanguage();
+      });
+
+      const toggleSide = () => {
+        document.body.classList.toggle("menu-collapsed");
+        setTimeout(renderTree, 400);
+      };
+
+      const toggleSumm = () => {
+        document.body.classList.toggle("summary-collapsed");
+        setTimeout(renderTree, 400);
+      };
+
+      ui.toggleSidebar.addEventListener("click", toggleSide);
+      ui.toggleSummary.addEventListener("click", toggleSumm);
+
+      window.addEventListener("resize", renderTree);
+      applyLanguage();
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
