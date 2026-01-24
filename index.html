@@ -396,7 +396,7 @@
       top: 0;
       right: 0;
       height: 100%;
-      width: 280px;
+      width: clamp(280px, var(--summary-width, 320px), 80vw);
       background: var(--sidebar-bg);
       border-left: 1px solid var(--border);
       padding: 20px;
@@ -405,6 +405,55 @@
       z-index: 90;
       display: flex;
       flex-direction: column;
+    }
+
+    .summary-resizer {
+      position: absolute;
+      top: 0;
+      left: -5px;
+      width: 10px;
+      height: 100%;
+      cursor: ew-resize;
+      z-index: 100;
+    }
+
+    .summary-resizer:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .summary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .summary-header h3 {
+      margin: 0 !important;
+    }
+
+    .sort-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .sort-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .sort-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
     }
 
     body.summary-collapsed .summary-panel {
@@ -439,30 +488,61 @@
       padding: 0;
       margin: 0;
       display: grid;
-      gap: 6px;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
     }
 
     .summary-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
-      padding: 8px;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid transparent;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      min-height: 48px;
     }
 
     .summary-item img {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 6px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .summary-item .item-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .summary-item .name {
+      font-weight: 500;
+      line-height: 1.2;
+      color: #fff;
+      overflow-wrap: break-word;
+    }
+
+    .summary-item .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
     }
 
     .summary-item .qty {
-      margin-left: auto;
       color: var(--accent-2);
       font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .summary-item .tag {
+      margin: 0;
+      padding: 1px 4px;
     }
 
     /* Buttons */
@@ -503,6 +583,14 @@
       fill: none;
       stroke: rgba(255, 255, 255, 0.1);
       stroke-width: 1.5px;
+    }
+
+    .node {
+      cursor: grab;
+    }
+
+    .node.dragging {
+      cursor: grabbing;
     }
 
     .node circle {
@@ -626,17 +714,27 @@
         <button id="clear-selection" class="button secondary">Clear Selection</button>
       </div>
 
-      <aside class="summary-panel">
+      <aside class="summary-panel" id="summary-panel">
+        <div id="summary-resizer" class="summary-resizer"></div>
         <button id="toggle-summary" class="toggle-summary-btn" title="Toggle Summary">
           <svg viewBox="0 0 24 24">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
         <div class="summary-scroll">
-          <h3 id="summary-title">Base Materials</h3>
+          <div class="summary-header">
+            <h3 id="summary-title">Base Materials</h3>
+            <button id="sort-summary" class="sort-btn" title="Toggle Sort (Name/Rarity)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-3 3-3-3" />
+                <path d="M12 3v18" />
+                <path d="M9 6l3-3 3 3" />
+              </svg>
+              <span id="sort-label">Order</span>
+            </button>
+          </div>
           <div id="summary-empty" class="summary-empty">Select items to see requirements</div>
-          <ul id="summary-base" class="summary-list"></ul>
-          <h4 id="summary-subtitle">Intermediate Steps</h4>
           <ul id="summary-list" class="summary-list"></ul>
         </div>
       </aside>
@@ -659,15 +757,19 @@
       selectedChips: document.getElementById("selected-chips"),
       clearSelection: document.getElementById("clear-selection"),
       summaryList: document.getElementById("summary-list"),
-      summaryBase: document.getElementById("summary-base"),
       summaryEmpty: document.getElementById("summary-empty"),
       toggleSidebar: document.getElementById("toggle-sidebar"),
       toggleSummary: document.getElementById("toggle-summary"),
+      summaryPanel: document.getElementById("summary-panel"),
+      summaryResizer: document.getElementById("summary-resizer"),
+      sortSummary: document.getElementById("sort-summary"),
+      sortLabel: document.getElementById("sort-label"),
       categoriesTitle: document.getElementById("categories-title"),
       summaryTitle: document.getElementById("summary-title"),
-      summarySubtitle: document.getElementById("summary-subtitle"),
       langToggle: document.getElementById("toggle-lang")
     };
+
+    let sortMode = "name"; // 'name' or 'rarity'
 
     const items = DATA.items || [];
     const itemsMap = new Map(items.map(item => [item.name, item]));
@@ -686,7 +788,7 @@
       es: categories.labels || {}
     };
     const state = {
-      lang: "es"
+      lang: "en"
     };
     const selection = new Map();
     const treePositions = new Map();
@@ -698,8 +800,7 @@
         searchPlaceholder: "Search materials...",
         dropzone: "Drop to add to tree",
         clearSelection: "Clear Selection",
-        summaryBase: "Base Materials",
-        summaryIntermediate: "Intermediate Steps",
+        summaryTitle: "All Items",
         summaryEmpty: "Select items to see requirements",
         noFilterItems: "No items matching this filter.",
         others: "Others",
@@ -719,8 +820,7 @@
         searchPlaceholder: "Buscar materiales...",
         dropzone: "Suelta para agregar al arbol",
         clearSelection: "Limpiar seleccion",
-        summaryBase: "Materiales base",
-        summaryIntermediate: "Pasos intermedios",
+        summaryTitle: "Todos los items",
         summaryEmpty: "Selecciona items para ver requisitos",
         noFilterItems: "No hay items con este filtro.",
         others: "Otros",
@@ -781,14 +881,33 @@
       return "";
     }
 
+    function getPreviousLevelName(name) {
+      const match = name.match(/^(.*) L([234])$/);
+      if (!match) return null;
+      const base = match[1].trim();
+      const level = parseInt(match[2], 10);
+      if (Number.isNaN(level) || level <= 1) return null;
+      if (level === 2) return base;
+      return `${base} L${level - 1}`;
+    }
+
+    function getCombinedRecipe(item) {
+      const recipe = Array.isArray(item.recipe) ? item.recipe : [];
+      const prev = getPreviousLevelName(item.name);
+      if (!prev) return recipe;
+      return [{ item: prev, qty: 1 }].concat(recipe);
+    }
+
     function buildTreeData(name, qty = 1, visited = new Set()) {
       const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+      const recipe = getCombinedRecipe(item);
+      const craftable = !!(recipe.length);
       const node = {
         name: item.name,
         qty,
-        craftable: !!item.craftable,
+        craftable,
         station: item.station || "",
-        recipe: item.recipe || [],
+        recipe,
         image: getItemImage(item.name),
         rarity: item.rarity || null,
         children: []
@@ -1022,6 +1141,7 @@
       const dragTree = d3.drag()
         .on("start", function (event) {
           if (event.sourceEvent) event.sourceEvent.stopPropagation();
+          d3.select(this).classed("dragging", true);
         })
         .on("drag", function (event, d) {
           const pos = treePositions.get(d.name) || { x: 0, y: 0 };
@@ -1030,6 +1150,9 @@
           treePositions.set(d.name, pos);
           d3.select(this)
             .attr("transform", `translate(${pos.x},${pos.y})`);
+        })
+        .on("end", function () {
+          d3.select(this).classed("dragging", false);
         });
 
       selection.forEach((qty, name) => {
@@ -1116,7 +1239,8 @@
 
     function accumulateRequirements(name, qty, totals, baseTotals, stack) {
       const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
-      const craftable = !!(item.craftable && item.recipe && item.recipe.length);
+      const recipe = getCombinedRecipe(item);
+      const craftable = !!recipe.length;
       if (!totals.has(name)) {
         totals.set(name, { name, qty: 0, craftable, rarity: item.rarity || null });
       }
@@ -1125,7 +1249,7 @@
       if (craftable && !stack.has(name)) {
         const next = new Set(stack);
         next.add(name);
-        item.recipe.forEach(ing => {
+        recipe.forEach(ing => {
           accumulateRequirements(ing.item, ing.qty * qty, totals, baseTotals, next);
         });
       } else {
@@ -1138,7 +1262,6 @@
 
     function renderSummary() {
       ui.summaryList.innerHTML = "";
-      ui.summaryBase.innerHTML = "";
 
       if (selection.size === 0) {
         ui.summaryEmpty.style.display = "block";
@@ -1151,16 +1274,34 @@
 
       selection.forEach((qty, name) => {
         const item = itemsMap.get(name);
-        if (!item || !item.recipe || !item.recipe.length) {
-          return;
-        }
-        item.recipe.forEach(ing => {
+        if (!item) return;
+        const recipe = getCombinedRecipe(item);
+        if (!recipe.length) return;
+        recipe.forEach(ing => {
           accumulateRequirements(ing.item, ing.qty * qty, totals, baseTotals, new Set([name]));
         });
       });
 
-      const totalList = Array.from(totals.values()).sort((a, b) => b.qty - a.qty || a.name.localeCompare(b.name));
-      const baseList = Array.from(baseTotals.values()).sort((a, b) => b.qty - a.qty || a.name.localeCompare(b.name));
+      const getRarityValue = (rarity) => {
+        const lower = String(rarity || "").toLowerCase();
+        if (lower.includes("legend")) return 5;
+        if (lower.includes("epic")) return 4;
+        if (lower.includes("rare")) return 3;
+        if (lower.includes("uncommon")) return 2;
+        if (lower.includes("common")) return 1;
+        return 0;
+      };
+
+      const customSort = (a, b) => {
+        if (sortMode === "rarity") {
+          const valA = getRarityValue(a.rarity);
+          const valB = getRarityValue(b.rarity);
+          if (valB !== valA) return valB - valA;
+        }
+        return getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name));
+      };
+
+      const totalList = Array.from(totals.values()).sort(customSort);
 
       if (totalList.length === 0) {
         const empty = document.createElement("li");
@@ -1172,53 +1313,38 @@
           const li = document.createElement("li");
           const rarity = normalizeRarity(entry.rarity);
           li.className = `summary-item${rarity ? " rarity-" + rarity : ""}`;
+
           const img = document.createElement("img");
           const imgSrc = getItemImage(entry.name);
-          if (imgSrc) {
-            img.src = imgSrc;
-          } else {
-            img.alt = "";
-            img.style.visibility = "hidden";
-          }
-          li.appendChild(img);
-          li.appendChild(document.createTextNode(getItemLabelByName(entry.name)));
+          if (imgSrc) img.src = imgSrc;
+          else img.style.visibility = "hidden";
+
+          const info = document.createElement("div");
+          info.className = "item-info";
+
+          const nameSpan = document.createElement("div");
+          nameSpan.className = "name";
+          nameSpan.textContent = getItemLabelByName(entry.name);
+
+          const meta = document.createElement("div");
+          meta.className = "meta";
+
           const tag = document.createElement("span");
           tag.className = `tag ${entry.craftable ? "craft" : "loot"}`;
           tag.textContent = entry.craftable ? t("craftTag") : t("lootTag");
-          li.appendChild(tag);
-          const qty = document.createElement("span");
-          qty.className = "qty";
-          qty.textContent = `x${entry.qty}`;
-          li.appendChild(qty);
-          ui.summaryList.appendChild(li);
-        });
-      }
 
-      if (baseList.length === 0) {
-        const empty = document.createElement("li");
-        empty.className = "summary-item";
-        empty.textContent = t("noBaseLoot");
-        ui.summaryBase.appendChild(empty);
-      } else {
-        baseList.forEach(entry => {
-          const li = document.createElement("li");
-          const rarity = normalizeRarity(entry.rarity);
-          li.className = `summary-item${rarity ? " rarity-" + rarity : ""}`;
-          const img = document.createElement("img");
-          const imgSrc = getItemImage(entry.name);
-          if (imgSrc) {
-            img.src = imgSrc;
-          } else {
-            img.alt = "";
-            img.style.visibility = "hidden";
-          }
-          li.appendChild(img);
-          li.appendChild(document.createTextNode(getItemLabelByName(entry.name)));
           const qty = document.createElement("span");
           qty.className = "qty";
           qty.textContent = `x${entry.qty}`;
-          li.appendChild(qty);
-          ui.summaryBase.appendChild(li);
+
+          meta.appendChild(tag);
+          meta.appendChild(qty);
+          info.appendChild(nameSpan);
+          info.appendChild(meta);
+
+          li.appendChild(img);
+          li.appendChild(info);
+          ui.summaryList.appendChild(li);
         });
       }
     }
@@ -1261,8 +1387,7 @@
       ui.search.placeholder = t("searchPlaceholder");
       ui.dropzone.textContent = t("dropzone");
       ui.clearSelection.textContent = t("clearSelection");
-      ui.summaryTitle.textContent = t("summaryBase");
-      ui.summarySubtitle.textContent = t("summaryIntermediate");
+      ui.summaryTitle.textContent = t("summaryTitle");
       ui.summaryEmpty.textContent = t("summaryEmpty");
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
@@ -1278,6 +1403,37 @@
       ui.langToggle.addEventListener("click", () => {
         state.lang = state.lang === "es" ? "en" : "es";
         applyLanguage();
+      });
+
+      // Resizing logic
+      let isResizing = false;
+      ui.summaryResizer.addEventListener("mousedown", (e) => {
+        isResizing = true;
+        document.body.style.cursor = "ew-resize";
+        document.body.style.userSelect = "none";
+        ui.summaryPanel.style.transition = "none";
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isResizing) return;
+        const width = window.innerWidth - e.clientX;
+        document.documentElement.style.setProperty("--summary-width", `${width}px`);
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!isResizing) return;
+        isResizing = false;
+        document.body.style.cursor = "";
+        document.body.style.userSelect = "";
+        ui.summaryPanel.style.transition = "";
+        setTimeout(renderTree, 100);
+      });
+
+      // Sorting logic
+      ui.sortSummary.addEventListener("click", () => {
+        sortMode = sortMode === "name" ? "rarity" : "name";
+        ui.sortSummary.classList.toggle("active", sortMode === "rarity");
+        renderSummary();
       });
 
       const toggleSide = () => {
