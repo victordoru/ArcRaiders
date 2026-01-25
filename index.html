@@ -678,16 +678,20 @@
     }
 
     .chip[class*="rarity-"],
-    .summary-item[class*="rarity-"],
-    .item-list li[class*="rarity-"] {
+    .summary-item[class*="rarity-"] {
       border-color: var(--r) !important;
       background: color-mix(in srgb, var(--r), transparent 92%) !important;
       border: 1px solid color-mix(in srgb, var(--r), transparent 70%);
     }
 
+    .item-list li[class*="rarity-"] {
+      background: color-mix(in srgb, var(--r), transparent 88%) !important;
+      border: none !important;
+      margin-bottom: 2px;
+    }
+
     .item-list li[class*="rarity-"]:hover {
-      background: color-mix(in srgb, var(--r), transparent 85%) !important;
-      border-color: var(--r) !important;
+      background: color-mix(in srgb, var(--r), transparent 75%) !important;
     }
 
     .node[class*="rarity-"] circle {
@@ -1377,7 +1381,7 @@
         });
       });
 
-      
+
 
       const zoom = d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
         zoomTransform = event.transform;
