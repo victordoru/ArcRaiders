@@ -585,6 +585,11 @@
       stroke-width: 1.5px;
     }
 
+    .link.prev-level {
+      stroke-dasharray: 4 4;
+      opacity: 0.6;
+    }
+
     .node {
       cursor: grab;
     }
@@ -614,6 +619,41 @@
       fill: var(--muted);
       font-size: 10px;
       stroke: none;
+    }
+
+    .node.prev-level circle {
+      stroke-dasharray: 5 4;
+      opacity: 0.75;
+    }
+
+    .node.prev-level text {
+      fill: var(--muted);
+    }
+
+    .node.prev-level .status {
+      opacity: 0.7;
+    }
+
+    .prev-toggle {
+      cursor: pointer;
+    }
+
+    .prev-toggle circle {
+      fill: rgba(0, 0, 0, 0.6);
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+
+    .prev-toggle-label {
+      fill: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    .prev-toggle:hover circle {
+      stroke: var(--accent-2);
+      fill: rgba(0, 0, 0, 0.8);
     }
 
     /* Rarity Icons / Colors with Transparent backgrounds */
@@ -788,11 +828,60 @@
       es: categories.labels || {}
     };
     const state = {
-      lang: "en"
+      lang: "en",
+      prevLevels: new Map()
     };
     const selection = new Map();
     const treePositions = new Map();
     let zoomTransform = d3.zoomIdentity;
+
+    function saveAppState() {
+      const data = {
+        selection: Array.from(selection.entries()),
+        treePositions: Array.from(treePositions.entries()),
+        state: { lang: state.lang },
+        prevLevels: Array.from(state.prevLevels.entries()),
+        sortMode: sortMode,
+        zoomTransform: {
+          x: zoomTransform.x,
+          y: zoomTransform.y,
+          k: zoomTransform.k
+        }
+      };
+      localStorage.setItem("arc_raiders_craft_state", JSON.stringify(data));
+    }
+
+    function loadAppState() {
+      try {
+        const saved = localStorage.getItem("arc_raiders_craft_state");
+        if (!saved) return;
+        const data = JSON.parse(saved);
+
+        if (data.state && data.state.lang) state.lang = data.state.lang;
+        if (data.sortMode) sortMode = data.sortMode;
+        if (Array.isArray(data.prevLevels)) {
+          state.prevLevels = new Map(data.prevLevels);
+        }
+
+        if (data.selection) {
+          selection.clear();
+          data.selection.forEach(([name, qty]) => selection.set(name, qty));
+        }
+
+        if (data.treePositions) {
+          treePositions.clear();
+          data.treePositions.forEach(([name, pos]) => treePositions.set(name, pos));
+        }
+
+        if (data.zoomTransform) {
+          zoomTransform = d3.zoomIdentity
+            .translate(data.zoomTransform.x, data.zoomTransform.y)
+            .scale(data.zoomTransform.k);
+        }
+      } catch (e) {
+        console.error("Error loading saved state:", e);
+      }
+    }
 
     const uiStrings = {
       en: {
@@ -812,6 +901,8 @@
         noBaseLoot: "No base loot-only items.",
         toggleSidebar: "Toggle Sidebar",
         toggleSummary: "Toggle Summary",
+        prevLevelsShow: "Show previous levels",
+        prevLevelsHide: "Hide previous levels",
         langLabel: "EN",
         title: "ARC Raiders Crafting Trees"
       },
@@ -832,6 +923,8 @@
         noBaseLoot: "No hay items base solo loot.",
         toggleSidebar: "Mostrar/Ocultar menu",
         toggleSummary: "Mostrar/Ocultar resumen",
+        prevLevelsShow: "Mostrar niveles anteriores",
+        prevLevelsHide: "Ocultar niveles anteriores",
         langLabel: "ES",
         title: "ARC Raiders Arboles de crafteo"
       }
@@ -887,21 +980,44 @@
       const base = match[1].trim();
       const level = parseInt(match[2], 10);
       if (Number.isNaN(level) || level <= 1) return null;
-      if (level === 2) return base;
+      if (level === 2) {
+        const levelOne = `${base} I`;
+        if (itemsMap.has(levelOne)) return levelOne;
+        return base;
+      }
       return `${base} L${level - 1}`;
     }
 
-    function getCombinedRecipe(item) {
-      const recipe = Array.isArray(item.recipe) ? item.recipe : [];
-      const prev = getPreviousLevelName(item.name);
-      if (!prev) return recipe;
-      return [{ item: prev, qty: 1 }].concat(recipe);
+    function shouldShowPrevLevels(name) {
+      if (!state.prevLevels.has(name)) return true;
+      return state.prevLevels.get(name);
     }
 
-    function buildTreeData(name, qty = 1, visited = new Set()) {
+    function togglePrevLevels(name) {
+      const next = !shouldShowPrevLevels(name);
+      state.prevLevels.set(name, next);
+      saveAppState();
+      renderAll();
+    }
+
+    function getCombinedRecipe(item, options = {}) {
+      const includePrevLevels = options.includePrevLevels ?? shouldShowPrevLevels(item.name);
+      const recipe = Array.isArray(item.recipe) ? item.recipe : [];
+      const baseRecipe = recipe.map(ing => ({ item: ing.item, qty: ing.qty, isPrevLevel: false }));
+      const prev = getPreviousLevelName(item.name);
+      if (!prev) return baseRecipe;
+
+      if (includePrevLevels) {
+        return baseRecipe.concat([{ item: prev, qty: 1, isPrevLevel: true }]);
+      }
+      return baseRecipe;
+    }
+
+    function buildTreeData(name, qty = 1, visited = new Set(), isPrevLevel = false) {
       const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
       const recipe = getCombinedRecipe(item);
       const craftable = !!(recipe.length);
+      const hasPrevLevel = !!getPreviousLevelName(item.name);
       const node = {
         name: item.name,
         qty,
@@ -910,13 +1026,15 @@
         recipe,
         image: getItemImage(item.name),
         rarity: item.rarity || null,
+        hasPrevLevel,
+        isPrevLevel,
         children: []
       };
 
       if (node.craftable && node.recipe.length && !visited.has(node.name)) {
         const next = new Set(visited);
         next.add(node.name);
-        node.children = node.recipe.map(ing => buildTreeData(ing.item, ing.qty * qty, next));
+        node.children = node.recipe.map(ing => buildTreeData(ing.item, ing.qty * qty, next, !!ing.isPrevLevel));
       }
 
       return node;
@@ -946,11 +1064,13 @@
       } else {
         selection.set(name, next);
       }
+      saveAppState();
       renderAll();
     }
 
     function clearSelection() {
       selection.clear();
+      saveAppState();
       renderAll();
     }
 
@@ -1150,9 +1270,11 @@
           treePositions.set(d.name, pos);
           d3.select(this)
             .attr("transform", `translate(${pos.x},${pos.y})`);
+          saveAppState();
         })
         .on("end", function () {
           d3.select(this).classed("dragging", false);
+          saveAppState();
         });
 
       selection.forEach((qty, name) => {
@@ -1180,7 +1302,7 @@
           .selectAll("path")
           .data(root.links())
           .join("path")
-          .attr("class", "link")
+          .attr("class", d => `link${d.target && d.target.data && d.target.data.isPrevLevel ? " prev-level" : ""}`)
           .attr("d", d3.linkHorizontal()
             .x(d => d.y)
             .y(d => d.x));
@@ -1191,7 +1313,9 @@
           .join("g")
           .attr("class", d => {
             const rarity = normalizeRarity(d.data.rarity);
-            return `node ${d.data.craftable ? "craft" : "loot"}${rarity ? " rarity-" + rarity : ""}`;
+            const prev = d.data.isPrevLevel ? " prev-level" : "";
+            const hasPrev = d.data.hasPrevLevel ? " has-prev" : "";
+            return `node ${d.data.craftable ? "craft" : "loot"}${rarity ? " rarity-" + rarity : ""}${prev}${hasPrev}`;
           })
           .attr("transform", d => `translate(${d.y},${d.x})`);
 
@@ -1220,15 +1344,37 @@
           .attr("clip-path", d => d.data.clipId ? `url(#${d.data.clipId})` : null);
 
         node.append("text")
-          .attr("x", 24)
+          .attr("x", d => d.data.hasPrevLevel ? 44 : 24)
           .attr("y", -4)
           .text(d => `${d.data.qty > 1 ? "x" + d.data.qty + " " : ""}${getItemLabelByName(d.data.name)}`);
 
         node.append("text")
-          .attr("x", 24)
+          .attr("x", d => d.data.hasPrevLevel ? 44 : 24)
           .attr("y", 12)
           .attr("class", "status")
           .text(d => d.data.craftable ? t("craftable") : t("lootOnly"));
+
+        node.each(function (d) {
+          if (!d.data.hasPrevLevel) return;
+          const expanded = shouldShowPrevLevels(d.data.name);
+          const toggle = d3.select(this)
+            .append("g")
+            .attr("class", "prev-toggle")
+            .attr("transform", "translate(36,35)");
+
+          toggle.append("circle").attr("r", 8);
+          toggle.append("title").text(expanded ? t("prevLevelsHide") : t("prevLevelsShow"));
+          toggle.append("text")
+            .attr("class", "prev-toggle-label")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .text(expanded ? "-" : "+");
+
+          toggle.on("click", (event) => {
+            event.stopPropagation();
+            togglePrevLevels(d.data.name);
+          });
+        });
       });
 
       svg.call(d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
@@ -1392,11 +1538,13 @@
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
       ui.langToggle.textContent = state.lang === "es" ? "EN" : "ES";
+      saveAppState();
       renderList();
       renderAll();
     }
 
     function init() {
+      loadAppState();
       bindDrop();
       ui.search.addEventListener("input", renderList);
       ui.clearSelection.addEventListener("click", clearSelection);
@@ -1433,6 +1581,7 @@
       ui.sortSummary.addEventListener("click", () => {
         sortMode = sortMode === "name" ? "rarity" : "name";
         ui.sortSummary.classList.toggle("active", sortMode === "rarity");
+        saveAppState();
         renderSummary();
       });
 
