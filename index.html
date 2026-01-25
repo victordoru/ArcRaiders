@@ -1243,7 +1243,6 @@
 
       const svg = d3.select(ui.tree);
       svg.selectAll("*").remove();
-      zoomTransform = d3.zoomIdentity;
 
       const width = svg.node().clientWidth || 900;
       const height = svg.node().clientHeight || 600;
@@ -1251,6 +1250,7 @@
 
       const defs = svg.append("defs");
       const board = svg.append("g").attr("class", "board");
+      board.attr("transform", zoomTransform);
 
       let clipIndex = 0;
       function makeClipId(name) {
@@ -1377,10 +1377,12 @@
         });
       });
 
-      svg.call(d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
+      const zoom = d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
         zoomTransform = event.transform;
         board.attr("transform", zoomTransform);
-      })).on("dblclick.zoom", null);
+      });
+      svg.call(zoom).on("dblclick.zoom", null);
+      svg.call(zoom.transform, zoomTransform);
     }
 
     function accumulateRequirements(name, qty, totals, baseTotals, stack) {
