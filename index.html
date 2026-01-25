@@ -320,6 +320,47 @@
       z-index: 10;
     }
 
+    .board-switcher {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 90;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(18, 18, 20, 0.85);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .board-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .board-btn.active {
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 6px 18px var(--accent-glow);
+    }
+
+    .board-btn:hover:not(.active) {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
     .workspace-header {
       position: absolute;
       top: 20px;
@@ -656,6 +697,33 @@
       fill: rgba(0, 0, 0, 0.8);
     }
 
+    .depth-toggle {
+      cursor: pointer;
+    }
+
+    .depth-toggle circle {
+      fill: rgba(0, 0, 0, 0.6);
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+
+    .depth-toggle-label {
+      fill: var(--ink);
+      font-size: 10px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    .depth-toggle .is-disabled circle,
+    .depth-toggle .is-disabled text {
+      opacity: 0.35;
+    }
+
+    .depth-toggle .depth-btn:hover circle {
+      stroke: var(--accent-2);
+      fill: rgba(0, 0, 0, 0.8);
+    }
+
     /* Rarity Icons / Colors with Transparent backgrounds */
     .rarity-common {
       --r: var(--common);
@@ -751,6 +819,10 @@
 
     <section class="workspace">
       <div id="dropzone">Drop to add to tree</div>
+      <div class="board-switcher" id="board-switcher">
+        <button id="board-craft" class="board-btn active" data-board="craft">Crafting</button>
+        <button id="board-uses" class="board-btn" data-board="uses">Uses</button>
+      </div>
       <svg id="tree"></svg>
 
       <div class="selected-bar">
@@ -810,6 +882,8 @@
       sortLabel: document.getElementById("sort-label"),
       categoriesTitle: document.getElementById("categories-title"),
       summaryTitle: document.getElementById("summary-title"),
+      boardCraft: document.getElementById("board-craft"),
+      boardUses: document.getElementById("board-uses"),
       langToggle: document.getElementById("toggle-lang")
     };
 
@@ -833,24 +907,41 @@
     };
     const state = {
       lang: "en",
-      prevLevels: new Map()
+      board: "craft",
+      prevLevels: new Map(),
+      usesDepth: new Map()
     };
-    const selection = new Map();
-    const treePositions = new Map();
-    let zoomTransform = d3.zoomIdentity;
+    const selections = {
+      craft: new Map(),
+      uses: new Map()
+    };
+    const treePositions = {
+      craft: new Map(),
+      uses: new Map()
+    };
+    const zoomTransforms = {
+      craft: d3.zoomIdentity,
+      uses: d3.zoomIdentity
+    };
 
     function saveAppState() {
       const data = {
-        selection: Array.from(selection.entries()),
-        treePositions: Array.from(treePositions.entries()),
-        state: { lang: state.lang },
+        selections: {
+          craft: Array.from(selections.craft.entries()),
+          uses: Array.from(selections.uses.entries())
+        },
+        treePositions: {
+          craft: Array.from(treePositions.craft.entries()),
+          uses: Array.from(treePositions.uses.entries())
+        },
+        zoomTransforms: {
+          craft: { x: zoomTransforms.craft.x, y: zoomTransforms.craft.y, k: zoomTransforms.craft.k },
+          uses: { x: zoomTransforms.uses.x, y: zoomTransforms.uses.y, k: zoomTransforms.uses.k }
+        },
+        state: { lang: state.lang, board: state.board },
         prevLevels: Array.from(state.prevLevels.entries()),
-        sortMode: sortMode,
-        zoomTransform: {
-          x: zoomTransform.x,
-          y: zoomTransform.y,
-          k: zoomTransform.k
-        }
+        usesDepth: Array.from(state.usesDepth.entries()),
+        sortMode: sortMode
       };
       localStorage.setItem("arc_raiders_craft_state", JSON.stringify(data));
     }
@@ -862,23 +953,49 @@
         const data = JSON.parse(saved);
 
         if (data.state && data.state.lang) state.lang = data.state.lang;
+        if (data.state && data.state.board && ["craft", "uses"].includes(data.state.board)) {
+          state.board = data.state.board;
+        }
         if (data.sortMode) sortMode = data.sortMode;
         if (Array.isArray(data.prevLevels)) {
           state.prevLevels = new Map(data.prevLevels);
         }
-
-        if (data.selection) {
-          selection.clear();
-          data.selection.forEach(([name, qty]) => selection.set(name, qty));
+        if (Array.isArray(data.usesDepth)) {
+          state.usesDepth = new Map(data.usesDepth);
         }
 
-        if (data.treePositions) {
-          treePositions.clear();
-          data.treePositions.forEach(([name, pos]) => treePositions.set(name, pos));
+        if (data.selections && data.selections.craft) {
+          selections.craft = new Map(data.selections.craft);
+        }
+        if (data.selections && data.selections.uses) {
+          selections.uses = new Map(data.selections.uses);
+        }
+        if (Array.isArray(data.selection)) {
+          selections.craft = new Map(data.selection);
         }
 
+        if (data.treePositions && data.treePositions.craft) {
+          treePositions.craft = new Map(data.treePositions.craft);
+        }
+        if (data.treePositions && data.treePositions.uses) {
+          treePositions.uses = new Map(data.treePositions.uses);
+        }
+        if (Array.isArray(data.treePositions)) {
+          treePositions.craft = new Map(data.treePositions);
+        }
+
+        if (data.zoomTransforms && data.zoomTransforms.craft) {
+          zoomTransforms.craft = d3.zoomIdentity
+            .translate(data.zoomTransforms.craft.x, data.zoomTransforms.craft.y)
+            .scale(data.zoomTransforms.craft.k);
+        }
+        if (data.zoomTransforms && data.zoomTransforms.uses) {
+          zoomTransforms.uses = d3.zoomIdentity
+            .translate(data.zoomTransforms.uses.x, data.zoomTransforms.uses.y)
+            .scale(data.zoomTransforms.uses.k);
+        }
         if (data.zoomTransform) {
-          zoomTransform = d3.zoomIdentity
+          zoomTransforms.craft = d3.zoomIdentity
             .translate(data.zoomTransform.x, data.zoomTransform.y)
             .scale(data.zoomTransform.k);
         }
@@ -891,10 +1008,13 @@
       en: {
         categories: "Categories",
         searchPlaceholder: "Search materials...",
-        dropzone: "Drop to add to tree",
+        dropzoneCraft: "Drop to add to tree",
+        dropzoneUses: "Drop to see what it crafts",
         clearSelection: "Clear Selection",
-        summaryTitle: "All Items",
-        summaryEmpty: "Select items to see requirements",
+        summaryTitleCraft: "All Items",
+        summaryTitleUses: "Can Be Crafted",
+        summaryEmptyCraft: "Select items to see requirements",
+        summaryEmptyUses: "Select items to see what they craft",
         noFilterItems: "No items matching this filter.",
         others: "Others",
         craftTag: "CRAFT",
@@ -902,9 +1022,14 @@
         craftable: "craftable",
         lootOnly: "loot-only",
         noMaterials: "No materials required.",
+        noUses: "No items use this.",
         noBaseLoot: "No base loot-only items.",
         toggleSidebar: "Toggle Sidebar",
         toggleSummary: "Toggle Summary",
+        boardCraft: "Crafting",
+        boardUses: "Uses",
+        usesDepthMore: "More layers",
+        usesDepthLess: "Fewer layers",
         prevLevelsShow: "Show previous levels",
         prevLevelsHide: "Hide previous levels",
         langLabel: "EN",
@@ -913,10 +1038,13 @@
       es: {
         categories: "Categorias",
         searchPlaceholder: "Buscar materiales...",
-        dropzone: "Suelta para agregar al arbol",
+        dropzoneCraft: "Suelta para agregar al arbol",
+        dropzoneUses: "Suelta para ver en que se usa",
         clearSelection: "Limpiar seleccion",
-        summaryTitle: "Todos los items",
-        summaryEmpty: "Selecciona items para ver requisitos",
+        summaryTitleCraft: "Todos los items",
+        summaryTitleUses: "Se puede craftear",
+        summaryEmptyCraft: "Selecciona items para ver requisitos",
+        summaryEmptyUses: "Selecciona items para ver usos",
         noFilterItems: "No hay items con este filtro.",
         others: "Otros",
         craftTag: "FAB",
@@ -924,9 +1052,14 @@
         craftable: "crafteable",
         lootOnly: "solo loot",
         noMaterials: "No hay materiales requeridos.",
+        noUses: "Ningun item lo usa.",
         noBaseLoot: "No hay items base solo loot.",
         toggleSidebar: "Mostrar/Ocultar menu",
         toggleSummary: "Mostrar/Ocultar resumen",
+        boardCraft: "Crafteo",
+        boardUses: "Usos",
+        usesDepthMore: "Mas capas",
+        usesDepthLess: "Menos capas",
         prevLevelsShow: "Mostrar niveles anteriores",
         prevLevelsHide: "Ocultar niveles anteriores",
         langLabel: "ES",
@@ -936,6 +1069,22 @@
 
     function t(key) {
       return uiStrings[state.lang][key] || key;
+    }
+
+    function getActiveSelection() {
+      return state.board === "uses" ? selections.uses : selections.craft;
+    }
+
+    function getActivePositions() {
+      return state.board === "uses" ? treePositions.uses : treePositions.craft;
+    }
+
+    function getActiveZoom() {
+      return zoomTransforms[state.board] || d3.zoomIdentity;
+    }
+
+    function setActiveZoom(transform) {
+      zoomTransforms[state.board] = transform;
     }
 
     function getItemLabel(item) {
@@ -1004,6 +1153,18 @@
       renderAll();
     }
 
+    function getUsesDepth(name) {
+      if (!state.usesDepth.has(name)) return 1;
+      return state.usesDepth.get(name);
+    }
+
+    function adjustUsesDepth(name, delta) {
+      const next = Math.max(1, getUsesDepth(name) + delta);
+      state.usesDepth.set(name, next);
+      saveAppState();
+      renderAll();
+    }
+
     function getCombinedRecipe(item, options = {}) {
       const includePrevLevels = options.includePrevLevels ?? shouldShowPrevLevels(item.name);
       const recipe = Array.isArray(item.recipe) ? item.recipe : [];
@@ -1016,6 +1177,20 @@
       }
       return baseRecipe;
     }
+
+    function buildUsesMap() {
+      const map = new Map();
+      items.forEach(item => {
+        const recipe = getCombinedRecipe(item, { includePrevLevels: true });
+        recipe.forEach(ing => {
+          if (!map.has(ing.item)) map.set(ing.item, []);
+          map.get(ing.item).push({ name: item.name, qty: ing.qty });
+        });
+      });
+      return map;
+    }
+
+    let usesMap = buildUsesMap();
 
     function buildTreeData(name, qty = 1, visited = new Set(), isPrevLevel = false) {
       const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
@@ -1044,10 +1219,43 @@
       return node;
     }
 
+    function buildUsesTreeData(name, qty = 1, visited = new Set(), maxDepth = 1, depth = 0) {
+      const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+      const node = {
+        name: item.name,
+        qty,
+        craftable: !!(Array.isArray(item.recipe) && item.recipe.length),
+        station: item.station || "",
+        recipe: [],
+        image: getItemImage(item.name),
+        rarity: item.rarity || null,
+        hasPrevLevel: false,
+        isPrevLevel: false,
+        children: []
+      };
+
+      if (depth >= maxDepth) return node;
+
+      if (!visited.has(node.name)) {
+        const next = new Set(visited);
+        next.add(node.name);
+        const uses = (usesMap.get(node.name) || [])
+          .slice()
+          .sort((a, b) => getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name)));
+        node.children = uses.map(entry => buildUsesTreeData(entry.name, entry.qty, next, maxDepth, depth + 1));
+      }
+
+      return node;
+    }
+
     function buildForestData() {
       const children = [];
+      const selection = getActiveSelection();
       selection.forEach((qty, name) => {
-        children.push(buildTreeData(name, qty));
+        const node = state.board === "uses"
+          ? buildUsesTreeData(name, qty, new Set(), getUsesDepth(name), 0)
+          : buildTreeData(name, qty);
+        children.push(node);
       });
       return {
         name: "Selected",
@@ -1061,6 +1269,7 @@
     }
 
     function addSelection(name, delta = 1) {
+      const selection = getActiveSelection();
       const current = selection.get(name) || 0;
       const next = current + delta;
       if (next <= 0) {
@@ -1073,23 +1282,26 @@
     }
 
     function clearSelection() {
+      const selection = getActiveSelection();
       selection.clear();
       saveAppState();
       renderAll();
     }
 
     function syncTreePositions() {
-      Array.from(treePositions.keys()).forEach(name => {
-        if (!selection.has(name)) treePositions.delete(name);
+      const selection = getActiveSelection();
+      const positions = getActivePositions();
+      Array.from(positions.keys()).forEach(name => {
+        if (!selection.has(name)) positions.delete(name);
       });
       const names = Array.from(selection.keys());
       const spacingX = 420;
       const spacingY = 280;
       names.forEach((name, index) => {
-        if (!treePositions.has(name)) {
+        if (!positions.has(name)) {
           const col = index % 2;
           const row = Math.floor(index / 2);
-          treePositions.set(name, { x: 80 + col * spacingX, y: 80 + row * spacingY });
+          positions.set(name, { x: 80 + col * spacingX, y: 80 + row * spacingY });
         }
       });
     }
@@ -1098,9 +1310,9 @@
       const query = ui.search.value.trim().toLowerCase();
       ui.categoryList.innerHTML = "";
 
-      // Hide loot items by default (anything non-craftable)
       const eligible = items.filter(item => {
-        if (!item.craftable) return false;
+        if (item.name === "?") return false;
+        if (state.board === "craft" && !item.craftable) return false;
         return matchesQuery(item, query);
       });
       const assigned = new Set();
@@ -1216,6 +1428,7 @@
 
     function renderSelection() {
       ui.selectedChips.innerHTML = "";
+      const selection = getActiveSelection();
       const entries = Array.from(selection.entries());
       entries.forEach(([name, qty]) => {
         const item = itemsMap.get(name) || {};
@@ -1229,6 +1442,7 @@
         remove.textContent = "x";
         remove.addEventListener("click", () => {
           selection.delete(name);
+          saveAppState();
           renderAll();
         });
         chip.appendChild(remove);
@@ -1237,6 +1451,7 @@
     }
 
     function renderTree() {
+      const selection = getActiveSelection();
       if (selection.size === 0) {
         const svg = d3.select(ui.tree);
         svg.selectAll("*").remove();
@@ -1244,6 +1459,8 @@
       }
 
       syncTreePositions();
+      const positions = getActivePositions();
+      const currentZoom = getActiveZoom();
 
       const svg = d3.select(ui.tree);
       svg.selectAll("*").remove();
@@ -1254,7 +1471,7 @@
 
       const defs = svg.append("defs");
       const board = svg.append("g").attr("class", "board");
-      board.attr("transform", zoomTransform);
+      board.attr("transform", currentZoom);
 
       let clipIndex = 0;
       function makeClipId(name) {
@@ -1268,10 +1485,10 @@
           d3.select(this).classed("dragging", true);
         })
         .on("drag", function (event, d) {
-          const pos = treePositions.get(d.name) || { x: 0, y: 0 };
-          pos.x += event.dx / zoomTransform.k;
-          pos.y += event.dy / zoomTransform.k;
-          treePositions.set(d.name, pos);
+          const pos = positions.get(d.name) || { x: 0, y: 0 };
+          pos.x += event.dx / currentZoom.k;
+          pos.y += event.dy / currentZoom.k;
+          positions.set(d.name, pos);
           d3.select(this)
             .attr("transform", `translate(${pos.x},${pos.y})`);
           saveAppState();
@@ -1282,7 +1499,9 @@
         });
 
       selection.forEach((qty, name) => {
-        const rootData = buildTreeData(name, qty);
+        const rootData = state.board === "uses"
+          ? buildUsesTreeData(name, qty, new Set(), getUsesDepth(name), 0)
+          : buildTreeData(name, qty);
         const root = d3.hierarchy(rootData, d => d.children);
         const treeLayout = d3.tree().nodeSize([70, 190]);
         treeLayout(root);
@@ -1299,7 +1518,7 @@
           .datum({ name })
           .call(dragTree);
 
-        const pos = treePositions.get(name) || { x: 60, y: 60 };
+        const pos = positions.get(name) || { x: 60, y: 60 };
         group.attr("transform", `translate(${pos.x},${pos.y})`);
 
         group.append("g")
@@ -1359,6 +1578,7 @@
           .text(d => d.data.craftable ? t("craftable") : t("lootOnly"));
 
         node.each(function (d) {
+          if (state.board !== "craft") return;
           if (!d.data.hasPrevLevel) return;
           const expanded = shouldShowPrevLevels(d.data.name);
           const toggle = d3.select(this)
@@ -1379,16 +1599,63 @@
             togglePrevLevels(d.data.name);
           });
         });
+
+        node.each(function (d) {
+          if (state.board !== "uses") return;
+          if (d.depth !== 0) return;
+          const uses = usesMap.get(d.data.name) || [];
+          if (!uses.length) return;
+          const depth = getUsesDepth(d.data.name);
+          const toggle = d3.select(this)
+            .append("g")
+            .attr("class", "depth-toggle")
+            .attr("transform", "translate(36,35)");
+
+          const minus = toggle.append("g")
+            .attr("class", `depth-btn${depth <= 1 ? " is-disabled" : ""}`)
+            .attr("transform", "translate(0,-12)");
+
+          minus.append("circle").attr("r", 7);
+          minus.append("text")
+            .attr("class", "depth-toggle-label")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .text("-");
+          minus.append("title").text(t("usesDepthLess"));
+
+          minus.on("click", (event) => {
+            event.stopPropagation();
+            if (depth <= 1) return;
+            adjustUsesDepth(d.data.name, -1);
+          });
+
+          const plus = toggle.append("g")
+            .attr("class", "depth-btn")
+            .attr("transform", "translate(0,12)");
+
+          plus.append("circle").attr("r", 7);
+          plus.append("text")
+            .attr("class", "depth-toggle-label")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .text("+");
+          plus.append("title").text(t("usesDepthMore"));
+
+          plus.on("click", (event) => {
+            event.stopPropagation();
+            adjustUsesDepth(d.data.name, 1);
+          });
+        });
       });
 
 
 
       const zoom = d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
-        zoomTransform = event.transform;
-        board.attr("transform", zoomTransform);
+        setActiveZoom(event.transform);
+        board.attr("transform", event.transform);
       });
       svg.call(zoom).on("dblclick.zoom", null);
-      svg.call(zoom.transform, zoomTransform);
+      svg.call(zoom.transform, currentZoom);
     }
 
     function accumulateRequirements(name, qty, totals, baseTotals, stack) {
@@ -1416,12 +1683,79 @@
 
     function renderSummary() {
       ui.summaryList.innerHTML = "";
+      const selection = getActiveSelection();
 
       if (selection.size === 0) {
         ui.summaryEmpty.style.display = "block";
         return;
       }
       ui.summaryEmpty.style.display = "none";
+
+      if (state.board === "uses") {
+        const usesTotals = new Map();
+        selection.forEach((qty, name) => {
+          const uses = usesMap.get(name) || [];
+          uses.forEach(entry => {
+            if (usesTotals.has(entry.name)) return;
+            const usedItem = itemsMap.get(entry.name) || {};
+            usesTotals.set(entry.name, {
+              name: entry.name,
+              qty: entry.qty,
+              craftable: true,
+              rarity: usedItem.rarity || null
+            });
+          });
+        });
+
+        const list = Array.from(usesTotals.values())
+          .sort((a, b) => getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name)));
+
+        if (list.length === 0) {
+          const empty = document.createElement("li");
+          empty.className = "summary-item";
+          empty.textContent = t("noUses");
+          ui.summaryList.appendChild(empty);
+        } else {
+          list.forEach(entry => {
+            const li = document.createElement("li");
+            const rarity = normalizeRarity(entry.rarity);
+            li.className = `summary-item${rarity ? " rarity-" + rarity : ""}`;
+
+            const img = document.createElement("img");
+            const imgSrc = getItemImage(entry.name);
+            if (imgSrc) img.src = imgSrc;
+            else img.style.visibility = "hidden";
+
+            const info = document.createElement("div");
+            info.className = "item-info";
+
+            const nameSpan = document.createElement("div");
+            nameSpan.className = "name";
+            nameSpan.textContent = getItemLabelByName(entry.name);
+
+            const meta = document.createElement("div");
+            meta.className = "meta";
+
+            const tag = document.createElement("span");
+            tag.className = "tag craft";
+            tag.textContent = t("craftTag");
+
+            const qty = document.createElement("span");
+            qty.className = "qty";
+            qty.textContent = `x${entry.qty}`;
+
+            meta.appendChild(tag);
+            meta.appendChild(qty);
+            info.appendChild(nameSpan);
+            info.appendChild(meta);
+
+            li.appendChild(img);
+            li.appendChild(info);
+            ui.summaryList.appendChild(li);
+          });
+        }
+        return;
+      }
 
       const totals = new Map();
       const baseTotals = new Map();
@@ -1534,18 +1868,36 @@
       renderSummary();
     }
 
+    function applyBoardUI() {
+      ui.boardCraft.textContent = t("boardCraft");
+      ui.boardUses.textContent = t("boardUses");
+      ui.boardCraft.classList.toggle("active", state.board === "craft");
+      ui.boardUses.classList.toggle("active", state.board === "uses");
+      ui.dropzone.textContent = state.board === "craft" ? t("dropzoneCraft") : t("dropzoneUses");
+      ui.summaryTitle.textContent = state.board === "craft" ? t("summaryTitleCraft") : t("summaryTitleUses");
+      ui.summaryEmpty.textContent = state.board === "craft" ? t("summaryEmptyCraft") : t("summaryEmptyUses");
+      ui.sortSummary.style.display = state.board === "craft" ? "" : "none";
+    }
+
     function applyLanguage() {
       document.documentElement.lang = state.lang;
       document.title = t("title");
       ui.categoriesTitle.textContent = t("categories");
       ui.search.placeholder = t("searchPlaceholder");
-      ui.dropzone.textContent = t("dropzone");
       ui.clearSelection.textContent = t("clearSelection");
-      ui.summaryTitle.textContent = t("summaryTitle");
-      ui.summaryEmpty.textContent = t("summaryEmpty");
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
       ui.langToggle.textContent = state.lang === "es" ? "EN" : "ES";
+      applyBoardUI();
+      saveAppState();
+      renderList();
+      renderAll();
+    }
+
+    function setBoard(board) {
+      if (state.board === board) return;
+      state.board = board;
+      applyBoardUI();
       saveAppState();
       renderList();
       renderAll();
@@ -1556,6 +1908,8 @@
       bindDrop();
       ui.search.addEventListener("input", renderList);
       ui.clearSelection.addEventListener("click", clearSelection);
+      ui.boardCraft.addEventListener("click", () => setBoard("craft"));
+      ui.boardUses.addEventListener("click", () => setBoard("uses"));
       ui.langToggle.addEventListener("click", () => {
         state.lang = state.lang === "es" ? "en" : "es";
         applyLanguage();
