@@ -1377,6 +1377,8 @@
         });
       });
 
+      
+
       const zoom = d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
         zoomTransform = event.transform;
         board.attr("transform", zoomTransform);
