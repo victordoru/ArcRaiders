@@ -5,7 +5,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ARC Raiders Crafting Trees</title>
+  <title>ARC Raiders Crafting & Uses Tree | Inventory Planner</title>
+  <meta name="description"
+    content="Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ARC Raiders Crafting & Uses Tree | Inventory Planner">
+  <meta property="og:description"
+    content="Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ARC Raiders Crafting & Uses Tree | Inventory Planner">
+  <meta name="twitter:description"
+    content="Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ARC Raiders Crafting & Uses Tree",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web",
+      "description": "Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I use the crafting board?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Switch to Crafting, drag an item from the left list to the board, and the tree will show required materials and previous levels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I see what an item is used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Switch to Uses, drop an item on the board, and expand layers with the + button to see what it can craft."
+          }
+        }
+      ]
+    }
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
@@ -192,6 +241,56 @@
 
     .filters {
       margin-bottom: 20px;
+    }
+
+    .quick-guide {
+      margin-bottom: 16px;
+    }
+
+    .quick-guide details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .quick-guide summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .quick-guide summary::after {
+      content: "\203A";
+      font-size: 1.2rem;
+      color: var(--muted);
+      float: right;
+      transition: transform 0.3s;
+    }
+
+    .quick-guide details[open] summary::after {
+      transform: rotate(90deg);
+    }
+
+    .quick-guide p {
+      margin: 8px 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .guide-steps {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .guide-steps li {
+      margin-bottom: 6px;
     }
 
     input[type="search"] {
@@ -813,6 +912,18 @@
         <div class="filters">
           <input id="search" type="search" placeholder="Search materials...">
         </div>
+        <div class="quick-guide">
+          <details id="quick-guide">
+            <summary id="guide-summary">Quick guide</summary>
+            <p id="guide-intro"></p>
+            <ol class="guide-steps">
+              <li id="guide-step-1"></li>
+              <li id="guide-step-2"></li>
+              <li id="guide-step-3"></li>
+              <li id="guide-step-4"></li>
+            </ol>
+          </details>
+        </div>
         <div id="category-list" class="category-list"></div>
       </div>
     </aside>
@@ -884,6 +995,12 @@
       summaryTitle: document.getElementById("summary-title"),
       boardCraft: document.getElementById("board-craft"),
       boardUses: document.getElementById("board-uses"),
+      guideSummary: document.getElementById("guide-summary"),
+      guideIntro: document.getElementById("guide-intro"),
+      guideStep1: document.getElementById("guide-step-1"),
+      guideStep2: document.getElementById("guide-step-2"),
+      guideStep3: document.getElementById("guide-step-3"),
+      guideStep4: document.getElementById("guide-step-4"),
       langToggle: document.getElementById("toggle-lang")
     };
 
@@ -1030,10 +1147,16 @@
         boardUses: "Uses",
         usesDepthMore: "More layers",
         usesDepthLess: "Fewer layers",
+        guideSummary: "Quick guide",
+        guideIntro: "Use this tool to plan crafting, upgrades, and item uses for ARC Raiders.",
+        guideStep1: "Switch between Crafting and Uses from the top selector.",
+        guideStep2: "Search on the left and drag an item into the board.",
+        guideStep3: "Use +/- on nodes to show previous levels (Crafting) or deeper layers (Uses).",
+        guideStep4: "Drag to move, scroll to zoom, and check the summary on the right.",
         prevLevelsShow: "Show previous levels",
         prevLevelsHide: "Hide previous levels",
         langLabel: "EN",
-        title: "ARC Raiders Crafting Trees"
+        title: "ARC Raiders Crafting & Uses Tree | Inventory Planner"
       },
       es: {
         categories: "Categorias",
@@ -1060,10 +1183,16 @@
         boardUses: "Usos",
         usesDepthMore: "Mas capas",
         usesDepthLess: "Menos capas",
+        guideSummary: "Guia rapida",
+        guideIntro: "Usa esta herramienta para planificar crafteo, mejoras y usos de items en ARC Raiders.",
+        guideStep1: "Cambia entre Crafteo y Usos en el selector superior.",
+        guideStep2: "Busca a la izquierda y arrastra un item a la pizarra.",
+        guideStep3: "Usa +/- en los nodos para ver niveles anteriores (Crafteo) o mas capas (Usos).",
+        guideStep4: "Arrastra para mover, rueda para zoom y revisa el resumen a la derecha.",
         prevLevelsShow: "Mostrar niveles anteriores",
         prevLevelsHide: "Ocultar niveles anteriores",
         langLabel: "ES",
-        title: "ARC Raiders Arboles de crafteo"
+        title: "ARC Raiders Arboles de crafteo y usos | Inventario"
       }
     };
 
@@ -1917,6 +2046,12 @@
       ui.clearSelection.textContent = t("clearSelection");
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
+      ui.guideSummary.textContent = t("guideSummary");
+      ui.guideIntro.textContent = t("guideIntro");
+      ui.guideStep1.textContent = t("guideStep1");
+      ui.guideStep2.textContent = t("guideStep2");
+      ui.guideStep3.textContent = t("guideStep3");
+      ui.guideStep4.textContent = t("guideStep4");
       ui.langToggle.textContent = state.lang === "es" ? "EN" : "ES";
       applyBoardUI();
       saveAppState();
