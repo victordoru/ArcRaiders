@@ -9,7 +9,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Aleación ARC"
+      "name_es": "Aleación ARC",
+      "recyclesInto": {
+        "Metal Parts": 2
+      }
     },
     {
       "name": "ARC Circuitry",
@@ -24,7 +27,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Sistema De Circuitos Arc"
+      "name_es": "Sistema De Circuitos Arc",
+      "recyclesInto": {
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "ARC Coolant",
@@ -34,7 +40,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Refrigerante ARC"
+      "name_es": "Refrigerante ARC",
+      "recyclesInto": {
+        "Chemicals": 16
+      }
     },
     {
       "name": "ARC Flex Rubber",
@@ -44,7 +53,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Goma Flexible Arc"
+      "name_es": "Goma Flexible Arc",
+      "recyclesInto": {
+        "Rubber Parts": 16
+      }
     },
     {
       "name": "ARC Motion Core",
@@ -59,7 +71,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Núcleo de movimiento ARC"
+      "name_es": "Núcleo de movimiento ARC",
+      "recyclesInto": {
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "ARC Performance Steel",
@@ -69,7 +84,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Acero Resistente Arc"
+      "name_es": "Acero Resistente Arc",
+      "recyclesInto": {
+        "Metal Parts": 12
+      }
     },
     {
       "name": "ARC Powercell",
@@ -89,7 +107,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Resina sintética ARC"
+      "name_es": "Resina sintética ARC",
+      "recyclesInto": {
+        "Plastic Parts": 14
+      }
     },
     {
       "name": "ARC Thermo Lining",
@@ -99,7 +120,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Revestimiento térmico ARC"
+      "name_es": "Revestimiento térmico ARC",
+      "recyclesInto": {
+        "Fabric": 16
+      }
     },
     {
       "name": "Acoustic Guitar",
@@ -109,7 +133,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Legendary",
-      "name_es": "Guitarra acústica"
+      "name_es": "Guitarra acústica",
+      "recyclesInto": {
+        "Metal Parts": 4,
+        "Wires": 6
+      }
     },
     {
       "name": "Adrenaline Shot",
@@ -128,7 +156,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Inyección de adrenalina"
+      "name_es": "Inyección de adrenalina",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Plastic Parts": 1
+      }
     },
     {
       "name": "Advanced ARC Powercell",
@@ -138,7 +170,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Celda de energía ARC avanzada"
+      "name_es": "Celda de energía ARC avanzada",
+      "recyclesInto": {
+        "ARC Powercell": 2
+      }
     },
     {
       "name": "Advanced Electrical Components",
@@ -157,7 +192,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Rare",
-      "name_es": "Componentes eléctricos avanzados"
+      "name_es": "Componentes eléctricos avanzados",
+      "recyclesInto": {
+        "Electrical Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Advanced Mechanical Components",
@@ -176,7 +215,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Rare",
-      "name_es": "Componentes mecánicos avanzados"
+      "name_es": "Componentes mecánicos avanzados",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Agave",
@@ -186,7 +229,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Uncommon",
-      "name_es": "Agave"
+      "name_es": "Agave",
+      "recyclesInto": {
+        "Assorted Seeds": 3
+      }
     },
     {
       "name": "Air Freshener",
@@ -206,7 +252,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Reloj Elegante"
+      "name_es": "Reloj Elegante",
+      "recyclesInto": {
+        "Plastic Parts": 6,
+        "Processor": 1
+      }
     },
     {
       "name": "Angled Grip I",
@@ -225,7 +275,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Empuñadura inclinada I"
+      "name_es": "Empuñadura inclinada I",
+      "recyclesInto": {
+        "Plastic Parts": 6
+      }
     },
     {
       "name": "Angled Grip II",
@@ -244,7 +297,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Empuñadura inclinada II"
+      "name_es": "Empuñadura inclinada II",
+      "recyclesInto": {
+        "Duct Tape": 1,
+        "Mechanical Components": 1
+      }
     },
     {
       "name": "Angled Grip II Blueprint",
@@ -273,7 +330,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Empuñadura inclinada III"
+      "name_es": "Empuñadura inclinada III",
+      "recyclesInto": {
+        "Duct Tape": 2,
+        "Mod Components": 1
+      }
     },
     {
       "name": "Angled Grip III Blueprint",
@@ -302,7 +363,10 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Rare",
-      "name_es": "Antiséptico"
+      "name_es": "Antiséptico",
+      "recyclesInto": {
+        "Chemicals": 10
+      }
     },
     {
       "name": "Anvil Blueprint",
@@ -331,7 +395,11 @@
       "sources": [],
       "type": "Hand Cannon",
       "rarity": "Uncommon",
-      "name_es": "Yunque I"
+      "name_es": "Yunque I",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Anvil II",
@@ -350,7 +418,11 @@
       "sources": [],
       "type": "Hand Cannon",
       "rarity": "Uncommon",
-      "name_es": "Yunque II"
+      "name_es": "Yunque II",
+      "recyclesInto": {
+        "Mechanical Components": 3,
+        "Simple Gun Parts": 3
+      }
     },
     {
       "name": "Anvil III",
@@ -369,7 +441,11 @@
       "sources": [],
       "type": "Hand Cannon",
       "rarity": "Uncommon",
-      "name_es": "Yunque III"
+      "name_es": "Yunque III",
+      "recyclesInto": {
+        "Mechanical Components": 4,
+        "Simple Gun Parts": 4
+      }
     },
     {
       "name": "Anvil IV",
@@ -388,7 +464,11 @@
       "sources": [],
       "type": "Hand Cannon",
       "rarity": "Uncommon",
-      "name_es": "Yunque IV"
+      "name_es": "Yunque IV",
+      "recyclesInto": {
+        "Mechanical Components": 5,
+        "Simple Gun Parts": 5
+      }
     },
     {
       "name": "Anvil Splitter",
@@ -398,7 +478,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Legendary",
-      "name_es": "Divisor Yunque"
+      "name_es": "Divisor Yunque",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Aphelion",
@@ -421,7 +505,11 @@
       "sources": [],
       "type": "Special",
       "rarity": "Legendary",
-      "name_es": "Afelio"
+      "name_es": "Afelio",
+      "recyclesInto": {
+        "Complex Gun Parts": 1,
+        "Magnetic Accelerator": 2
+      }
     },
     {
       "name": "Aphelion Blueprint",
@@ -441,7 +529,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Uncommon",
-      "name_es": "Albaricoque"
+      "name_es": "Albaricoque",
+      "recyclesInto": {
+        "Assorted Seeds": 3
+      }
     },
     {
       "name": "Arpeggio I",
@@ -460,7 +551,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Uncommon",
-      "name_es": "Arpegio I"
+      "name_es": "Arpegio I",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Arpeggio II",
@@ -479,7 +574,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Uncommon",
-      "name_es": "Arpegio II"
+      "name_es": "Arpegio II",
+      "recyclesInto": {
+        "Mechanical Components": 3,
+        "Simple Gun Parts": 3
+      }
     },
     {
       "name": "Arpeggio III",
@@ -498,7 +597,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Uncommon",
-      "name_es": "Arpegio III"
+      "name_es": "Arpegio III",
+      "recyclesInto": {
+        "Mechanical Components": 4,
+        "Simple Gun Parts": 4
+      }
     },
     {
       "name": "Arpeggio IV",
@@ -517,7 +620,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Uncommon",
-      "name_es": "Arpegio IV"
+      "name_es": "Arpegio IV",
+      "recyclesInto": {
+        "Mechanical Components": 5,
+        "Simple Gun Parts": 5
+      }
     },
     {
       "name": "Assorted Seeds",
@@ -562,7 +669,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Venda"
+      "name_es": "Venda",
+      "recyclesInto": {
+        "Fabric": 2
+      }
     },
     {
       "name": "Barricade Kit",
@@ -577,7 +687,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Kit de barricada"
+      "name_es": "Kit de barricada",
+      "recyclesInto": {
+        "Metal Parts": 4
+      }
     },
     {
       "name": "Barricade Kit Blueprint",
@@ -597,7 +710,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Celda de bastión"
+      "name_es": "Celda de bastión",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "Battery",
@@ -607,7 +724,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Batería"
+      "name_es": "Batería",
+      "recyclesInto": {
+        "Metal Parts": 2
+      }
     },
     {
       "name": "Bettina Blueprint",
@@ -640,7 +760,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Bettina I"
+      "name_es": "Bettina I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Heavy Gun Parts": 2
+      }
     },
     {
       "name": "Bettina II",
@@ -659,7 +783,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Bettina II"
+      "name_es": "Bettina II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Heavy Gun Parts": 2
+      }
     },
     {
       "name": "Bettina III",
@@ -678,7 +806,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Bettina III"
+      "name_es": "Bettina III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Heavy Gun Parts": 3
+      }
     },
     {
       "name": "Bettina IV",
@@ -697,7 +829,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Bettina IV"
+      "name_es": "Bettina IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Heavy Gun Parts": 3
+      }
     },
     {
       "name": "Bicycle Pump",
@@ -707,7 +843,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Bomba de bicicleta"
+      "name_es": "Bomba de bicicleta",
+      "recyclesInto": {
+        "Canister": 4,
+        "Metal Parts": 10
+      }
     },
     {
       "name": "Binoculars",
@@ -726,7 +866,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Binoculares"
+      "name_es": "Binoculares",
+      "recyclesInto": {
+        "Plastic Parts": 4,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Blaze Grenade",
@@ -745,7 +889,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Granada de fuego"
+      "name_es": "Granada de fuego",
+      "recyclesInto": {
+        "Metal Parts": 4,
+        "Oil": 2
+      }
     },
     {
       "name": "Blaze Grenade Blueprint",
@@ -849,7 +997,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Barra luminosa azul"
+      "name_es": "Barra luminosa azul",
+      "recyclesInto": {
+        "Chemicals": 1
+      }
     },
     {
       "name": "Blue Light Stick Blueprint",
@@ -892,7 +1043,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Epic",
-      "name_es": "Bobcat I"
+      "name_es": "Bobcat I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Light Gun Parts": 2
+      }
     },
     {
       "name": "Bobcat II",
@@ -911,7 +1066,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Epic",
-      "name_es": "Bobcat II"
+      "name_es": "Bobcat II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Light Gun Parts": 3
+      }
     },
     {
       "name": "Bobcat III",
@@ -930,7 +1089,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Epic",
-      "name_es": "Bobcat III"
+      "name_es": "Bobcat III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 4,
+        "Light Gun Parts": 4
+      }
     },
     {
       "name": "Bobcat IV",
@@ -949,7 +1112,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Epic",
-      "name_es": "Bobcat IV"
+      "name_es": "Bobcat IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 5,
+        "Light Gun Parts": 4
+      }
     },
     {
       "name": "Bombardier Cell",
@@ -959,7 +1126,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Célula de bombardero"
+      "name_es": "Célula de bombardero",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "Breathtaking Snow Globe",
@@ -979,7 +1150,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Linterna rota"
+      "name_es": "Linterna rota",
+      "recyclesInto": {
+        "Battery": 2,
+        "Metal Parts": 6
+      }
     },
     {
       "name": "Broken Guidance System",
@@ -989,7 +1164,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Sistema de guía roto"
+      "name_es": "Sistema de guía roto",
+      "recyclesInto": {
+        "Processor": 4
+      }
     },
     {
       "name": "Broken Handheld Radio",
@@ -999,7 +1177,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Radio portátil rota"
+      "name_es": "Radio portátil rota",
+      "recyclesInto": {
+        "Sensors": 3,
+        "Wires": 2
+      }
     },
     {
       "name": "Broken Taser",
@@ -1009,7 +1191,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Táser roto"
+      "name_es": "Táser roto",
+      "recyclesInto": {
+        "Battery": 2,
+        "Wires": 2
+      }
     },
     {
       "name": "Burgerboy",
@@ -1088,7 +1274,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Uncommon",
-      "name_es": "Burletta I"
+      "name_es": "Burletta I",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Burletta II",
@@ -1107,7 +1297,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Uncommon",
-      "name_es": "Burletta II"
+      "name_es": "Burletta II",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Burletta III",
@@ -1126,7 +1320,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Uncommon",
-      "name_es": "Burletta III"
+      "name_es": "Burletta III",
+      "recyclesInto": {
+        "Mechanical Components": 3,
+        "Simple Gun Parts": 3
+      }
     },
     {
       "name": "Burletta IV",
@@ -1145,7 +1343,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Uncommon",
-      "name_es": "Burletta IV"
+      "name_es": "Burletta IV",
+      "recyclesInto": {
+        "Mechanical Components": 4,
+        "Simple Gun Parts": 4
+      }
     },
     {
       "name": "Burned Arc Circuitry",
@@ -1155,7 +1357,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Circuitos ARC quemados"
+      "name_es": "Circuitos ARC quemados",
+      "recyclesInto": {
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "Burnt-Out Candles",
@@ -1175,7 +1380,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Lente de cámara"
+      "name_es": "Lente de cámara",
+      "recyclesInto": {
+        "Plastic Parts": 8
+      }
     },
     {
       "name": "Candle Holder",
@@ -1185,7 +1393,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Candelabro"
+      "name_es": "Candelabro",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Candleberries",
@@ -1195,7 +1406,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Rare",
-      "name_es": "Bayas de vela"
+      "name_es": "Bayas de vela",
+      "recyclesInto": {
+        "Assorted Seeds": 2
+      }
     },
     {
       "name": "Canister",
@@ -1205,7 +1419,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Lata"
+      "name_es": "Lata",
+      "recyclesInto": {
+        "Plastic Parts": 3
+      }
     },
     {
       "name": "Cans Backpack Attachment",
@@ -1284,7 +1501,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Uncommon",
-      "name_es": "Combate Ver. 1"
+      "name_es": "Combate Ver. 1",
+      "recyclesInto": {
+        "Plastic Parts": 3,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Combat Mk. 2",
@@ -1303,7 +1524,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Rare",
-      "name_es": "Combate Ver. 2"
+      "name_es": "Combate Ver. 2",
+      "recyclesInto": {
+        "Electrical Components": 1,
+        "Magnet": 1
+      }
     },
     {
       "name": "Combat Mk. 3 (Aggressive)",
@@ -1322,7 +1547,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Epic",
-      "name_es": "Combate Ver. 3 (Agresivo)"
+      "name_es": "Combate Ver. 3 (Agresivo)",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Combat Mk. 3 (Aggressive) Blueprint",
@@ -1351,7 +1580,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Epic",
-      "name_es": "Combate Ver. 3 (Flanqueo)"
+      "name_es": "Combate Ver. 3 (Flanqueo)",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Combat Mk. 3 (Flanking) Blueprint",
@@ -1380,7 +1613,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Compensador I"
+      "name_es": "Compensador I",
+      "recyclesInto": {
+        "Metal Parts": 5
+      }
     },
     {
       "name": "Compensator II",
@@ -1399,7 +1635,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Compensador II"
+      "name_es": "Compensador II",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Compensator II Blueprint",
@@ -1428,7 +1668,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Compensador III"
+      "name_es": "Compensador III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 2
+      }
     },
     {
       "name": "Compensator III Blueprint",
@@ -1461,7 +1705,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Epic",
-      "name_es": "Piezas de arma complejas"
+      "name_es": "Piezas de arma complejas",
+      "recyclesInto": {
+        "Simple Gun Parts": 3
+      }
     },
     {
       "name": "Complex Gun Parts Blueprint",
@@ -1481,7 +1728,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Refrigerante"
+      "name_es": "Refrigerante",
+      "recyclesInto": {
+        "Chemicals": 5,
+        "Oil": 2
+      }
     },
     {
       "name": "Cooling Coil",
@@ -1491,7 +1742,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Bobina de refrigeración"
+      "name_es": "Bobina de refrigeración",
+      "recyclesInto": {
+        "Chemicals": 6,
+        "Steel Spring": 2
+      }
     },
     {
       "name": "Cooling Fan",
@@ -1501,7 +1756,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Ventilador de refrigeración"
+      "name_es": "Ventilador de refrigeración",
+      "recyclesInto": {
+        "Plastic Parts": 14,
+        "Wires": 4
+      }
     },
     {
       "name": "Cracked Bioscanner",
@@ -1511,7 +1770,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Bioescaner roto"
+      "name_es": "Bioescaner roto",
+      "recyclesInto": {
+        "Battery": 3,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Crude Explosives",
@@ -1526,7 +1789,10 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Uncommon",
-      "name_es": "Explosivos rudimentarios"
+      "name_es": "Explosivos rudimentarios",
+      "recyclesInto": {
+        "Chemicals": 3
+      }
     },
     {
       "name": "Crumpled Plastic Bottle",
@@ -1536,7 +1802,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Botella de plástico arrugada"
+      "name_es": "Botella de plástico arrugada",
+      "recyclesInto": {
+        "Plastic Parts": 4
+      }
     },
     {
       "name": "Dam Control Tower Key",
@@ -1596,7 +1865,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Núcleo de movimiento ARC dañado"
+      "name_es": "Núcleo de movimiento ARC dañado",
+      "recyclesInto": {
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "Damaged ARC Powercell",
@@ -1606,7 +1878,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Celda de energía ARC dañada"
+      "name_es": "Celda de energía ARC dañada",
+      "recyclesInto": {
+        "ARC Alloy": 1
+      }
     },
     {
       "name": "Damaged Fireball Burner",
@@ -1616,7 +1891,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Quemador de esferígneo dañado"
+      "name_es": "Quemador de esferígneo dañado",
+      "recyclesInto": {
+        "ARC Alloy": 1
+      }
     },
     {
       "name": "Damaged Heat Sink",
@@ -1626,7 +1904,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Disipador de calor dañado"
+      "name_es": "Disipador de calor dañado",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Wires": 2
+      }
     },
     {
       "name": "Damaged Hornet Driver",
@@ -1636,7 +1918,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Controlador de Avispón dañado"
+      "name_es": "Controlador de Avispón dañado",
+      "recyclesInto": {
+        "ARC Alloy": 2
+      }
     },
     {
       "name": "Damaged Rocketeer Driver",
@@ -1646,7 +1931,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Controlador De Cohetero Dañado"
+      "name_es": "Controlador De Cohetero Dañado",
+      "recyclesInto": {
+        "ARC Alloy": 3
+      }
     },
     {
       "name": "Damaged Snitch Scanner",
@@ -1666,7 +1954,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Cápsula de garrapata dañada"
+      "name_es": "Cápsula de garrapata dañada",
+      "recyclesInto": {
+        "ARC Alloy": 1
+      }
     },
     {
       "name": "Damaged Wasp Driver",
@@ -1676,7 +1967,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Controlador de Avispa dañado"
+      "name_es": "Controlador de Avispa dañado",
+      "recyclesInto": {
+        "ARC Alloy": 1
+      }
     },
     {
       "name": "Dart Board",
@@ -1705,7 +1999,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Epic",
-      "name_es": "Ultimátum"
+      "name_es": "Ultimátum",
+      "recyclesInto": {
+        "ARC Circuitry": 1,
+        "Explosive Compound": 1
+      }
     },
     {
       "name": "Deadline Blueprint",
@@ -1734,7 +2032,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Desfibrilador"
+      "name_es": "Desfibrilador",
+      "recyclesInto": {
+        "Moss": 1,
+        "Plastic Parts": 1
+      }
     },
     {
       "name": "Defibrillator Blueprint",
@@ -1754,7 +2056,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Balón de fútbol desinflado"
+      "name_es": "Balón de fútbol desinflado",
+      "recyclesInto": {
+        "Fabric": 9,
+        "Rubber Parts": 9
+      }
     },
     {
       "name": "Degraded ARC Rubber",
@@ -1764,7 +2070,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Goma ARC degradada"
+      "name_es": "Goma ARC degradada",
+      "recyclesInto": {
+        "Rubber Parts": 11
+      }
     },
     {
       "name": "Diving Goggles",
@@ -1774,7 +2083,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Gafas de buceo"
+      "name_es": "Gafas de buceo",
+      "recyclesInto": {
+        "Rubber Parts": 12
+      }
     },
     {
       "name": "Dog Collar",
@@ -1784,7 +2096,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Collar de perro"
+      "name_es": "Collar de perro",
+      "recyclesInto": {
+        "Fabric": 8,
+        "Metal Parts": 1
+      }
     },
     {
       "name": "Door Blocker",
@@ -1803,7 +2119,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Bloqueador de puerta"
+      "name_es": "Bloqueador de puerta",
+      "recyclesInto": {
+        "Metal Parts": 2
+      }
     },
     {
       "name": "Dried-Out ARC Resin",
@@ -1813,7 +2132,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Resina ARC seca"
+      "name_es": "Resina ARC seca",
+      "recyclesInto": {
+        "Plastic Parts": 9
+      }
     },
     {
       "name": "Duct Tape",
@@ -1823,7 +2145,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Cinta Americana"
+      "name_es": "Cinta Americana",
+      "recyclesInto": {
+        "Fabric": 3
+      }
     },
     {
       "name": "Durable Cloth",
@@ -1838,7 +2163,10 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Uncommon",
-      "name_es": "Tela resistente"
+      "name_es": "Tela resistente",
+      "recyclesInto": {
+        "Fabric": 6
+      }
     },
     {
       "name": "ESR Analyzer",
@@ -1867,7 +2195,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Uncommon",
-      "name_es": "Componentes eléctricos"
+      "name_es": "Componentes eléctricos",
+      "recyclesInto": {
+        "Plastic Parts": 3,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Empty Wine Bottle",
@@ -1919,7 +2251,11 @@
       "sources": [],
       "type": "LMG",
       "rarity": "Legendary",
-      "name_es": "Ecualizador"
+      "name_es": "Ecualizador",
+      "recyclesInto": {
+        "Complex Gun Parts": 1,
+        "Magnetic Accelerator": 2
+      }
     },
     {
       "name": "Equalizer Blueprint",
@@ -1939,7 +2275,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Epic",
-      "name_es": "Módulos del Éxodo"
+      "name_es": "Módulos del Éxodo",
+      "recyclesInto": {
+        "Magnet": 2,
+        "Processor": 2
+      }
     },
     {
       "name": "Experimental Seed Sample",
@@ -1969,7 +2309,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Respirador Inservible"
+      "name_es": "Respirador Inservible",
+      "recyclesInto": {
+        "Fabric": 4,
+        "Rubber Parts": 8
+      }
     },
     {
       "name": "Explosive Compound",
@@ -1988,7 +2332,10 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Rare",
-      "name_es": "Compuesto explosivo"
+      "name_es": "Compuesto explosivo",
+      "recyclesInto": {
+        "Crude Explosives": 2
+      }
     },
     {
       "name": "Explosive Mine",
@@ -2007,7 +2354,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Mina explosiva"
+      "name_es": "Mina explosiva",
+      "recyclesInto": {
+        "Oil": 2,
+        "Sensors": 1
+      }
     },
     {
       "name": "Explosive Mine Blueprint",
@@ -2036,7 +2387,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Epic",
-      "name_es": "Cañón extendido"
+      "name_es": "Cañón extendido",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Extended Barrel Blueprint",
@@ -2065,7 +2420,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Cargador ligero extendido I"
+      "name_es": "Cargador ligero extendido I",
+      "recyclesInto": {
+        "Plastic Parts": 6
+      }
     },
     {
       "name": "Extended Light Mag II",
@@ -2084,7 +2442,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Cargador ligero extendido II"
+      "name_es": "Cargador ligero extendido II",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Extended Light Mag II Blueprint",
@@ -2113,7 +2475,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Cargador ligero extendido III"
+      "name_es": "Cargador ligero extendido III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Steel Spring": 2
+      }
     },
     {
       "name": "Extended Light Mag III Blueprint",
@@ -2142,7 +2508,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Cargador mediano extendido I"
+      "name_es": "Cargador mediano extendido I",
+      "recyclesInto": {
+        "Plastic Parts": 6
+      }
     },
     {
       "name": "Extended Medium Mag II",
@@ -2161,7 +2530,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Cargador mediano extendido II"
+      "name_es": "Cargador mediano extendido II",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Extended Medium Mag II Blueprint",
@@ -2190,7 +2563,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Cargador mediano extendido III"
+      "name_es": "Cargador mediano extendido III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Steel Spring": 2
+      }
     },
     {
       "name": "Extended Medium Mag III Blueprint",
@@ -2219,7 +2596,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Cargador de escopeta extendido I"
+      "name_es": "Cargador de escopeta extendido I",
+      "recyclesInto": {
+        "Plastic Parts": 6
+      }
     },
     {
       "name": "Extended Shotgun Mag II",
@@ -2238,7 +2618,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Cargador de escopeta extendido II"
+      "name_es": "Cargador de escopeta extendido II",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Extended Shotgun Mag II Blueprint",
@@ -2267,7 +2651,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Cargador extendido de escopeta III"
+      "name_es": "Cargador extendido de escopeta III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Steel Spring": 2
+      }
     },
     {
       "name": "Extended Shotgun Mag III Blueprint",
@@ -2316,7 +2704,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Common",
-      "name_es": "Ferro I"
+      "name_es": "Ferro I",
+      "recyclesInto": {
+        "Metal Parts": 2,
+        "Rubber Parts": 1
+      }
     },
     {
       "name": "Ferro II",
@@ -2331,7 +2723,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Common",
-      "name_es": "Ferro II"
+      "name_es": "Ferro II",
+      "recyclesInto": {
+        "Metal Parts": 4,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Ferro III",
@@ -2350,7 +2746,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Common",
-      "name_es": "Ferro III"
+      "name_es": "Ferro III",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Simple Gun Parts": 1
+      }
     },
     {
       "name": "Ferro IV",
@@ -2369,7 +2769,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Common",
-      "name_es": "Ferro IV"
+      "name_es": "Ferro IV",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Fertilizer",
@@ -2379,7 +2783,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Uncommon",
-      "name_es": "Fertilizante"
+      "name_es": "Fertilizante",
+      "recyclesInto": {
+        "Assorted Seeds": 2
+      }
     },
     {
       "name": "Film Reel",
@@ -2409,7 +2816,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Quemador de esferígneo"
+      "name_es": "Quemador de esferígneo",
+      "recyclesInto": {
+        "ARC Alloy": 1,
+        "Chemicals": 1
+      }
     },
     {
       "name": "Firecracker",
@@ -2428,7 +2839,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Petardo"
+      "name_es": "Petardo",
+      "recyclesInto": {
+        "Plastic Parts": 3
+      }
     },
     {
       "name": "Fireworks Box",
@@ -2447,7 +2861,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Caja de fuegos artificiales"
+      "name_es": "Caja de fuegos artificiales",
+      "recyclesInto": {
+        "Explosive Compound": 1
+      }
     },
     {
       "name": "Fireworks Box Blueprint",
@@ -2506,7 +2923,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Lanzallamas"
+      "name_es": "Lanzallamas",
+      "recyclesInto": {
+        "Canister": 1,
+        "Fireball Burner": 1
+      }
     },
     {
       "name": "Flow Controller",
@@ -2516,7 +2937,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Controlador de Flujo"
+      "name_es": "Controlador de Flujo",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Sensors": 1
+      }
     },
     {
       "name": "Flushing Terminal Key",
@@ -2536,7 +2961,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Epic",
-      "name_es": "Rayo fosilizado"
+      "name_es": "Rayo fosilizado",
+      "recyclesInto": {
+        "Explosive Compound": 3
+      }
     },
     {
       "name": "Free Loadout Augment",
@@ -2556,7 +2984,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Caja de modulación de frecuencia"
+      "name_es": "Caja de modulación de frecuencia",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Speaker Component": 1
+      }
     },
     {
       "name": "Fried Motherboard",
@@ -2566,7 +2998,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Placa base quemada"
+      "name_es": "Placa base quemada",
+      "recyclesInto": {
+        "Electrical Components": 2,
+        "Plastic Parts": 5
+      }
     },
     {
       "name": "Fruit Mix",
@@ -2599,7 +3035,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Sartén"
+      "name_es": "Sartén",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Garlic Press",
@@ -2609,7 +3048,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Prensa de Ajo"
+      "name_es": "Prensa de Ajo",
+      "recyclesInto": {
+        "Metal Parts": 12
+      }
     },
     {
       "name": "Gas Grenade",
@@ -2628,7 +3070,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Granada de gas"
+      "name_es": "Granada de gas",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Rubber Parts": 1
+      }
     },
     {
       "name": "Gas Grenade Trap",
@@ -2666,7 +3112,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Mina de gas"
+      "name_es": "Mina de gas",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Rubber Parts": 1
+      }
     },
     {
       "name": "Gas Mine Blueprint",
@@ -2686,7 +3136,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Contador Geiger"
+      "name_es": "Contador Geiger",
+      "recyclesInto": {
+        "Battery": 3,
+        "Exodus Modules": 1
+      }
     },
     {
       "name": "Great Mullein",
@@ -2696,7 +3150,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Gran verbasco"
+      "name_es": "Gran verbasco",
+      "recyclesInto": {
+        "Assorted Seeds": 2
+      }
     },
     {
       "name": "Green Light Stick",
@@ -2711,7 +3168,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Barra luminosa verde"
+      "name_es": "Barra luminosa verde",
+      "recyclesInto": {
+        "Chemicals": 1
+      }
     },
     {
       "name": "Green Light Stick Blueprint",
@@ -2740,7 +3200,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Common",
-      "name_es": "Horquilla I"
+      "name_es": "Horquilla I",
+      "recyclesInto": {
+        "Metal Parts": 2,
+        "Rubber Parts": 1
+      }
     },
     {
       "name": "Hairpin II",
@@ -2755,7 +3219,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Common",
-      "name_es": "Horquilla II"
+      "name_es": "Horquilla II",
+      "recyclesInto": {
+        "Metal Parts": 4,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Hairpin III",
@@ -2774,7 +3242,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Common",
-      "name_es": "Horquilla III"
+      "name_es": "Horquilla III",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Simple Gun Parts": 1
+      }
     },
     {
       "name": "Hairpin IV",
@@ -2793,7 +3265,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Common",
-      "name_es": "Horquilla IV"
+      "name_es": "Horquilla IV",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Headphones",
@@ -2803,7 +3279,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Auriculares"
+      "name_es": "Auriculares",
+      "recyclesInto": {
+        "Rubber Parts": 7,
+        "Speaker Component": 1
+      }
     },
     {
       "name": "Heavy Ammo",
@@ -2841,7 +3321,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Granada de espoleta pesada"
+      "name_es": "Granada de espoleta pesada",
+      "recyclesInto": {
+        "Oil": 1,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Heavy Gun Parts",
@@ -2856,7 +3340,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Piezas de arma pesada"
+      "name_es": "Piezas de arma pesada",
+      "recyclesInto": {
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Heavy Gun Parts Blueprint",
@@ -2885,7 +3372,11 @@
       "sources": [],
       "type": "Shield",
       "rarity": "Epic",
-      "name_es": "Escudo pesado"
+      "name_es": "Escudo pesado",
+      "recyclesInto": {
+        "ARC Circuitry": 2,
+        "Voltage Converter": 1
+      }
     },
     {
       "name": "Herbal Bandage",
@@ -2904,7 +3395,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Venda herbal"
+      "name_es": "Venda herbal",
+      "recyclesInto": {
+        "Assorted Seeds": 2,
+        "Fabric": 5
+      }
     },
     {
       "name": "Horizontal Grip",
@@ -2923,7 +3418,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Epic",
-      "name_es": "Empuñadura Horizontal"
+      "name_es": "Empuñadura Horizontal",
+      "recyclesInto": {
+        "Duct Tape": 2,
+        "Mod Components": 1
+      }
     },
     {
       "name": "Horizontal Grip Blueprint",
@@ -2943,7 +3442,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Controlador de Avispón"
+      "name_es": "Controlador de Avispón",
+      "recyclesInto": {
+        "ARC Alloy": 2,
+        "Electrical Components": 2
+      }
     },
     {
       "name": "Household Cleaner",
@@ -2953,7 +3456,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Limpiador Doméstico"
+      "name_es": "Limpiador Doméstico",
+      "recyclesInto": {
+        "Chemicals": 11
+      }
     },
     {
       "name": "Hullcracker Blueprint",
@@ -2986,7 +3492,11 @@
       "sources": [],
       "type": "Special",
       "rarity": "Epic",
-      "name_es": "Partecascos I"
+      "name_es": "Partecascos I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Heavy Gun Parts": 2
+      }
     },
     {
       "name": "Hullcracker II",
@@ -3005,7 +3515,11 @@
       "sources": [],
       "type": "Special",
       "rarity": "Epic",
-      "name_es": "Rompe Cascos II"
+      "name_es": "Rompe Cascos II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Heavy Gun Parts": 3
+      }
     },
     {
       "name": "Hullcracker III",
@@ -3024,7 +3538,11 @@
       "sources": [],
       "type": "Special",
       "rarity": "Epic",
-      "name_es": "Rompe Cascos III"
+      "name_es": "Rompe Cascos III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Heavy Gun Parts": 4
+      }
     },
     {
       "name": "Hullcracker IV",
@@ -3043,7 +3561,11 @@
       "sources": [],
       "type": "Special",
       "rarity": "Epic",
-      "name_es": "Rompe Cascos IV"
+      "name_es": "Rompe Cascos IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 4,
+        "Heavy Gun Parts": 5
+      }
     },
     {
       "name": "Humidifier",
@@ -3053,7 +3575,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Humidificador"
+      "name_es": "Humidificador",
+      "recyclesInto": {
+        "Canister": 2,
+        "Wires": 2
+      }
     },
     {
       "name": "Ice Cream Scooper",
@@ -3063,7 +3589,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Cuchara De Helados"
+      "name_es": "Cuchara De Helados",
+      "recyclesInto": {
+        "Metal Parts": 7
+      }
     },
     {
       "name": "Il Toro Blueprint",
@@ -3092,7 +3621,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Uncommon",
-      "name_es": "Il Toro I"
+      "name_es": "Il Toro I",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Il Toro II",
@@ -3111,7 +3644,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Uncommon",
-      "name_es": "Il Toro II"
+      "name_es": "Il Toro II",
+      "recyclesInto": {
+        "Mechanical Components": 3,
+        "Simple Gun Parts": 3
+      }
     },
     {
       "name": "Il Toro III",
@@ -3130,7 +3667,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Uncommon",
-      "name_es": "Il Toro III"
+      "name_es": "Il Toro III",
+      "recyclesInto": {
+        "Mechanical Components": 4,
+        "Simple Gun Parts": 4
+      }
     },
     {
       "name": "Il Toro IV",
@@ -3149,7 +3690,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Uncommon",
-      "name_es": "Il Toro IV"
+      "name_es": "Il Toro IV",
+      "recyclesInto": {
+        "Mechanical Components": 5,
+        "Simple Gun Parts": 5
+      }
     },
     {
       "name": "Impure ARC Coolant",
@@ -3159,7 +3704,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Refrigerante ARC Impuro"
+      "name_es": "Refrigerante ARC Impuro",
+      "recyclesInto": {
+        "Chemicals": 12
+      }
     },
     {
       "name": "Industrial Battery",
@@ -3169,7 +3717,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Batería industrial"
+      "name_es": "Batería industrial",
+      "recyclesInto": {
+        "Battery": 2,
+        "Chemicals": 7
+      }
     },
     {
       "name": "Industrial Charger",
@@ -3179,7 +3731,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Cargador Industrial"
+      "name_es": "Cargador Industrial",
+      "recyclesInto": {
+        "Metal Parts": 5,
+        "Voltage Converter": 1
+      }
     },
     {
       "name": "Industrial Magnet",
@@ -3189,7 +3745,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Imán Industrial"
+      "name_es": "Imán Industrial",
+      "recyclesInto": {
+        "Magnet": 2,
+        "Metal Parts": 4
+      }
     },
     {
       "name": "Ion Sputter",
@@ -3199,7 +3759,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Pulverizador iónico"
+      "name_es": "Pulverizador iónico",
+      "recyclesInto": {
+        "Exodus Modules": 1,
+        "Voltage Converter": 4
+      }
     },
     {
       "name": "Jolt Mine",
@@ -3218,7 +3782,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Mina de choque"
+      "name_es": "Mina de choque",
+      "recyclesInto": {
+        "Battery": 1,
+        "Plastic Parts": 2
+      }
     },
     {
       "name": "Jolt Mine Blueprint",
@@ -3261,7 +3829,11 @@
       "sources": [],
       "type": "Sniper Rifle",
       "rarity": "Legendary",
-      "name_es": "Júpiter"
+      "name_es": "Júpiter",
+      "recyclesInto": {
+        "Complex Gun Parts": 1,
+        "Magnetic Accelerator": 2
+      }
     },
     {
       "name": "Jupiter Blueprint",
@@ -3290,7 +3862,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Caldero I"
+      "name_es": "Caldero I",
+      "recyclesInto": {
+        "Metal Parts": 3,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Kettle II",
@@ -3300,7 +3876,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Caldero II"
+      "name_es": "Caldero II",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Rubber Parts": 6
+      }
     },
     {
       "name": "Kettle III",
@@ -3310,7 +3890,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Caldero III"
+      "name_es": "Caldero III",
+      "recyclesInto": {
+        "Metal Parts": 12,
+        "Simple Gun Parts": 1
+      }
     },
     {
       "name": "Kettle IV",
@@ -3320,7 +3904,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Caldero IV"
+      "name_es": "Caldero IV",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Kinetic Converter",
@@ -3330,7 +3918,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Legendary",
-      "name_es": "Convertidor cinético"
+      "name_es": "Convertidor cinético",
+      "recyclesInto": {
+        "Duct Tape": 2,
+        "Mod Components": 1
+      }
     },
     {
       "name": "Kinetic Converter Blueprint",
@@ -3350,7 +3942,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Reactivos de laboratorio"
+      "name_es": "Reactivos de laboratorio",
+      "recyclesInto": {
+        "Chemicals": 16,
+        "Crude Explosives": 3
+      }
     },
     {
       "name": "Lance's Mixtape (5th Edition)",
@@ -3389,7 +3985,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Unidad de pulso de saltador"
+      "name_es": "Unidad de pulso de saltador",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "ARC Alloy": 3
+      }
     },
     {
       "name": "Lemon",
@@ -3399,7 +3999,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Uncommon",
-      "name_es": "Limón"
+      "name_es": "Limón",
+      "recyclesInto": {
+        "Assorted Seeds": 3
+      }
     },
     {
       "name": "Li'l Smoke Grenade",
@@ -3418,7 +4021,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Pequeña granada de humo"
+      "name_es": "Pequeña granada de humo",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Plastic Parts": 1
+      }
     },
     {
       "name": "Lidar Scanner",
@@ -3472,7 +4079,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Piezas de Armas Ligeras"
+      "name_es": "Piezas de Armas Ligeras",
+      "recyclesInto": {
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Light Gun Parts Blueprint",
@@ -3501,7 +4111,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Granada de impacto ligera"
+      "name_es": "Granada de impacto ligera",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Plastic Parts": 1
+      }
     },
     {
       "name": "Light Shield",
@@ -3520,7 +4134,10 @@
       "sources": [],
       "type": "Shield",
       "rarity": "Uncommon",
-      "name_es": "Escudo ligero"
+      "name_es": "Escudo ligero",
+      "recyclesInto": {
+        "Plastic Parts": 4
+      }
     },
     {
       "name": "Lightweight Stock",
@@ -3539,7 +4156,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Epic",
-      "name_es": "Culata ligera"
+      "name_es": "Culata ligera",
+      "recyclesInto": {
+        "Duct Tape": 1,
+        "Mod Components": 1
+      }
     },
     {
       "name": "Lightweight Stock Blueprint",
@@ -3568,7 +4189,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Uncommon",
-      "name_es": "Saqueo Ver.1"
+      "name_es": "Saqueo Ver.1",
+      "recyclesInto": {
+        "Plastic Parts": 3,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Looting Mk. 2",
@@ -3587,7 +4212,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Rare",
-      "name_es": "Saqueo Ver. 2"
+      "name_es": "Saqueo Ver. 2",
+      "recyclesInto": {
+        "Electrical Components": 1,
+        "Magnet": 1
+      }
     },
     {
       "name": "Looting Mk. 3 (Cautious)",
@@ -3606,7 +4235,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Epic",
-      "name_es": "Saqueo Ver. 3 (Cauteloso)"
+      "name_es": "Saqueo Ver. 3 (Cauteloso)",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Looting Mk. 3 (Survivor)",
@@ -3625,7 +4258,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Epic",
-      "name_es": "Saqueo Ver. 3 (Superviviente)"
+      "name_es": "Saqueo Ver. 3 (Superviviente)",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Looting Mk. 3 (Survivor) Blueprint",
@@ -3654,7 +4291,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Granada señuelo"
+      "name_es": "Granada señuelo",
+      "recyclesInto": {
+        "Speaker Component": 1
+      }
     },
     {
       "name": "Lure Grenade Blueprint",
@@ -3693,7 +4333,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Imán"
+      "name_es": "Imán",
+      "recyclesInto": {
+        "Metal Parts": 2
+      }
     },
     {
       "name": "Magnetic Accelerator",
@@ -3712,7 +4355,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Epic",
-      "name_es": "Acelerador Magnético"
+      "name_es": "Acelerador Magnético",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "ARC Motion Core": 1
+      }
     },
     {
       "name": "Magnetron",
@@ -3722,7 +4369,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Magnetrón"
+      "name_es": "Magnetrón",
+      "recyclesInto": {
+        "Magnetic Accelerator": 1,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Major Aiva's Patch",
@@ -3742,7 +4393,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Legendary",
-      "name_es": "Reactor de la Matriarca"
+      "name_es": "Reactor de la Matriarca",
+      "recyclesInto": {
+        "Magnetic Accelerator": 1,
+        "Power Rod": 1
+      }
     },
     {
       "name": "Mechanical Components",
@@ -3761,7 +4416,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Uncommon",
-      "name_es": "Componentes mecánicos"
+      "name_es": "Componentes mecánicos",
+      "recyclesInto": {
+        "Metal Parts": 3,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Medium Ammo",
@@ -3795,7 +4454,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Piezas de armas medianas"
+      "name_es": "Piezas de armas medianas",
+      "recyclesInto": {
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Medium Gun Parts Blueprint",
@@ -3824,7 +4486,10 @@
       "sources": [],
       "type": "Shield",
       "rarity": "Rare",
-      "name_es": "Escudo mediano"
+      "name_es": "Escudo mediano",
+      "recyclesInto": {
+        "ARC Circuitry": 1
+      }
     },
     {
       "name": "Metal Brackets",
@@ -3834,7 +4499,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Soportes metálicos"
+      "name_es": "Soportes metálicos",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Metal Parts",
@@ -3854,7 +4522,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Microscopio"
+      "name_es": "Microscopio",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Magnet": 3
+      }
     },
     {
       "name": "Mini Centrifuge",
@@ -3864,7 +4536,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Minicentrífuga"
+      "name_es": "Minicentrífuga",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Canister": 2
+      }
     },
     {
       "name": "Mod Components",
@@ -3883,7 +4559,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Rare",
-      "name_es": "Componentes de modificación"
+      "name_es": "Componentes de modificación",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Moss",
@@ -3893,7 +4573,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Musgo"
+      "name_es": "Musgo",
+      "recyclesInto": {
+        "Assorted Seeds": 3
+      }
     },
     {
       "name": "Motor",
@@ -3903,7 +4586,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Motor"
+      "name_es": "Motor",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Oil": 2
+      }
     },
     {
       "name": "Mushroom",
@@ -3952,7 +4639,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Freno de boca I"
+      "name_es": "Freno de boca I",
+      "recyclesInto": {
+        "Metal Parts": 5
+      }
     },
     {
       "name": "Muzzle Brake II",
@@ -3971,7 +4661,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Freno de boca II"
+      "name_es": "Freno de boca II",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Muzzle Brake II Blueprint",
@@ -4000,7 +4694,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Freno de boca III"
+      "name_es": "Freno de boca III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 2
+      }
     },
     {
       "name": "Muzzle Brake III Blueprint",
@@ -4029,7 +4727,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Generador de ruido"
+      "name_es": "Generador de ruido",
+      "recyclesInto": {
+        "Speaker Component": 1
+      }
     },
     {
       "name": "Number Plate",
@@ -4039,7 +4740,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Matrícula"
+      "name_es": "Matrícula",
+      "recyclesInto": {
+        "Metal Parts": 3
+      }
     },
     {
       "name": "Oil",
@@ -4049,7 +4753,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Aceite"
+      "name_es": "Aceite",
+      "recyclesInto": {
+        "Chemicals": 3
+      }
     },
     {
       "name": "Olives",
@@ -4059,7 +4766,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Uncommon",
-      "name_es": "Aceitunas"
+      "name_es": "Aceitunas",
+      "recyclesInto": {
+        "Assorted Seeds": 2
+      }
     },
     {
       "name": "Osprey Blueprint",
@@ -4092,7 +4802,11 @@
       "sources": [],
       "type": "Sniper Rifle",
       "rarity": "Rare",
-      "name_es": "Osprey I"
+      "name_es": "Osprey I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Osprey II",
@@ -4111,7 +4825,11 @@
       "sources": [],
       "type": "Sniper Rifle",
       "rarity": "Rare",
-      "name_es": "Osprey II"
+      "name_es": "Osprey II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Osprey III",
@@ -4130,7 +4848,11 @@
       "sources": [],
       "type": "Sniper Rifle",
       "rarity": "Rare",
-      "name_es": "Osprey III"
+      "name_es": "Osprey III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Osprey IV",
@@ -4149,7 +4871,11 @@
       "sources": [],
       "type": "Sniper Rifle",
       "rarity": "Rare",
-      "name_es": "Osprey IV"
+      "name_es": "Osprey IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Padded Stock",
@@ -4168,7 +4894,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Epic",
-      "name_es": "Culata acolchada"
+      "name_es": "Culata acolchada",
+      "recyclesInto": {
+        "Duct Tape": 1,
+        "Mod Components": 1
+      }
     },
     {
       "name": "Padded Stock Blueprint",
@@ -4217,7 +4947,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Epic",
-      "name_es": "Capa fotoeléctrica"
+      "name_es": "Capa fotoeléctrica",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Speaker Component": 1
+      }
     },
     {
       "name": "Plastic Parts",
@@ -4247,7 +4981,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Filtro de aire contaminado"
+      "name_es": "Filtro de aire contaminado",
+      "recyclesInto": {
+        "Fabric": 6,
+        "Oil": 2
+      }
     },
     {
       "name": "Pop Trigger",
@@ -4257,7 +4995,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Gatillo de tronador"
+      "name_es": "Gatillo de tronador",
+      "recyclesInto": {
+        "ARC Alloy": 1,
+        "Crude Explosives": 1
+      }
     },
     {
       "name": "Portable TV",
@@ -4267,7 +5009,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "TV portátil"
+      "name_es": "TV portátil",
+      "recyclesInto": {
+        "Battery": 2,
+        "Wires": 6
+      }
     },
     {
       "name": "Poster of Natural Wonders",
@@ -4297,7 +5043,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Batería Externa"
+      "name_es": "Batería Externa",
+      "recyclesInto": {
+        "Battery": 2,
+        "Wires": 2
+      }
     },
     {
       "name": "Power Cable",
@@ -4307,7 +5057,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Cable de alimentación"
+      "name_es": "Cable de alimentación",
+      "recyclesInto": {
+        "Wires": 4
+      }
     },
     {
       "name": "Power Rod",
@@ -4326,7 +5079,11 @@
       "sources": [],
       "type": "Refined Material",
       "rarity": "Epic",
-      "name_es": "Varilla de energía"
+      "name_es": "Varilla de energía",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "ARC Circuitry": 1
+      }
     },
     {
       "name": "Prickly Pear",
@@ -4336,7 +5093,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Common",
-      "name_es": "Higo chumbo"
+      "name_es": "Higo chumbo",
+      "recyclesInto": {
+        "Assorted Seeds": 3
+      }
     },
     {
       "name": "Processor",
@@ -4346,7 +5106,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Procesador"
+      "name_es": "Procesador",
+      "recyclesInto": {
+        "Plastic Parts": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Projector",
@@ -4356,7 +5120,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Proyector"
+      "name_es": "Proyector",
+      "recyclesInto": {
+        "Processor": 1,
+        "Wires": 2
+      }
     },
     {
       "name": "Pulse Mine",
@@ -4375,7 +5143,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Mina de pulso"
+      "name_es": "Mina de pulso",
+      "recyclesInto": {
+        "Chemicals": 6
+      }
     },
     {
       "name": "Pulse Mine Blueprint",
@@ -4395,7 +5166,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Legendary",
-      "name_es": "Reactor de reina"
+      "name_es": "Reactor de reina",
+      "recyclesInto": {
+        "Magnetic Accelerator": 1,
+        "Power Rod": 1
+      }
     },
     {
       "name": "Radio",
@@ -4405,7 +5180,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Radio"
+      "name_es": "Radio",
+      "recyclesInto": {
+        "Sensors": 1,
+        "Speaker Component": 1
+      }
     },
     {
       "name": "Radio Relay",
@@ -4415,7 +5194,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Relé de radio"
+      "name_es": "Relé de radio",
+      "recyclesInto": {
+        "Sensors": 2,
+        "Speaker Component": 2
+      }
     },
     {
       "name": "Radio Renegade",
@@ -4463,7 +5246,10 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Crótalo I"
+      "name_es": "Crótalo I",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Rattler II",
@@ -4478,7 +5264,10 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Crótalo II"
+      "name_es": "Crótalo II",
+      "recyclesInto": {
+        "Metal Parts": 12
+      }
     },
     {
       "name": "Rattler III",
@@ -4497,7 +5286,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Crótalo III"
+      "name_es": "Crótalo III",
+      "recyclesInto": {
+        "Mechanical Components": 3,
+        "Simple Gun Parts": 1
+      }
     },
     {
       "name": "Rattler IV",
@@ -4516,7 +5309,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
-      "name_es": "Crótalo IV"
+      "name_es": "Crótalo IV",
+      "recyclesInto": {
+        "Mechanical Components": 4,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Recorder",
@@ -4526,7 +5323,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Flauta"
+      "name_es": "Flauta",
+      "recyclesInto": {
+        "Plastic Parts": 10
+      }
     },
     {
       "name": "Red Coral Jewelry",
@@ -4551,7 +5351,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Barra luminosa roja"
+      "name_es": "Barra luminosa roja",
+      "recyclesInto": {
+        "Chemicals": 1
+      }
     },
     {
       "name": "Red Light Stick Blueprint",
@@ -4571,7 +5374,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Control Remoto"
+      "name_es": "Control Remoto",
+      "recyclesInto": {
+        "Plastic Parts": 7,
+        "Sensors": 1
+      }
     },
     {
       "name": "Remote Raider Flare",
@@ -4590,7 +5397,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Bengala de asaltante remota"
+      "name_es": "Bengala de asaltante remota",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Rubber Parts": 1
+      }
     },
     {
       "name": "Remote Raider Flare Blueprint",
@@ -4623,7 +5434,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Rare",
-      "name_es": "Renegado I"
+      "name_es": "Renegado I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Renegade II",
@@ -4642,7 +5457,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Rare",
-      "name_es": "Renegado II"
+      "name_es": "Renegado II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Renegade III",
@@ -4661,7 +5480,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Rare",
-      "name_es": "Renegado III"
+      "name_es": "Renegado III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Renegade IV",
@@ -4680,7 +5503,11 @@
       "sources": [],
       "type": "Battle Rifle",
       "rarity": "Rare",
-      "name_es": "Renegado IV"
+      "name_es": "Renegado IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Resin",
@@ -4700,7 +5527,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Chaleco de seguridad rasgado"
+      "name_es": "Chaleco de seguridad rasgado",
+      "recyclesInto": {
+        "Durable Cloth": 1,
+        "Magnet": 1
+      }
     },
     {
       "name": "Rocket Thruster",
@@ -4710,7 +5541,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Propulsor de cohetero"
+      "name_es": "Propulsor de cohetero",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Synthesized Fuel": 2
+      }
     },
     {
       "name": "Rocketeer Driver",
@@ -4720,7 +5555,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Controlador de cohetero"
+      "name_es": "Controlador de cohetero",
+      "recyclesInto": {
+        "Advanced Electrical Components": 2,
+        "ARC Alloy": 3
+      }
     },
     {
       "name": "Roots",
@@ -4730,7 +5569,10 @@
       "sources": [],
       "type": "Nature",
       "rarity": "Uncommon",
-      "name_es": "Raíces"
+      "name_es": "Raíces",
+      "recyclesInto": {
+        "Assorted Seeds": 1
+      }
     },
     {
       "name": "Rope",
@@ -4740,7 +5582,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Cuerda"
+      "name_es": "Cuerda",
+      "recyclesInto": {
+        "Fabric": 5
+      }
     },
     {
       "name": "Rosary",
@@ -4760,7 +5605,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Codificador rotatorio"
+      "name_es": "Codificador rotatorio",
+      "recyclesInto": {
+        "Electrical Components": 2,
+        "Processor": 2
+      }
     },
     {
       "name": "Rubber Duck",
@@ -4780,7 +5629,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Almohadilla de Goma"
+      "name_es": "Almohadilla de Goma",
+      "recyclesInto": {
+        "Rubber Parts": 18
+      }
     },
     {
       "name": "Rubber Parts",
@@ -4800,7 +5652,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Acordeón arruinado"
+      "name_es": "Acordeón arruinado",
+      "recyclesInto": {
+        "Rubber Parts": 18,
+        "Steel Spring": 3
+      }
     },
     {
       "name": "Ruined Augment",
@@ -4810,7 +5666,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Common",
-      "name_es": "Aumento arruinado"
+      "name_es": "Aumento arruinado",
+      "recyclesInto": {
+        "Plastic Parts": 2,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Ruined Baton",
@@ -4820,7 +5680,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Bastón arruinado"
+      "name_es": "Bastón arruinado",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Ruined Handcuffs",
@@ -4830,7 +5694,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Esposas arruinadas"
+      "name_es": "Esposas arruinadas",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Ruined Parachute",
@@ -4840,7 +5707,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Paracaídas arruinado"
+      "name_es": "Paracaídas arruinado",
+      "recyclesInto": {
+        "Fabric": 10
+      }
     },
     {
       "name": "Ruined Riot Shield",
@@ -4850,7 +5720,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Escudo antidisturbios arruinado"
+      "name_es": "Escudo antidisturbios arruinado",
+      "recyclesInto": {
+        "Plastic Parts": 10,
+        "Rubber Parts": 6
+      }
     },
     {
       "name": "Ruined Tactical Vest",
@@ -4860,7 +5734,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Chaleco táctico arruinado"
+      "name_es": "Chaleco táctico arruinado",
+      "recyclesInto": {
+        "Fabric": 5,
+        "Magnet": 1
+      }
     },
     {
       "name": "Rusted Bolts",
@@ -4870,7 +5748,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Tornillos Oxidados"
+      "name_es": "Tornillos Oxidados",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Rusted Gear",
@@ -4880,7 +5761,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Engranaje oxidado"
+      "name_es": "Engranaje oxidado",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Metal Parts": 4
+      }
     },
     {
       "name": "Rusted Shut Medical Kit",
@@ -4890,7 +5775,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Botiquín oxidado cerrado"
+      "name_es": "Botiquín oxidado cerrado",
+      "recyclesInto": {
+        "Antiseptic": 1,
+        "Syringe": 2
+      }
     },
     {
       "name": "Rusted Tools",
@@ -4900,7 +5789,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Herramientas oxidadas"
+      "name_es": "Herramientas oxidadas",
+      "recyclesInto": {
+        "Metal Parts": 8,
+        "Steel Spring": 1
+      }
     },
     {
       "name": "Rusty ARC Steel",
@@ -4910,7 +5803,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Acero ARC oxidado"
+      "name_es": "Acero ARC oxidado",
+      "recyclesInto": {
+        "Metal Parts": 8
+      }
     },
     {
       "name": "Sample Cleaner",
@@ -4920,7 +5816,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Limpiador de muestras"
+      "name_es": "Limpiador de muestras",
+      "recyclesInto": {
+        "Assorted Seeds": 14,
+        "Electrical Components": 2
+      }
     },
     {
       "name": "Seeker Grenade",
@@ -4939,7 +5839,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Granada rastreadora"
+      "name_es": "Granada rastreadora",
+      "recyclesInto": {
+        "Crude Explosives": 1
+      }
     },
     {
       "name": "Seeker Grenade Blueprint",
@@ -4959,7 +5862,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Sensores"
+      "name_es": "Sensores",
+      "recyclesInto": {
+        "Metal Parts": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Sentinel Firing Core",
@@ -4969,7 +5876,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Núcleo de disparo de centinela"
+      "name_es": "Núcleo de disparo de centinela",
+      "recyclesInto": {
+        "ARC Alloy": 2,
+        "Mechanical Components": 3
+      }
     },
     {
       "name": "Shaker",
@@ -4979,7 +5890,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Shaker"
+      "name_es": "Shaker",
+      "recyclesInto": {
+        "Plastic Parts": 10
+      }
     },
     {
       "name": "Shield Recharger",
@@ -4998,7 +5912,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Cargador de escudos"
+      "name_es": "Cargador de escudos",
+      "recyclesInto": {
+        "Rubber Parts": 4
+      }
     },
     {
       "name": "Shotgun Ammo",
@@ -5036,7 +5953,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Estrangulador de escopeta I"
+      "name_es": "Estrangulador de escopeta I",
+      "recyclesInto": {
+        "Metal Parts": 5
+      }
     },
     {
       "name": "Shotgun Choke II",
@@ -5055,7 +5975,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Estrangulador de escopeta II"
+      "name_es": "Estrangulador de escopeta II",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Shotgun Choke II Blueprint",
@@ -5084,7 +6008,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Estrangulador de escopeta III"
+      "name_es": "Estrangulador de escopeta III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 2
+      }
     },
     {
       "name": "Shotgun Choke III Blueprint",
@@ -5113,7 +6041,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Epic",
-      "name_es": "Silenciador de escopeta"
+      "name_es": "Silenciador de escopeta",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Shotgun Silencer Blueprint",
@@ -5142,7 +6074,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Aguafiestas"
+      "name_es": "Aguafiestas",
+      "recyclesInto": {
+        "Battery": 2,
+        "Electrical Components": 1
+      }
     },
     {
       "name": "Showstopper Blueprint",
@@ -5171,7 +6107,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Granada de metralla"
+      "name_es": "Granada de metralla",
+      "recyclesInto": {
+        "Crude Explosives": 1,
+        "Metal Parts": 1
+      }
     },
     {
       "name": "Shredder Gyro",
@@ -5181,7 +6121,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Giroscopio de Triturador"
+      "name_es": "Giroscopio de Triturador",
+      "recyclesInto": {
+        "ARC Alloy": 3,
+        "Mechanical Components": 3
+      }
     },
     {
       "name": "Signal Amplifier",
@@ -5191,7 +6135,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Amplificador de señal"
+      "name_es": "Amplificador de señal",
+      "recyclesInto": {
+        "Electrical Components": 2,
+        "Voltage Converter": 2
+      }
     },
     {
       "name": "Silencer I",
@@ -5210,7 +6158,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Silenciador I"
+      "name_es": "Silenciador I",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Silencer I Blueprint",
@@ -5239,7 +6191,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Silenciador II"
+      "name_es": "Silenciador II",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 2
+      }
     },
     {
       "name": "Silencer II Blueprint",
@@ -5259,7 +6215,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Epic",
-      "name_es": "Silenciador III"
+      "name_es": "Silenciador III",
+      "recyclesInto": {
+        "Mod Components": 1,
+        "Wires": 3
+      }
     },
     {
       "name": "Silencer III Blueprint",
@@ -5289,7 +6249,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Piezas de arma básica"
+      "name_es": "Piezas de arma básica",
+      "recyclesInto": {
+        "Metal Parts": 2
+      }
     },
     {
       "name": "Smoke Grenade",
@@ -5308,7 +6271,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Granada de humo"
+      "name_es": "Granada de humo",
+      "recyclesInto": {
+        "Canister": 1,
+        "Chemicals": 2
+      }
     },
     {
       "name": "Smoke Grenade Blueprint",
@@ -5356,7 +6323,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Uncommon",
-      "name_es": "Granada de ráfaga"
+      "name_es": "Granada de ráfaga",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Magnet": 1
+      }
     },
     {
       "name": "Snap Hook",
@@ -5379,7 +6350,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Legendary",
-      "name_es": "Mosquetón"
+      "name_es": "Mosquetón",
+      "recyclesInto": {
+        "Power Rod": 1,
+        "Rope": 3
+      }
     },
     {
       "name": "Snap Hook Blueprint",
@@ -5399,7 +6374,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Escáner de delator"
+      "name_es": "Escáner de delator",
+      "recyclesInto": {
+        "ARC Alloy": 1,
+        "Electrical Components": 2
+      }
     },
     {
       "name": "Snowball",
@@ -5459,7 +6438,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Componente de altavoz"
+      "name_es": "Componente de altavoz",
+      "recyclesInto": {
+        "Plastic Parts": 2,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Spectrometer",
@@ -5469,7 +6452,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Espectrómetro"
+      "name_es": "Espectrómetro",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Sensors": 1
+      }
     },
     {
       "name": "Spectrum Analyzer",
@@ -5479,7 +6466,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Epic",
-      "name_es": "Analizador de espectro"
+      "name_es": "Analizador de espectro",
+      "recyclesInto": {
+        "Exodus Modules": 1,
+        "Sensors": 1
+      }
     },
     {
       "name": "Spotter Relay",
@@ -5489,7 +6480,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Repetidor de Vigía"
+      "name_es": "Repetidor de Vigía",
+      "recyclesInto": {
+        "ARC Alloy": 1,
+        "Electrical Components": 2
+      }
     },
     {
       "name": "Spring Cushion",
@@ -5499,7 +6494,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Cojín de Muelles"
+      "name_es": "Cojín de Muelles",
+      "recyclesInto": {
+        "Durable Cloth": 2,
+        "Steel Spring": 2
+      }
     },
     {
       "name": "Stable Stock I",
@@ -5518,7 +6517,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Culata estable I"
+      "name_es": "Culata estable I",
+      "recyclesInto": {
+        "Rubber Parts": 6
+      }
     },
     {
       "name": "Stable Stock II",
@@ -5537,7 +6539,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Culata estable II"
+      "name_es": "Culata estable II",
+      "recyclesInto": {
+        "Duct Tape": 1,
+        "Mechanical Components": 1
+      }
     },
     {
       "name": "Stable Stock II Blueprint",
@@ -5566,7 +6572,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Culata estable III"
+      "name_es": "Culata estable III",
+      "recyclesInto": {
+        "Duct Tape": 2,
+        "Mod Components": 1
+      }
     },
     {
       "name": "Stable Stock III Blueprint",
@@ -5596,7 +6606,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Resorte de acero"
+      "name_es": "Resorte de acero",
+      "recyclesInto": {
+        "Metal Parts": 2
+      }
     },
     {
       "name": "Stella Montis Archives Key",
@@ -5655,7 +6668,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Venda esterilizada"
+      "name_es": "Venda esterilizada",
+      "recyclesInto": {
+        "Antiseptic": 1,
+        "Fabric": 1
+      }
     },
     {
       "name": "Stitcher I",
@@ -5674,7 +6691,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Common",
-      "name_es": "Costurero I"
+      "name_es": "Costurero I",
+      "recyclesInto": {
+        "Metal Parts": 3,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Stitcher II",
@@ -5693,7 +6714,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Common",
-      "name_es": "Costurero II"
+      "name_es": "Costurero II",
+      "recyclesInto": {
+        "Metal Parts": 6,
+        "Rubber Parts": 6
+      }
     },
     {
       "name": "Stitcher III",
@@ -5712,7 +6737,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Uncommon",
-      "name_es": "Costurero III"
+      "name_es": "Costurero III",
+      "recyclesInto": {
+        "Metal Parts": 12,
+        "Simple Gun Parts": 1
+      }
     },
     {
       "name": "Stitcher IV",
@@ -5731,7 +6760,11 @@
       "sources": [],
       "type": "SMG",
       "rarity": "Uncommon",
-      "name_es": "Costurero IV"
+      "name_es": "Costurero IV",
+      "recyclesInto": {
+        "Mechanical Components": 2,
+        "Simple Gun Parts": 2
+      }
     },
     {
       "name": "Surge Shield Recharger",
@@ -5750,7 +6783,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Cargador de escudos de sobrecarga"
+      "name_es": "Cargador de escudos de sobrecarga",
+      "recyclesInto": {
+        "Electrical Components": 1
+      }
     },
     {
       "name": "Surveyor Vault",
@@ -5760,7 +6796,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Depósito de Vigilante"
+      "name_es": "Depósito de Vigilante",
+      "recyclesInto": {
+        "ARC Alloy": 2,
+        "Mechanical Components": 2
+      }
     },
     {
       "name": "Synthesized Fuel",
@@ -5770,7 +6810,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Combustible sintetizado"
+      "name_es": "Combustible sintetizado",
+      "recyclesInto": {
+        "Oil": 1,
+        "Plastic Parts": 1
+      }
     },
     {
       "name": "Syringe",
@@ -5780,7 +6824,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Jeringa"
+      "name_es": "Jeringa",
+      "recyclesInto": {
+        "Chemicals": 2,
+        "Plastic Parts": 3
+      }
     },
     {
       "name": "Tactical Mk. 1",
@@ -5799,7 +6847,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Uncommon",
-      "name_es": "Táctico Ver. 1"
+      "name_es": "Táctico Ver. 1",
+      "recyclesInto": {
+        "Plastic Parts": 3,
+        "Rubber Parts": 3
+      }
     },
     {
       "name": "Tactical Mk. 2",
@@ -5818,7 +6870,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Rare",
-      "name_es": "Táctico Ver. 2"
+      "name_es": "Táctico Ver. 2",
+      "recyclesInto": {
+        "Electrical Components": 1,
+        "Magnet": 1
+      }
     },
     {
       "name": "Tactical Mk. 3 (Defensive)",
@@ -5837,7 +6893,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Epic",
-      "name_es": "Táctico Ver. 3 (Defensivo)"
+      "name_es": "Táctico Ver. 3 (Defensivo)",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Tactical Mk. 3 (Defensive) Blueprint",
@@ -5866,7 +6926,11 @@
       "sources": [],
       "type": "Augment",
       "rarity": "Epic",
-      "name_es": "Táctico Ver. 3 (Curación)"
+      "name_es": "Táctico Ver. 3 (Curación)",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Tactical Mk. 3 (Healing) Blueprint",
@@ -5895,7 +6959,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Granada de marcaje"
+      "name_es": "Granada de marcaje",
+      "recyclesInto": {
+        "Plastic Parts": 1,
+        "Sensors": 1
+      }
     },
     {
       "name": "Tagging Grenade Blueprint",
@@ -5915,7 +6983,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Revestimiento ARC Rasgado"
+      "name_es": "Revestimiento ARC Rasgado",
+      "recyclesInto": {
+        "Fabric": 12
+      }
     },
     {
       "name": "Tattered Clothes",
@@ -5925,7 +6996,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Ropa Andrajosa"
+      "name_es": "Ropa Andrajosa",
+      "recyclesInto": {
+        "Fabric": 11
+      }
     },
     {
       "name": "Telemetry Transceiver",
@@ -5935,7 +7009,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Transceptor de telemetría"
+      "name_es": "Transceptor de telemetría",
+      "recyclesInto": {
+        "Advanced Electrical Components": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Tempest Blueprint",
@@ -5968,7 +7046,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Tempestad I"
+      "name_es": "Tempestad I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Tempest II",
@@ -5987,7 +7069,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Tempestad II"
+      "name_es": "Tempestad II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Tempest III",
@@ -6006,7 +7092,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Tempestad III"
+      "name_es": "Tempestad III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 4,
+        "Medium Gun Parts": 4
+      }
     },
     {
       "name": "Tempest IV",
@@ -6025,7 +7115,11 @@
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Epic",
-      "name_es": "Tempestad IV"
+      "name_es": "Tempestad IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 5,
+        "Medium Gun Parts": 4
+      }
     },
     {
       "name": "Thermostat",
@@ -6035,7 +7129,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Termostato"
+      "name_es": "Termostato",
+      "recyclesInto": {
+        "Rubber Parts": 7,
+        "Sensors": 1
+      }
     },
     {
       "name": "Tick Pod",
@@ -6045,7 +7143,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Uncommon",
-      "name_es": "Cápsula de garrapata"
+      "name_es": "Cápsula de garrapata",
+      "recyclesInto": {
+        "ARC Alloy": 2,
+        "Chemicals": 2
+      }
     },
     {
       "name": "Toaster",
@@ -6055,7 +7157,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Tostador"
+      "name_es": "Tostador",
+      "recyclesInto": {
+        "Plastic Parts": 5,
+        "Wires": 3
+      }
     },
     {
       "name": "Torn Blanket",
@@ -6065,7 +7171,10 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Manta rasgada"
+      "name_es": "Manta rasgada",
+      "recyclesInto": {
+        "Fabric": 12
+      }
     },
     {
       "name": "Torn Book",
@@ -6108,7 +7217,11 @@
       "sources": [],
       "type": "LMG",
       "rarity": "Rare",
-      "name_es": "Torrente I"
+      "name_es": "Torrente I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Torrente II",
@@ -6127,7 +7240,11 @@
       "sources": [],
       "type": "LMG",
       "rarity": "Rare",
-      "name_es": "Torrente II"
+      "name_es": "Torrente II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Torrente III",
@@ -6146,7 +7263,11 @@
       "sources": [],
       "type": "LMG",
       "rarity": "Rare",
-      "name_es": "Torrente III"
+      "name_es": "Torrente III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Torrente IV",
@@ -6165,7 +7286,11 @@
       "sources": [],
       "type": "LMG",
       "rarity": "Rare",
-      "name_es": "Torrente IV"
+      "name_es": "Torrente IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Trailblazer",
@@ -6184,7 +7309,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Pionero"
+      "name_es": "Pionero",
+      "recyclesInto": {
+        "Crude Explosives": 2
+      }
     },
     {
       "name": "Trailblazer Blueprint",
@@ -6213,7 +7341,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Granada de gatillo"
+      "name_es": "Granada de gatillo",
+      "recyclesInto": {
+        "Chemicals": 1,
+        "Processor": 1
+      }
     },
     {
       "name": "Trigger Nade Blueprint",
@@ -6233,7 +7365,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Bomba Turbomolecular"
+      "name_es": "Bomba Turbomolecular",
+      "recyclesInto": {
+        "Mechanical Components": 1,
+        "Oil": 3
+      }
     },
     {
       "name": "Unusable Weapon",
@@ -6243,7 +7379,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Arma inutilizable"
+      "name_es": "Arma inutilizable",
+      "recyclesInto": {
+        "Metal Parts": 4,
+        "Simple Gun Parts": 5
+      }
     },
     {
       "name": "Vase",
@@ -6286,7 +7426,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Rare",
-      "name_es": "Venator I"
+      "name_es": "Venator I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 1,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Venator II",
@@ -6305,7 +7449,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Rare",
-      "name_es": "Venator II"
+      "name_es": "Venator II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 2
+      }
     },
     {
       "name": "Venator III",
@@ -6324,7 +7472,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Rare",
-      "name_es": "Venator III"
+      "name_es": "Venator III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Venator IV",
@@ -6343,7 +7495,11 @@
       "sources": [],
       "type": "Pistol",
       "rarity": "Rare",
-      "name_es": "Venator IV"
+      "name_es": "Venator IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Medium Gun Parts": 3
+      }
     },
     {
       "name": "Vertical Grip I",
@@ -6362,7 +7518,10 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Common",
-      "name_es": "Empuñadura vertical I"
+      "name_es": "Empuñadura vertical I",
+      "recyclesInto": {
+        "Plastic Parts": 6
+      }
     },
     {
       "name": "Vertical Grip II",
@@ -6381,7 +7540,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Uncommon",
-      "name_es": "Empuñadura vertical II"
+      "name_es": "Empuñadura vertical II",
+      "recyclesInto": {
+        "Duct Tape": 1,
+        "Mechanical Components": 1
+      }
     },
     {
       "name": "Vertical Grip II Blueprint",
@@ -6410,7 +7573,11 @@
       "sources": [],
       "type": "Modification",
       "rarity": "Rare",
-      "name_es": "Empuñadura Vertical III"
+      "name_es": "Empuñadura Vertical III",
+      "recyclesInto": {
+        "Duct Tape": 2,
+        "Mechanical Components": 2
+      }
     },
     {
       "name": "Vertical Grip III Blueprint",
@@ -6449,7 +7616,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Inyección de Vita"
+      "name_es": "Inyección de Vita",
+      "recyclesInto": {
+        "Chemicals": 4,
+        "Syringe": 1
+      }
     },
     {
       "name": "Vita Shot Blueprint",
@@ -6478,7 +7649,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Epic",
-      "name_es": "Aerosol Vita"
+      "name_es": "Aerosol Vita",
+      "recyclesInto": {
+        "Antiseptic": 1,
+        "Canister": 2
+      }
     },
     {
       "name": "Vita Spray Blueprint",
@@ -6508,7 +7683,11 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Rare",
-      "name_es": "Convertidor de voltaje"
+      "name_es": "Convertidor de voltaje",
+      "recyclesInto": {
+        "Rubber Parts": 1,
+        "Wires": 1
+      }
     },
     {
       "name": "Vulcano Blueprint",
@@ -6541,7 +7720,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Epic",
-      "name_es": "Vulcano I"
+      "name_es": "Vulcano I",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Heavy Gun Parts": 2
+      }
     },
     {
       "name": "Vulcano II",
@@ -6560,7 +7743,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Epic",
-      "name_es": "Vulcano II"
+      "name_es": "Vulcano II",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 2,
+        "Heavy Gun Parts": 3
+      }
     },
     {
       "name": "Vulcano III",
@@ -6579,7 +7766,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Epic",
-      "name_es": "Vulcano III"
+      "name_es": "Vulcano III",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 3,
+        "Heavy Gun Parts": 4
+      }
     },
     {
       "name": "Vulcano IV",
@@ -6598,7 +7789,11 @@
       "sources": [],
       "type": "Shotgun",
       "rarity": "Epic",
-      "name_es": "Vulcano IV"
+      "name_es": "Vulcano IV",
+      "recyclesInto": {
+        "Advanced Mechanical Components": 4,
+        "Heavy Gun Parts": 5
+      }
     },
     {
       "name": "Wasp Driver",
@@ -6608,7 +7803,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Controlador de Avispa"
+      "name_es": "Controlador de Avispa",
+      "recyclesInto": {
+        "ARC Alloy": 1,
+        "Electrical Components": 1
+      }
     },
     {
       "name": "Water Filter",
@@ -6618,7 +7817,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Filtro de agua"
+      "name_es": "Filtro de agua",
+      "recyclesInto": {
+        "Canister": 3,
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Water Pump",
@@ -6628,7 +7831,11 @@
       "sources": [],
       "type": "Recyclable",
       "rarity": "Rare",
-      "name_es": "Bomba de agua"
+      "name_es": "Bomba de agua",
+      "recyclesInto": {
+        "Metal Parts": 4,
+        "Oil": 2
+      }
     },
     {
       "name": "Wires",
@@ -6638,7 +7845,10 @@
       "sources": [],
       "type": "Topside Material",
       "rarity": "Uncommon",
-      "name_es": "Cables"
+      "name_es": "Cables",
+      "recyclesInto": {
+        "Rubber Parts": 2
+      }
     },
     {
       "name": "Wolfpack",
@@ -6657,7 +7867,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Epic",
-      "name_es": "Manada de lobos"
+      "name_es": "Manada de lobos",
+      "recyclesInto": {
+        "ARC Motion Core": 1,
+        "Explosive Compound": 1
+      }
     },
     {
       "name": "Wolfpack Blueprint",
@@ -6682,7 +7896,10 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Common",
-      "name_es": "Barra de luz amarilla"
+      "name_es": "Barra de luz amarilla",
+      "recyclesInto": {
+        "Chemicals": 1
+      }
     },
     {
       "name": "Yellow Light Stick Blueprint",
@@ -6711,7 +7928,11 @@
       "sources": [],
       "type": "Quick Use",
       "rarity": "Rare",
-      "name_es": "Tirolina"
+      "name_es": "Tirolina",
+      "recyclesInto": {
+        "Metal Parts": 1,
+        "Rope": 1
+      }
     }
   ],
   "images": {

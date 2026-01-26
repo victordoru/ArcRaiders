@@ -5,25 +5,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ARC Raiders Crafting & Uses Tree | Inventory Planner</title>
+  <title>ARC Raiders Crafting, Uses & Recycling | Inventory Planner</title>
   <meta name="description"
-    content="Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.">
+    content="Interactive crafting, item-uses, and recycling tree for ARC Raiders inventory management. Plan materials, upgrades, and inventory needs with a visual board.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="ARC Raiders Crafting & Uses Tree | Inventory Planner">
+  <meta property="og:title" content="ARC Raiders Crafting, Uses & Recycling | Inventory Planner">
   <meta property="og:description"
-    content="Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.">
+    content="Interactive crafting, item-uses, and recycling tree for ARC Raiders inventory management. Plan materials, upgrades, and inventory needs with a visual board.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ARC Raiders Crafting & Uses Tree | Inventory Planner">
+  <meta name="twitter:title" content="ARC Raiders Crafting, Uses & Recycling | Inventory Planner">
   <meta name="twitter:description"
-    content="Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.">
+    content="Interactive crafting, item-uses, and recycling tree for ARC Raiders inventory management. Plan materials, upgrades, and inventory needs with a visual board.">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "ARC Raiders Crafting & Uses Tree",
+      "name": "ARC Raiders Crafting, Uses & Recycling",
       "applicationCategory": "GameApplication",
       "operatingSystem": "Web",
-      "description": "Interactive crafting and item-uses tree for ARC Raiders. Plan materials, upgrades, and inventory needs with a visual board.",
+      "description": "Interactive crafting, item-uses, and recycling tree for ARC Raiders inventory management. Plan materials, upgrades, and inventory needs with a visual board.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -50,6 +50,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Switch to Uses, drop an item on the board, and expand layers with the + button to see what it can craft."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I see what recycles into a material?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Switch to Recycling, drop a target material on the board, and the tree will list items that recycle into it."
           }
         }
       ]
@@ -243,54 +251,112 @@
       margin-bottom: 20px;
     }
 
-    .quick-guide {
-      margin-bottom: 16px;
+    .guide-btn {
+      margin-top: 8px;
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      border-radius: 10px;
     }
 
-    .quick-guide details {
+    .guide-modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 200;
+    }
+
+    .guide-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .guide-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 10, 12, 0.7);
+      backdrop-filter: blur(6px);
+    }
+
+    .guide-dialog {
+      position: relative;
+      width: min(900px, 92vw);
+      max-height: 85vh;
+      overflow: hidden;
+      background: rgba(18, 18, 20, 0.98);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.03);
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    .quick-guide summary {
+    .guide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .guide-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .guide-close {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 6px 10px;
       cursor: pointer;
-      list-style: none;
+    }
+
+    .guide-close:hover {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.12);
+    }
+
+    .guide-content {
+      padding: 18px 20px 24px;
+      overflow: auto;
+    }
+
+    .guide-content h3 {
+      margin: 18px 0 6px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .guide-content p,
+    .guide-content li {
       font-size: 0.9rem;
-      font-weight: 600;
+      line-height: 1.55;
       color: var(--ink);
     }
 
-    .quick-guide summary::after {
-      content: "\203A";
-      font-size: 1.2rem;
-      color: var(--muted);
-      float: right;
-      transition: transform 0.3s;
+    .guide-content ul,
+    .guide-content ol {
+      margin: 8px 0 0 18px;
+      padding: 0;
     }
 
-    .quick-guide details[open] summary::after {
-      transform: rotate(90deg);
+    html[lang="en"] .lang-es {
+      display: none;
     }
 
-    .quick-guide p {
-      margin: 8px 0 0;
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    .guide-steps {
-      margin: 8px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.45;
-    }
-
-    .guide-steps li {
-      margin-bottom: 6px;
+    html[lang="es"] .lang-en {
+      display: none;
     }
 
     input[type="search"] {
@@ -408,6 +474,11 @@
     .tag.loot {
       background: rgba(255, 184, 0, 0.1);
       color: var(--loot);
+    }
+
+    .tag.recycle {
+      background: rgba(92, 200, 255, 0.1);
+      color: #5cc8ff;
     }
 
     /* Workspace - The Pizarra */
@@ -912,18 +983,7 @@
         <div class="filters">
           <input id="search" type="search" placeholder="Search materials...">
         </div>
-        <div class="quick-guide">
-          <details id="quick-guide">
-            <summary id="guide-summary">Quick guide</summary>
-            <p id="guide-intro"></p>
-            <ol class="guide-steps">
-              <li id="guide-step-1"></li>
-              <li id="guide-step-2"></li>
-              <li id="guide-step-3"></li>
-              <li id="guide-step-4"></li>
-            </ol>
-          </details>
-        </div>
+        <button id="open-guide" class="button ghost guide-btn">Open guide</button>
         <div id="category-list" class="category-list"></div>
       </div>
     </aside>
@@ -933,6 +993,7 @@
       <div class="board-switcher" id="board-switcher">
         <button id="board-craft" class="board-btn active" data-board="craft">Crafting</button>
         <button id="board-uses" class="board-btn" data-board="uses">Uses</button>
+        <button id="board-recycle" class="board-btn" data-board="recycle">Recycling</button>
       </div>
       <svg id="tree"></svg>
 
@@ -968,6 +1029,78 @@
     </section>
   </main>
 
+  <div id="guide-modal" class="guide-modal" aria-hidden="true">
+    <div class="guide-backdrop" id="guide-backdrop"></div>
+    <div class="guide-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title">
+      <div class="guide-header">
+        <h2 id="guide-title">ARC Raiders Inventory Management Guide</h2>
+        <button id="close-guide" class="guide-close" type="button">Close</button>
+      </div>
+      <div class="guide-content">
+        <div class="lang lang-en">
+          <h3>What this tool is</h3>
+          <p>
+            This is an ARC Raiders inventory management tool designed to visualize crafting,
+            item uses, and recycling. It helps you plan materials, upgrades, and routes by
+            showing dependencies in a clear tree.
+          </p>
+          <h3>Crafting board</h3>
+          <ol>
+            <li>Switch to Crafting at the top.</li>
+            <li>Search or browse items in the left list and drag one to the board.</li>
+            <li>Use +/- on a weapon to show or hide previous levels.</li>
+            <li>Check the summary on the right for required materials.</li>
+          </ol>
+          <h3>Uses board</h3>
+          <ol>
+            <li>Switch to Uses to see what an item can craft.</li>
+            <li>Drop a material (e.g., Oil) and expand layers with + to see deeper uses.</li>
+            <li>Great for planning crafting chains and inventory management.</li>
+          </ol>
+          <h3>Recycling board</h3>
+          <ol>
+            <li>Switch to Recycling.</li>
+            <li>Drop a target material (e.g., Processor) to see items that recycle into it.</li>
+            <li>Use this to decide what to keep or recycle during runs.</li>
+          </ol>
+
+        </div>
+        <div class="lang lang-es">
+          <h3>Que es esta herramienta</h3>
+          <p>
+            Esta es una herramienta de gestion de inventario para ARC Raiders. Visualiza crafteo,
+            usos de items y reciclaje para planificar materiales, mejoras y rutas con un arbol claro.
+          </p>
+          <h3>Pizarra de crafteo</h3>
+          <ol>
+            <li>Cambia a Crafteo en el selector superior.</li>
+            <li>Busca o navega items en la lista izquierda y arrastra uno a la pizarra.</li>
+            <li>Usa +/- en el arma para mostrar u ocultar niveles anteriores.</li>
+            <li>Revisa el resumen a la derecha con materiales requeridos.</li>
+          </ol>
+          <h3>Pizarra de usos</h3>
+          <ol>
+            <li>Cambia a Usos para ver que se puede fabricar con un item.</li>
+            <li>Arrastra un material (por ejemplo, Aceite) y expande capas con +.</li>
+            <li>Ideal para planificar cadenas de crafteo y gestion de inventario.</li>
+          </ol>
+          <h3>Pizarra de reciclaje</h3>
+          <ol>
+            <li>Cambia a Reciclaje.</li>
+            <li>Arrastra un material objetivo (por ejemplo, Procesador) para ver que lo recicla.</li>
+            <li>Te ayuda a decidir que guardar o reciclar durante las partidas.</li>
+          </ol>
+          <h3>Intencion de busqueda (SEO)</h3>
+          <p>
+            Quien busque “gestion de inventario ARC Raiders”, “arbol de crafteo”, “usos de items”
+            o “reciclaje de materiales” encontrara esta herramienta util. El texto esta en ingles
+            y espanol para coincidir con como busca la comunidad.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
   <script src="data.js"></script>
@@ -995,12 +1128,12 @@
       summaryTitle: document.getElementById("summary-title"),
       boardCraft: document.getElementById("board-craft"),
       boardUses: document.getElementById("board-uses"),
-      guideSummary: document.getElementById("guide-summary"),
-      guideIntro: document.getElementById("guide-intro"),
-      guideStep1: document.getElementById("guide-step-1"),
-      guideStep2: document.getElementById("guide-step-2"),
-      guideStep3: document.getElementById("guide-step-3"),
-      guideStep4: document.getElementById("guide-step-4"),
+      boardRecycle: document.getElementById("board-recycle"),
+      openGuide: document.getElementById("open-guide"),
+      guideModal: document.getElementById("guide-modal"),
+      guideBackdrop: document.getElementById("guide-backdrop"),
+      closeGuide: document.getElementById("close-guide"),
+      guideTitle: document.getElementById("guide-title"),
       langToggle: document.getElementById("toggle-lang")
     };
 
@@ -1030,30 +1163,36 @@
     };
     const selections = {
       craft: new Map(),
-      uses: new Map()
+      uses: new Map(),
+      recycle: new Map()
     };
     const treePositions = {
       craft: new Map(),
-      uses: new Map()
+      uses: new Map(),
+      recycle: new Map()
     };
     const zoomTransforms = {
       craft: d3.zoomIdentity,
-      uses: d3.zoomIdentity
+      uses: d3.zoomIdentity,
+      recycle: d3.zoomIdentity
     };
 
     function saveAppState() {
       const data = {
         selections: {
           craft: Array.from(selections.craft.entries()),
-          uses: Array.from(selections.uses.entries())
+          uses: Array.from(selections.uses.entries()),
+          recycle: Array.from(selections.recycle.entries())
         },
         treePositions: {
           craft: Array.from(treePositions.craft.entries()),
-          uses: Array.from(treePositions.uses.entries())
+          uses: Array.from(treePositions.uses.entries()),
+          recycle: Array.from(treePositions.recycle.entries())
         },
         zoomTransforms: {
           craft: { x: zoomTransforms.craft.x, y: zoomTransforms.craft.y, k: zoomTransforms.craft.k },
-          uses: { x: zoomTransforms.uses.x, y: zoomTransforms.uses.y, k: zoomTransforms.uses.k }
+          uses: { x: zoomTransforms.uses.x, y: zoomTransforms.uses.y, k: zoomTransforms.uses.k },
+          recycle: { x: zoomTransforms.recycle.x, y: zoomTransforms.recycle.y, k: zoomTransforms.recycle.k }
         },
         state: { lang: state.lang, board: state.board },
         prevLevels: Array.from(state.prevLevels.entries()),
@@ -1070,7 +1209,7 @@
         const data = JSON.parse(saved);
 
         if (data.state && data.state.lang) state.lang = data.state.lang;
-        if (data.state && data.state.board && ["craft", "uses"].includes(data.state.board)) {
+        if (data.state && data.state.board && ["craft", "uses", "recycle"].includes(data.state.board)) {
           state.board = data.state.board;
         }
         if (data.sortMode) sortMode = data.sortMode;
@@ -1087,6 +1226,9 @@
         if (data.selections && data.selections.uses) {
           selections.uses = new Map(data.selections.uses);
         }
+        if (data.selections && data.selections.recycle) {
+          selections.recycle = new Map(data.selections.recycle);
+        }
         if (Array.isArray(data.selection)) {
           selections.craft = new Map(data.selection);
         }
@@ -1096,6 +1238,9 @@
         }
         if (data.treePositions && data.treePositions.uses) {
           treePositions.uses = new Map(data.treePositions.uses);
+        }
+        if (data.treePositions && data.treePositions.recycle) {
+          treePositions.recycle = new Map(data.treePositions.recycle);
         }
         if (Array.isArray(data.treePositions)) {
           treePositions.craft = new Map(data.treePositions);
@@ -1110,6 +1255,11 @@
           zoomTransforms.uses = d3.zoomIdentity
             .translate(data.zoomTransforms.uses.x, data.zoomTransforms.uses.y)
             .scale(data.zoomTransforms.uses.k);
+        }
+        if (data.zoomTransforms && data.zoomTransforms.recycle) {
+          zoomTransforms.recycle = d3.zoomIdentity
+            .translate(data.zoomTransforms.recycle.x, data.zoomTransforms.recycle.y)
+            .scale(data.zoomTransforms.recycle.k);
         }
         if (data.zoomTransform) {
           zoomTransforms.craft = d3.zoomIdentity
@@ -1127,72 +1277,78 @@
         searchPlaceholder: "Search materials...",
         dropzoneCraft: "Drop to add to tree",
         dropzoneUses: "Drop to see what it crafts",
+        dropzoneRecycle: "Drop to see what recycles into it",
         clearSelection: "Clear Selection",
         summaryTitleCraft: "All Items",
         summaryTitleUses: "Can Be Crafted",
+        summaryTitleRecycle: "Recycled Into",
         summaryEmptyCraft: "Select items to see requirements",
         summaryEmptyUses: "Select items to see what they craft",
+        summaryEmptyRecycle: "Select items to see what recycles into them",
         noFilterItems: "No items matching this filter.",
         others: "Others",
         craftTag: "CRAFT",
         lootTag: "LOOT",
+        recycleTag: "RECYCLE",
         craftable: "craftable",
         lootOnly: "loot-only",
         noMaterials: "No materials required.",
         noUses: "No items use this.",
+        noRecycle: "No items recycle into this.",
         noBaseLoot: "No base loot-only items.",
         toggleSidebar: "Toggle Sidebar",
         toggleSummary: "Toggle Summary",
         boardCraft: "Crafting",
         boardUses: "Uses",
+        boardRecycle: "Recycling",
         usesDepthMore: "More layers",
         usesDepthLess: "Fewer layers",
-        guideSummary: "Quick guide",
-        guideIntro: "Use this tool to plan crafting, upgrades, and item uses for ARC Raiders.",
-        guideStep1: "Switch between Crafting and Uses from the top selector.",
-        guideStep2: "Search on the left and drag an item into the board.",
-        guideStep3: "Use +/- on nodes to show previous levels (Crafting) or deeper layers (Uses).",
-        guideStep4: "Drag to move, scroll to zoom, and check the summary on the right.",
+        openGuide: "Open guide",
+        closeGuide: "Close",
+        guideTitle: "ARC Raiders Inventory Management Guide",
         prevLevelsShow: "Show previous levels",
         prevLevelsHide: "Hide previous levels",
         langLabel: "EN",
-        title: "ARC Raiders Crafting & Uses Tree | Inventory Planner"
+        title: "ARC Raiders Crafting, Uses & Recycling | Inventory Planner"
       },
       es: {
         categories: "Categorias",
         searchPlaceholder: "Buscar materiales...",
         dropzoneCraft: "Suelta para agregar al arbol",
         dropzoneUses: "Suelta para ver en que se usa",
+        dropzoneRecycle: "Suelta para ver que recicla en el",
         clearSelection: "Limpiar seleccion",
         summaryTitleCraft: "Todos los items",
         summaryTitleUses: "Se puede craftear",
+        summaryTitleRecycle: "Reciclado en",
         summaryEmptyCraft: "Selecciona items para ver requisitos",
         summaryEmptyUses: "Selecciona items para ver usos",
+        summaryEmptyRecycle: "Selecciona items para ver que recicla en ellos",
         noFilterItems: "No hay items con este filtro.",
         others: "Otros",
         craftTag: "FAB",
         lootTag: "BOTIN",
+        recycleTag: "RECICLA",
         craftable: "crafteable",
         lootOnly: "solo loot",
         noMaterials: "No hay materiales requeridos.",
         noUses: "Ningun item lo usa.",
+        noRecycle: "Ningun item recicla en esto.",
         noBaseLoot: "No hay items base solo loot.",
         toggleSidebar: "Mostrar/Ocultar menu",
         toggleSummary: "Mostrar/Ocultar resumen",
         boardCraft: "Crafteo",
         boardUses: "Usos",
+        boardRecycle: "Reciclaje",
         usesDepthMore: "Mas capas",
         usesDepthLess: "Menos capas",
-        guideSummary: "Guia rapida",
-        guideIntro: "Usa esta herramienta para planificar crafteo, mejoras y usos de items en ARC Raiders.",
-        guideStep1: "Cambia entre Crafteo y Usos en el selector superior.",
-        guideStep2: "Busca a la izquierda y arrastra un item a la pizarra.",
-        guideStep3: "Usa +/- en los nodos para ver niveles anteriores (Crafteo) o mas capas (Usos).",
-        guideStep4: "Arrastra para mover, rueda para zoom y revisa el resumen a la derecha.",
+        openGuide: "Abrir guia",
+        closeGuide: "Cerrar",
+        guideTitle: "Guia de gestion de inventario ARC Raiders",
         prevLevelsShow: "Mostrar niveles anteriores",
         prevLevelsHide: "Ocultar niveles anteriores",
         langLabel: "ES",
-        title: "ARC Raiders Arboles de crafteo y usos | Inventario"
+        title: "ARC Raiders Arboles de crafteo, usos y reciclaje | Inventario"
       }
     };
 
@@ -1201,11 +1357,15 @@
     }
 
     function getActiveSelection() {
-      return state.board === "uses" ? selections.uses : selections.craft;
+      if (state.board === "uses") return selections.uses;
+      if (state.board === "recycle") return selections.recycle;
+      return selections.craft;
     }
 
     function getActivePositions() {
-      return state.board === "uses" ? treePositions.uses : treePositions.craft;
+      if (state.board === "uses") return treePositions.uses;
+      if (state.board === "recycle") return treePositions.recycle;
+      return treePositions.craft;
     }
 
     function getActiveZoom() {
@@ -1353,6 +1513,20 @@
 
     let usesMap = buildUsesMap();
 
+    function buildRecycleMap() {
+      const map = new Map();
+      items.forEach(item => {
+        const recycles = item.recyclesInto || {};
+        Object.entries(recycles).forEach(([target, qty]) => {
+          if (!map.has(target)) map.set(target, []);
+          map.get(target).push({ name: item.name, qty });
+        });
+      });
+      return map;
+    }
+
+    let recycleMap = buildRecycleMap();
+
     function buildTreeData(name, qty = 1, visited = new Set(), isPrevLevel = false) {
       const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
       const recipe = getCombinedRecipe(item);
@@ -1409,13 +1583,44 @@
       return node;
     }
 
+    function buildRecycleTreeData(name, qty = 1, visited = new Set(), maxDepth = 1, depth = 0) {
+      const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+      const node = {
+        name: item.name,
+        qty,
+        craftable: !!(Array.isArray(item.recipe) && item.recipe.length),
+        station: item.station || "",
+        recipe: [],
+        image: getItemImage(item.name),
+        rarity: item.rarity || null,
+        hasPrevLevel: false,
+        isPrevLevel: false,
+        children: []
+      };
+
+      if (depth >= maxDepth) return node;
+
+      if (!visited.has(node.name)) {
+        const next = new Set(visited);
+        next.add(node.name);
+        const sources = (recycleMap.get(node.name) || [])
+          .slice()
+          .sort((a, b) => getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name)));
+        node.children = sources.map(entry => buildRecycleTreeData(entry.name, entry.qty, next, maxDepth, depth + 1));
+      }
+
+      return node;
+    }
+
     function buildForestData() {
       const children = [];
       const selection = getActiveSelection();
       selection.forEach((qty, name) => {
         const node = state.board === "uses"
           ? buildUsesTreeData(name, qty, new Set(), getUsesDepth(name), 0)
-          : buildTreeData(name, qty);
+          : state.board === "recycle"
+            ? buildRecycleTreeData(name, qty, new Set(), 1, 0)
+            : buildTreeData(name, qty);
         children.push(node);
       });
       return {
@@ -1662,7 +1867,9 @@
       selection.forEach((qty, name) => {
         const rootData = state.board === "uses"
           ? buildUsesTreeData(name, qty, new Set(), getUsesDepth(name), 0)
-          : buildTreeData(name, qty);
+          : state.board === "recycle"
+            ? buildRecycleTreeData(name, qty, new Set(), 1, 0)
+            : buildTreeData(name, qty);
         const root = d3.hierarchy(rootData, d => d.children);
         const treeLayout = d3.tree().nodeSize([70, 190]);
         treeLayout(root);
@@ -1730,7 +1937,12 @@
         node.append("text")
           .attr("x", d => d.data.hasPrevLevel ? 44 : 24)
           .attr("y", -4)
-          .text(d => `${d.data.qty > 1 ? "x" + d.data.qty + " " : ""}${getItemLabelByName(d.data.name)}`);
+          .text(d => {
+            if (state.board === "recycle" && d.depth > 0 && d.data.qty > 1) {
+              return `${getItemLabelByName(d.data.name)} -> x${d.data.qty}`;
+            }
+            return `${d.data.qty > 1 ? "x" + d.data.qty + " " : ""}${getItemLabelByName(d.data.name)}`;
+          });
 
         node.append("text")
           .attr("x", d => d.data.hasPrevLevel ? 44 : 24)
@@ -1916,6 +2128,72 @@
         return;
       }
 
+      if (state.board === "recycle") {
+        const recycleTotals = new Map();
+        selection.forEach((qty, name) => {
+          const sources = recycleMap.get(name) || [];
+          sources.forEach(entry => {
+            if (recycleTotals.has(entry.name)) return;
+            const sourceItem = itemsMap.get(entry.name) || {};
+            recycleTotals.set(entry.name, {
+              name: entry.name,
+              qty: entry.qty,
+              craftable: !!(sourceItem.recipe && sourceItem.recipe.length),
+              rarity: sourceItem.rarity || null
+            });
+          });
+        });
+
+        const list = Array.from(recycleTotals.values())
+          .sort((a, b) => getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name)));
+
+        if (list.length === 0) {
+          const empty = document.createElement("li");
+          empty.className = "summary-item";
+          empty.textContent = t("noRecycle");
+          ui.summaryList.appendChild(empty);
+        } else {
+          list.forEach(entry => {
+            const li = document.createElement("li");
+            const rarity = normalizeRarity(entry.rarity);
+            li.className = `summary-item${rarity ? " rarity-" + rarity : ""}`;
+
+            const img = document.createElement("img");
+            const imgSrc = getItemImage(entry.name);
+            if (imgSrc) img.src = imgSrc;
+            else img.style.visibility = "hidden";
+
+            const info = document.createElement("div");
+            info.className = "item-info";
+
+            const nameSpan = document.createElement("div");
+            nameSpan.className = "name";
+            nameSpan.textContent = getItemLabelByName(entry.name);
+
+            const meta = document.createElement("div");
+            meta.className = "meta";
+
+            const tag = document.createElement("span");
+            tag.className = "tag recycle";
+            tag.textContent = t("recycleTag");
+
+            const qtySpan = document.createElement("span");
+            qtySpan.className = "qty";
+            qtySpan.textContent = `x${entry.qty}`;
+
+            meta.appendChild(tag);
+            meta.appendChild(qtySpan);
+            info.appendChild(nameSpan);
+            info.appendChild(meta);
+
+            li.appendChild(img);
+            li.appendChild(info);
+            ui.summaryList.appendChild(li);
+          });
+        }
+        return;
+      }
+
       const totals = new Map();
       const baseTotals = new Map();
 
@@ -2030,12 +2308,36 @@
     function applyBoardUI() {
       ui.boardCraft.textContent = t("boardCraft");
       ui.boardUses.textContent = t("boardUses");
+      ui.boardRecycle.textContent = t("boardRecycle");
       ui.boardCraft.classList.toggle("active", state.board === "craft");
       ui.boardUses.classList.toggle("active", state.board === "uses");
-      ui.dropzone.textContent = state.board === "craft" ? t("dropzoneCraft") : t("dropzoneUses");
-      ui.summaryTitle.textContent = state.board === "craft" ? t("summaryTitleCraft") : t("summaryTitleUses");
-      ui.summaryEmpty.textContent = state.board === "craft" ? t("summaryEmptyCraft") : t("summaryEmptyUses");
+      ui.boardRecycle.classList.toggle("active", state.board === "recycle");
+      ui.dropzone.textContent = state.board === "craft"
+        ? t("dropzoneCraft")
+        : state.board === "uses"
+          ? t("dropzoneUses")
+          : t("dropzoneRecycle");
+      ui.summaryTitle.textContent = state.board === "craft"
+        ? t("summaryTitleCraft")
+        : state.board === "uses"
+          ? t("summaryTitleUses")
+          : t("summaryTitleRecycle");
+      ui.summaryEmpty.textContent = state.board === "craft"
+        ? t("summaryEmptyCraft")
+        : state.board === "uses"
+          ? t("summaryEmptyUses")
+          : t("summaryEmptyRecycle");
       ui.sortSummary.style.display = state.board === "craft" ? "" : "none";
+    }
+
+    function openGuideModal() {
+      ui.guideModal.classList.add("open");
+      ui.guideModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeGuideModal() {
+      ui.guideModal.classList.remove("open");
+      ui.guideModal.setAttribute("aria-hidden", "true");
     }
 
     function applyLanguage() {
@@ -2046,12 +2348,9 @@
       ui.clearSelection.textContent = t("clearSelection");
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
-      ui.guideSummary.textContent = t("guideSummary");
-      ui.guideIntro.textContent = t("guideIntro");
-      ui.guideStep1.textContent = t("guideStep1");
-      ui.guideStep2.textContent = t("guideStep2");
-      ui.guideStep3.textContent = t("guideStep3");
-      ui.guideStep4.textContent = t("guideStep4");
+      ui.openGuide.textContent = t("openGuide");
+      ui.closeGuide.textContent = t("closeGuide");
+      ui.guideTitle.textContent = t("guideTitle");
       ui.langToggle.textContent = state.lang === "es" ? "EN" : "ES";
       applyBoardUI();
       saveAppState();
@@ -2075,6 +2374,10 @@
       ui.clearSelection.addEventListener("click", clearSelection);
       ui.boardCraft.addEventListener("click", () => setBoard("craft"));
       ui.boardUses.addEventListener("click", () => setBoard("uses"));
+      ui.boardRecycle.addEventListener("click", () => setBoard("recycle"));
+      ui.openGuide.addEventListener("click", openGuideModal);
+      ui.closeGuide.addEventListener("click", closeGuideModal);
+      ui.guideBackdrop.addEventListener("click", closeGuideModal);
       ui.langToggle.addEventListener("click", () => {
         state.lang = state.lang === "es" ? "en" : "es";
         applyLanguage();
@@ -2126,6 +2429,9 @@
       ui.toggleSummary.addEventListener("click", toggleSumm);
 
       window.addEventListener("resize", renderTree);
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeGuideModal();
+      });
       applyLanguage();
     }
 
