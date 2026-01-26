@@ -1099,10 +1099,15 @@
       return getItemLabel(item);
     }
 
+    function normalizeString(str) {
+      if (!str) return "";
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
     function matchesQuery(item, query) {
       if (!query) return true;
-      const q = query.toLowerCase();
-      const candidates = [item.name, item.name_es].filter(Boolean).map(name => name.toLowerCase());
+      const q = normalizeString(query);
+      const candidates = [item.name, item.name_es].filter(Boolean).map(name => normalizeString(name));
       return candidates.some(name => name.includes(q));
     }
 
@@ -1128,17 +1133,44 @@
     }
 
     function getPreviousLevelName(name) {
-      const match = name.match(/^(.*) L([234])$/);
-      if (!match) return null;
-      const base = match[1].trim();
-      const level = parseInt(match[2], 10);
-      if (Number.isNaN(level) || level <= 1) return null;
-      if (level === 2) {
-        const levelOne = `${base} I`;
-        if (itemsMap.has(levelOne)) return levelOne;
-        return base;
+      const matchL = name.match(/^(.*) L([234])$/);
+      if (matchL) {
+        const base = matchL[1].trim();
+        const level = parseInt(matchL[2], 10);
+        if (Number.isNaN(level) || level <= 1) return null;
+        if (level === 2) {
+          const levelOne = `${base} I`;
+          if (itemsMap.has(levelOne)) return levelOne;
+          return base;
+        }
+        return `${base} L${level - 1}`;
       }
-      return `${base} L${level - 1}`;
+
+      const matchRoman = name.match(/^(.*) (II|III|IV)$/);
+      if (matchRoman) {
+        const base = matchRoman[1].trim();
+        const roman = matchRoman[2];
+        const prevMap = { II: "I", III: "II", IV: "III" };
+        const prevRoman = prevMap[roman];
+        if (!prevRoman) return null;
+        const prevName = `${base} ${prevRoman}`;
+        if (itemsMap.has(prevName)) return prevName;
+        if (roman === "II" && itemsMap.has(base)) return base;
+        return prevName;
+      }
+
+      const matchMk = name.match(/^(.*) Mk\\.?\\s*([234])$/i);
+      if (matchMk) {
+        const base = matchMk[1].trim();
+        const level = parseInt(matchMk[2], 10);
+        if (Number.isNaN(level) || level <= 1) return null;
+        const prev = level - 1;
+        const prevName = `${base} Mk. ${prev}`;
+        if (itemsMap.has(prevName)) return prevName;
+        return prevName;
+      }
+
+      return null;
     }
 
     function shouldShowPrevLevels(name) {
@@ -1627,9 +1659,7 @@
             event.stopPropagation();
             if (depth <= 1) return;
             adjustUsesDepth(d.data.name, -1);
-          });
-
-          const plus = toggle.append("g")
+          }); const plus = toggle.append("g")
             .attr("class", "depth-btn")
             .attr("transform", "translate(0,12)");
 
