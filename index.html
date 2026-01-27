@@ -943,25 +943,63 @@
     #dropzone {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
+      background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 200;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s;
-      color: #fff;
-      font-size: 1.5rem;
-      font-weight: 700;
-      border: 4px dashed var(--accent);
-      margin: 20px;
-      border-radius: 30px;
+      transition: opacity 0.2s;
+      color: transparent;
+      font-size: 0;
     }
 
     #dropzone.active {
       opacity: 1;
+      background: rgba(255, 77, 0, 0.03);
+      border: 3px dashed var(--accent);
+      margin: 12px;
+      border-radius: 20px;
+    }
+
+    #dropzone.active::after {
+      content: attr(data-text);
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18, 18, 20, 0.95);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Center view button */
+    #center-view {
+      padding: 8px 12px;
+      font-size: 1.1rem;
+      min-width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #center-view:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Drop cursor indicator */
+    .workspace.drag-over #tree {
+      cursor: copy !important;
+    }
+
+    .workspace.drag-over .board {
+      pointer-events: none;
     }
   </style>
 </head>
@@ -999,6 +1037,7 @@
 
       <div class="selected-bar">
         <div id="selected-chips" class="selected-chips"></div>
+        <button id="center-view" class="button ghost" title="Center view on all objects">⌖</button>
         <button id="clear-selection" class="button secondary">Clear Selection</button>
       </div>
 
@@ -1121,6 +1160,7 @@
       sortLabel: document.getElementById("sort-label"),
       categoriesTitle: document.getElementById("categories-title"),
       summaryTitle: document.getElementById("summary-title"),
+      centerView: document.getElementById("center-view"),
       boardCraft: document.getElementById("board-craft"),
       boardUses: document.getElementById("board-uses"),
       boardRecycle: document.getElementById("board-recycle"),
@@ -1304,7 +1344,8 @@
         prevLevelsShow: "Show previous levels",
         prevLevelsHide: "Hide previous levels",
         langLabel: "EN",
-        title: "ARC Raiders Crafting, Uses & Recycling | Inventory Planner"
+        title: "ARC Raiders Crafting, Uses & Recycling | Inventory Planner",
+        centerView: "Center view"
       },
       es: {
         categories: "Categorias",
@@ -1343,7 +1384,8 @@
         prevLevelsShow: "Mostrar niveles anteriores",
         prevLevelsHide: "Ocultar niveles anteriores",
         langLabel: "ES",
-        title: "ARC Raiders Arboles de crafteo, usos y reciclaje | Inventario"
+        title: "ARC Raiders Arboles de crafteo, usos y reciclaje | Inventario",
+        centerView: "Centrar vista"
       }
     };
 
@@ -1629,24 +1671,143 @@
       };
     }
 
-    function addSelection(name, delta = 1) {
+    function addSelection(name, delta = 1, dropCoords = null) {
       const selection = getActiveSelection();
+      const positions = getActivePositions();
       const current = selection.get(name) || 0;
+      const isNew = current === 0;
+      const wasEmpty = selection.size === 0;
       const next = current + delta;
       if (next <= 0) {
         selection.delete(name);
+        positions.delete(name);
       } else {
         selection.set(name, next);
+        // If it's a new item and we have drop coordinates, use them
+        if (isNew && dropCoords) {
+          positions.set(name, { x: dropCoords.x, y: dropCoords.y });
+        }
       }
       saveAppState();
       renderAll();
+      
+      // Auto-center when adding first item to empty board
+      if (wasEmpty && selection.size === 1 && isNew) {
+        setTimeout(centerViewOnAll, 50);
+      }
     }
 
     function clearSelection() {
       const selection = getActiveSelection();
+      const positions = getActivePositions();
       selection.clear();
+      positions.clear();
+      // Reset zoom to default when clearing
+      setActiveZoom(d3.zoomIdentity);
       saveAppState();
       renderAll();
+    }
+
+    function centerViewOnAll() {
+      const positions = getActivePositions();
+      if (positions.size === 0) return;
+      
+      const svg = ui.tree;
+      const width = svg.clientWidth || 900;
+      const height = svg.clientHeight || 600;
+      
+      // Calculate bounding box of all tree positions
+      const posArray = Array.from(positions.values());
+      const minX = Math.min(...posArray.map(p => p.x)) - 150;
+      const maxX = Math.max(...posArray.map(p => p.x)) + 500; // Account for tree width
+      const minY = Math.min(...posArray.map(p => p.y)) - 150;
+      const maxY = Math.max(...posArray.map(p => p.y)) + 400; // Account for tree height
+      
+      const contentWidth = maxX - minX;
+      const contentHeight = maxY - minY;
+      
+      // Calculate scale to fit all content with some padding
+      const padding = 80;
+      const scaleX = (width - padding * 2) / contentWidth;
+      const scaleY = (height - padding * 2) / contentHeight;
+      const scale = Math.min(scaleX, scaleY, 1.2); // Cap max zoom (don't zoom in too much)
+      const finalScale = Math.max(scale, 0.3); // Min zoom
+      
+      // Calculate center of content
+      const centerX = (minX + maxX) / 2;
+      const centerY = (minY + maxY) / 2;
+      
+      // Calculate transform to center the content
+      const translateX = width / 2 - centerX * finalScale;
+      const translateY = height / 2 - centerY * finalScale;
+      
+      const newTransform = d3.zoomIdentity
+        .translate(translateX, translateY)
+        .scale(finalScale);
+      
+      setActiveZoom(newTransform);
+      saveAppState();
+      
+      // Animate the transition with zoom handler
+      const svgSel = d3.select(svg);
+      const board = svgSel.select(".board");
+      const zoom = d3.zoom()
+        .scaleExtent([0.4, 2.4])
+        .on("zoom", event => {
+          setActiveZoom(event.transform);
+          board.attr("transform", event.transform);
+        });
+      
+      svgSel.transition()
+        .duration(400)
+        .call(zoom.transform, newTransform);
+    }
+
+    function getViewCenter() {
+      const svg = ui.tree;
+      const width = svg.clientWidth || 900;
+      const height = svg.clientHeight || 600;
+      const transform = getActiveZoom();
+      // Convert screen center to board coordinates
+      const centerX = (width / 2 - transform.x) / transform.k;
+      const centerY = (height / 2 - transform.y) / transform.k;
+      return { x: centerX, y: centerY };
+    }
+
+    function findNonOverlappingPosition(baseX, baseY, existingPositions) {
+      const minDistance = 500; // Minimum distance between tree roots (increased for better spacing)
+      const positions = Array.from(existingPositions.values());
+      
+      // If no existing positions or base position is free, use it
+      if (positions.length === 0) return { x: baseX, y: baseY };
+      
+      // Check if base position is far enough from all others
+      const isFree = positions.every(pos => {
+        const dx = pos.x - baseX;
+        const dy = pos.y - baseY;
+        return Math.sqrt(dx * dx + dy * dy) >= minDistance;
+      });
+      
+      if (isFree) return { x: baseX, y: baseY };
+      
+      // Spiral outward to find a free spot
+      const spiralStep = 100;
+      for (let radius = spiralStep; radius < 2000; radius += spiralStep) {
+        for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
+          const testX = baseX + Math.cos(angle) * radius;
+          const testY = baseY + Math.sin(angle) * radius;
+          const testFree = positions.every(pos => {
+            const dx = pos.x - testX;
+            const dy = pos.y - testY;
+            return Math.sqrt(dx * dx + dy * dy) >= minDistance;
+          });
+          if (testFree) return { x: testX, y: testY };
+        }
+      }
+      
+      // Fallback: place below the lowest existing position
+      const maxY = Math.max(...positions.map(p => p.y));
+      return { x: baseX, y: maxY + 300 };
     }
 
     function syncTreePositions() {
@@ -1656,13 +1817,13 @@
         if (!selection.has(name)) positions.delete(name);
       });
       const names = Array.from(selection.keys());
-      const spacingX = 420;
-      const spacingY = 280;
-      names.forEach((name, index) => {
+      
+      names.forEach((name) => {
         if (!positions.has(name)) {
-          const col = index % 2;
-          const row = Math.floor(index / 2);
-          positions.set(name, { x: 80 + col * spacingX, y: 80 + row * spacingY });
+          // New item without position - place in view center, avoiding overlaps
+          const center = getViewCenter();
+          const freePos = findNonOverlappingPosition(center.x, center.y, positions);
+          positions.set(name, freePos);
         }
       });
     }
@@ -1841,14 +2002,26 @@
       }
 
       const dragTree = d3.drag()
+        .container(svg.node()) // Use SVG as container for consistent coordinate calculation
         .on("start", function (event) {
           if (event.sourceEvent) event.sourceEvent.stopPropagation();
           d3.select(this).classed("dragging", true);
         })
         .on("drag", function (event, d) {
+          // Use raw mouse movement from sourceEvent for precise 1:1 tracking
+          const sourceEvent = event.sourceEvent;
+          if (!sourceEvent) return;
+          
+          const currentK = getActiveZoom().k;
           const pos = positions.get(d.name) || { x: 0, y: 0 };
-          pos.x += event.dx / currentZoom.k;
-          pos.y += event.dy / currentZoom.k;
+          
+          // movementX/Y gives actual pixel movement of mouse
+          const dx = sourceEvent.movementX || 0;
+          const dy = sourceEvent.movementY || 0;
+          
+          // Convert screen pixels to board coordinates
+          pos.x += dx / currentK;
+          pos.y += dy / currentK;
           positions.set(d.name, pos);
           d3.select(this)
             .attr("transform", `translate(${pos.x},${pos.y})`);
@@ -2270,28 +2443,59 @@
     }
 
     function bindDrop() {
+      function screenToBoardCoords(clientX, clientY) {
+        const svg = ui.tree;
+        const rect = svg.getBoundingClientRect();
+        const screenX = clientX - rect.left;
+        const screenY = clientY - rect.top;
+        const transform = getActiveZoom();
+        // Convert screen coordinates to board coordinates
+        const boardX = (screenX - transform.x) / transform.k;
+        const boardY = (screenY - transform.y) / transform.k;
+        return { x: boardX, y: boardY };
+      }
+
       function handleDrop(event) {
         event.preventDefault();
         ui.dropzone.classList.remove("active");
         const name = event.dataTransfer.getData("text/plain");
-        if (name) addSelection(name, 1);
+        if (name) {
+          // Get drop position in board coordinates
+          const dropCoords = screenToBoardCoords(event.clientX, event.clientY);
+          const positions = getActivePositions();
+          // Find non-overlapping position near drop point
+          const freePos = findNonOverlappingPosition(dropCoords.x, dropCoords.y, positions);
+          addSelection(name, 1, freePos);
+        }
       }
 
       function handleOver(event) {
         event.preventDefault();
         ui.dropzone.classList.add("active");
+        ui.tree.parentElement.classList.add("drag-over");
       }
 
-      function handleLeave() {
+      function handleLeave(event) {
+        // Only remove if we're actually leaving the workspace
+        const workspace = ui.tree.parentElement;
+        const related = event.relatedTarget;
+        if (!related || !workspace.contains(related)) {
+          ui.dropzone.classList.remove("active");
+          workspace.classList.remove("drag-over");
+        }
+      }
+
+      function handleDropEnd() {
         ui.dropzone.classList.remove("active");
+        ui.tree.parentElement.classList.remove("drag-over");
       }
 
       ui.dropzone.addEventListener("dragover", handleOver);
       ui.dropzone.addEventListener("dragleave", handleLeave);
-      ui.dropzone.addEventListener("drop", handleDrop);
+      ui.dropzone.addEventListener("drop", (e) => { handleDrop(e); handleDropEnd(); });
       ui.tree.addEventListener("dragover", handleOver);
       ui.tree.addEventListener("dragleave", handleLeave);
-      ui.tree.addEventListener("drop", handleDrop);
+      ui.tree.addEventListener("drop", (e) => { handleDrop(e); handleDropEnd(); });
     }
 
     function renderAll() {
@@ -2307,7 +2511,7 @@
       ui.boardCraft.classList.toggle("active", state.board === "craft");
       ui.boardUses.classList.toggle("active", state.board === "uses");
       ui.boardRecycle.classList.toggle("active", state.board === "recycle");
-      ui.dropzone.textContent = state.board === "craft"
+      ui.dropzone.dataset.text = state.board === "craft"
         ? t("dropzoneCraft")
         : state.board === "uses"
           ? t("dropzoneUses")
@@ -2343,6 +2547,7 @@
       ui.clearSelection.textContent = t("clearSelection");
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
+      ui.centerView.title = t("centerView");
       ui.openGuide.textContent = t("openGuide");
       ui.closeGuide.textContent = t("closeGuide");
       ui.guideTitle.textContent = t("guideTitle");
@@ -2367,6 +2572,7 @@
       bindDrop();
       ui.search.addEventListener("input", renderList);
       ui.clearSelection.addEventListener("click", clearSelection);
+      ui.centerView.addEventListener("click", centerViewOnAll);
       ui.boardCraft.addEventListener("click", () => setBoard("craft"));
       ui.boardUses.addEventListener("click", () => setBoard("uses"));
       ui.boardRecycle.addEventListener("click", () => setBoard("recycle"));
