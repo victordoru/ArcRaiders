@@ -72,8 +72,13 @@
       --border: rgba(255, 255, 255, 0.06);
       --ink: #e0e0e0;
       --muted: #71717a;
-      --accent: #ff4d00;
-      --accent-glow: rgba(255, 77, 0, 0.3);
+      --accent: #3b82f6;
+      --accent-hi: #60a5fa;
+      --accent-glow: rgba(59, 130, 246, 0.35);
+      --accent-tint-strong: rgba(59, 130, 246, 0.2);
+      --accent-tint: rgba(59, 130, 246, 0.15);
+      --accent-tint-weak: rgba(59, 130, 246, 0.08);
+      --accent-tint-min: rgba(59, 130, 246, 0.03);
       --accent-2: #00ffa3;
       --craft: #00ffa3;
       --loot: #ffb800;
@@ -118,6 +123,10 @@
       background: var(--bg);
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    .is-hidden {
+      display: none !important;
     }
 
     /* Textured Background - Dark Grid / Dots */
@@ -359,6 +368,106 @@
       display: none;
     }
 
+    .board-modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 220;
+    }
+
+    .board-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .board-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 10, 12, 0.7);
+      backdrop-filter: blur(6px);
+    }
+
+    .board-dialog {
+      position: relative;
+      width: min(420px, 92vw);
+      background: rgba(18, 18, 20, 0.98);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 18px 20px;
+    }
+
+    .modal-body label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .modal-body input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .modal-body input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .modal-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .modal-error {
+      font-size: 0.8rem;
+      color: #ff9c9c;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
     input[type="search"] {
       width: 100%;
       padding: 12px 14px;
@@ -486,8 +595,18 @@
       flex: 1;
       height: 100%;
       position: relative;
-      overflow: hidden;
       z-index: 10;
+      display: flex;
+      overflow: visible;
+      min-width: 0;
+    }
+
+    .workspace-canvas {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
     }
 
     .board-switcher {
@@ -505,6 +624,67 @@
       background: rgba(18, 18, 20, 0.85);
       backdrop-filter: blur(20px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .session-bar {
+      display: none;
+      /* Moved to bottom-left-group */
+    }
+
+    /* Share banner for imported boards */
+    .share-banner {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 115;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--accent-2);
+      background: rgba(0, 255, 163, 0.08);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .share-banner span {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-2);
+    }
+
+    .share-banner .button {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+
+    .share-dismiss {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    .share-dismiss:hover {
+      color: var(--ink);
     }
 
     .board-btn {
@@ -543,42 +723,474 @@
       pointer-events: none;
     }
 
-    .selected-bar {
+    /* ═══════════════════════════════════════════════════════════════════════════
+       UNIFIED CONTROL PANEL - Bottom Left (Always Visible)
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    .control-panel {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 9999;
+    }
+
+    .control-trigger {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px var(--accent-glow), 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .control-trigger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px var(--accent-glow);
+    }
+
+    .control-trigger .icon-open {
+      display: block;
+    }
+
+    .control-trigger .icon-close {
+      display: none;
+    }
+
+    .control-panel.is-open .control-trigger .icon-open {
+      display: none;
+    }
+
+    .control-panel.is-open .control-trigger .icon-close {
+      display: block;
+    }
+
+    .control-panel.is-open .control-trigger {
+      background: linear-gradient(135deg, #333, #222);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .control-content {
       position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
+      bottom: calc(100% + 12px);
+      left: 0;
+      width: 360px;
+      max-height: 500px;
+      background: linear-gradient(145deg, rgba(24, 24, 28, 0.98), rgba(16, 16, 20, 0.99));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(40px);
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .control-panel.is-open .control-content {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .control-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .control-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .current-board-badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: var(--accent-tint);
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .control-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .control-btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--ink);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .control-btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .control-btn.primary:hover {
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    .boards-section {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .boards-section-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 8px 8px 12px;
+    }
+
+    .board-card {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 16px;
-      background: rgba(22, 22, 24, 0.9);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-      max-width: 90%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .board-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .board-card.active {
+      background: linear-gradient(135deg, var(--accent-tint), color-mix(in srgb, var(--accent-tint-weak), transparent 25%));
+      border-color: var(--accent);
+    }
+
+    .board-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .board-card.active .board-card-icon {
+      background: var(--accent-tint-strong);
+    }
+
+    .board-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .board-card-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+    }
+
+    .board-card-name:hover {
+      color: #fff;
+    }
+
+    .board-card-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .board-card-actions {
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .board-card:hover .board-card-actions {
+      opacity: 1;
+    }
+
+    .board-action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .board-action-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--ink);
+    }
+
+    .board-action-btn.delete:hover {
+      background: rgba(255, 100, 100, 0.15);
+      color: #ff9c9c;
+    }
+
+    /* Share Dropdown */
+    .share-dropdown {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      right: 0;
+      width: 180px;
+      background: rgba(22, 22, 26, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(30px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .share-dropdown.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .share-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: transparent;
+      border: none;
+      color: var(--ink);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .share-option:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .share-option .share-icon {
+      width: 24px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .boards-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+
+    .boards-empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    .boards-empty-text {
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .boards-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .boards-title::before {
+      content: '📁';
+    }
+
+    .boards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .board-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .board-row:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .board-row.active {
+      background: linear-gradient(135deg, var(--accent-tint), var(--accent-tint-weak));
+      border-color: var(--accent);
+    }
+
+    .board-item {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .board-delete {
+      opacity: 0;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .board-row:hover .board-delete {
+      opacity: 1;
+    }
+
+    .board-delete:hover {
+      background: rgba(255, 100, 100, 0.15);
+      color: #ff9c9c;
+    }
+
+    .boards-empty {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════════
+       SELECTION BAR - Fixed Center Bottom
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    .selection-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 10px 8px 18px;
+      background: linear-gradient(135deg, rgba(28, 28, 32, 0.95), rgba(18, 18, 22, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      backdrop-filter: blur(30px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .selection-bar.has-items {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .selected-chips {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      max-width: 100%;
-      padding-bottom: 4px;
+      max-width: 450px;
+      padding: 4px 0;
+      scrollbar-width: none;
+    }
+
+    .selected-chips::-webkit-scrollbar {
+      display: none;
     }
 
     .chip {
       flex: 0 0 auto;
-      padding: 5px 12px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.06);
-      font-size: 0.85rem;
-      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .chip:hover {
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .chip button {
@@ -587,11 +1199,75 @@
       color: var(--muted);
       cursor: pointer;
       padding: 0;
-      font-size: 1.2rem;
+      font-size: 1rem;
+      line-height: 1;
+      transition: color 0.2s;
     }
 
     .chip button:hover {
       color: #fff;
+    }
+
+    .selection-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .selection-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .selection-btn.ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink);
+    }
+
+    .selection-btn.ghost:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .selection-btn.danger {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+      color: #fff;
+    }
+
+    .selection-btn.danger:hover {
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    @media (max-width: 720px) {
+      .floating-menu {
+        bottom: 20px;
+        left: 20px;
+      }
+
+      .boards-drawer {
+        left: 20px;
+        bottom: 90px;
+      }
+
+      .boards-panel {
+        width: calc(100vw - 40px);
+        max-width: 360px;
+      }
+
+      .selection-bar {
+        max-width: calc(100vw - 40px);
+        bottom: 20px;
+      }
+
+      .selected-chips {
+        max-width: 200px;
+      }
     }
 
     #tree {
@@ -789,6 +1465,22 @@
       box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.15);
     }
 
+    .button.small {
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      border-radius: 10px;
+    }
+
+    .button.danger {
+      border-color: rgba(255, 122, 122, 0.4);
+      color: #ff9c9c;
+    }
+
+    .button.danger:hover {
+      border-color: rgba(255, 122, 122, 0.8);
+      box-shadow: 0 0 0 2px rgba(255, 122, 122, 0.12);
+    }
+
     /* D3 Nodes */
     .link {
       fill: none;
@@ -957,7 +1649,7 @@
 
     #dropzone.active {
       opacity: 1;
-      background: rgba(255, 77, 0, 0.03);
+      background: var(--accent-tint-min);
       border: 3px dashed var(--accent);
       margin: 12px;
       border-radius: 20px;
@@ -1007,64 +1699,135 @@
 <body>
 
   <main>
-    <aside class="sidebar">
-      <button id="toggle-sidebar" class="toggle-sidebar-btn" title="Toggle Sidebar">
-        <svg viewBox="0 0 24 24">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <div class="sidebar-inner">
-        <div class="sidebar-header">
-          <h2 id="categories-title">Categories</h2>
-          <button id="toggle-lang" class="button ghost">ES</button>
-        </div>
-        <div class="filters">
-          <input id="search" type="search" placeholder="Search materials...">
-        </div>
-        <button id="open-guide" class="button ghost guide-btn">Open guide</button>
-        <div id="category-list" class="category-list"></div>
-      </div>
-    </aside>
-
     <section class="workspace">
-      <div id="dropzone">Drop to add to tree</div>
-      <div class="board-switcher" id="board-switcher">
-        <button id="board-craft" class="board-btn active" data-board="craft">Crafting</button>
-        <button id="board-uses" class="board-btn" data-board="uses">Uses</button>
-        <button id="board-recycle" class="board-btn" data-board="recycle">Recycling</button>
-      </div>
-      <svg id="tree"></svg>
-
-      <div class="selected-bar">
-        <div id="selected-chips" class="selected-chips"></div>
-        <button id="center-view" class="button ghost" title="Center view on all objects">⌖</button>
-        <button id="clear-selection" class="button secondary">Clear Selection</button>
-      </div>
-
-      <aside class="summary-panel" id="summary-panel">
-        <div id="summary-resizer" class="summary-resizer"></div>
-        <button id="toggle-summary" class="toggle-summary-btn" title="Toggle Summary">
+      <aside class="sidebar">
+        <button id="toggle-sidebar" class="toggle-sidebar-btn" title="Toggle Sidebar">
           <svg viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6"></polyline>
+            <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </button>
-        <div class="summary-scroll">
-          <div class="summary-header">
-            <h3 id="summary-title">Base Materials</h3>
-            <button id="sort-summary" class="sort-btn" title="Toggle Sort (Name/Rarity)">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 18l-3 3-3-3" />
-                <path d="M12 3v18" />
-                <path d="M9 6l3-3 3 3" />
-              </svg>
-              <span id="sort-label">Order</span>
-            </button>
+        <div class="sidebar-inner">
+          <div class="sidebar-header">
+            <h2 id="categories-title">Categories</h2>
+            <button id="toggle-lang" class="button ghost">ES</button>
           </div>
-          <div id="summary-empty" class="summary-empty">Select items to see requirements</div>
-          <ul id="summary-list" class="summary-list"></ul>
+          <div class="filters">
+            <input id="search" type="search" placeholder="Search materials...">
+          </div>
+          <button id="open-guide" class="button ghost guide-btn">Open guide</button>
+          <div id="category-list" class="category-list"></div>
         </div>
       </aside>
+
+      <div class="workspace-canvas">
+        <div id="dropzone">Drop to add to tree</div>
+        <div class="board-switcher" id="board-switcher">
+          <button id="board-craft" class="board-btn active" data-board="craft">Crafting</button>
+          <button id="board-uses" class="board-btn" data-board="uses">Uses</button>
+          <button id="board-recycle" class="board-btn" data-board="recycle">Recycling</button>
+        </div>
+        <!-- Banner for shared boards -->
+        <div id="share-banner" class="share-banner is-hidden">
+          <span id="share-banner-text">Board compartida</span>
+          <button id="share-save-btn" class="button secondary small">Guardar copia</button>
+          <button id="share-dismiss-btn" class="share-dismiss">×</button>
+        </div>
+        <svg id="tree"></svg>
+
+        <!-- Unified Control Panel - Bottom Left -->
+        <div class="control-panel" id="control-panel">
+          <div class="control-content">
+            <div class="control-header">
+              <div class="control-title">
+                <span>📁</span>
+                <span id="boards-title">Mis Boards</span>
+              </div>
+              <div class="control-actions">
+                <button id="save-board-btn" class="control-btn" title="Guardar board actual">💾 Guardar</button>
+                <button id="new-board-btn" class="control-btn primary">+ Nueva</button>
+              </div>
+            </div>
+
+            <div class="boards-section">
+              <div class="boards-section-title">Board actual</div>
+              <div class="board-card active" id="current-board-card">
+                <div class="board-card-icon">📋</div>
+                <div class="board-card-info">
+                  <button class="board-card-name" id="current-board-name">Sin guardar</button>
+                  <div class="board-card-meta">Sesión activa</div>
+                </div>
+                <div class="board-card-actions" style="opacity: 1;">
+                  <button class="board-action-btn share-trigger" id="share-board-btn" title="Compartir">🔗</button>
+                  <div class="share-dropdown" id="share-dropdown">
+                    <button class="share-option" data-action="copy">
+                      <span class="share-icon">📋</span>
+                      <span>Copiar enlace</span>
+                    </button>
+                    <button class="share-option" data-action="whatsapp">
+                      <span class="share-icon">💬</span>
+                      <span>WhatsApp</span>
+                    </button>
+                    <button class="share-option" data-action="twitter">
+                      <span class="share-icon">🐦</span>
+                      <span>Twitter / X</span>
+                    </button>
+                    <button class="share-option" data-action="telegram">
+                      <span class="share-icon">✈️</span>
+                      <span>Telegram</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="boards-section-title" id="saved-boards-title">Boards guardadas</div>
+              <div id="boards-list" class="boards-list"></div>
+              <div id="boards-empty" class="boards-empty">
+                <div class="boards-empty-icon">📂</div>
+                <div class="boards-empty-text">No tienes boards guardadas</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="control-trigger" id="control-trigger" title="Gestionar boards">
+            <span class="icon-open">📁</span>
+            <span class="icon-close">✕</span>
+          </button>
+        </div>
+
+        <!-- Selection Bar - Fixed Center Bottom -->
+        <div class="selection-bar" id="selection-bar">
+          <div id="selected-chips" class="selected-chips"></div>
+          <div class="selection-actions">
+            <button id="center-view" class="selection-btn ghost" title="Centrar vista">⌖</button>
+            <button id="clear-selection" class="selection-btn danger">Limpiar</button>
+          </div>
+        </div>
+
+        <aside class="summary-panel" id="summary-panel">
+          <div id="summary-resizer" class="summary-resizer"></div>
+          <button id="toggle-summary" class="toggle-summary-btn" title="Toggle Summary">
+            <svg viewBox="0 0 24 24">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <div class="summary-scroll">
+            <div class="summary-header">
+              <h3 id="summary-title">Base Materials</h3>
+              <button id="sort-summary" class="sort-btn" title="Toggle Sort (Name/Rarity)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 18l-3 3-3-3" />
+                  <path d="M12 3v18" />
+                  <path d="M9 6l3-3 3 3" />
+                </svg>
+                <span id="sort-label">Order</span>
+              </button>
+            </div>
+            <div id="summary-empty" class="summary-empty">Select items to see requirements</div>
+            <ul id="summary-list" class="summary-list"></ul>
+          </div>
+        </aside>
+      </div>
     </section>
   </main>
 
@@ -1129,14 +1892,34 @@
             <li>Arrastra un material objetivo (por ejemplo, Procesador) para ver que lo recicla.</li>
             <li>Te ayuda a decidir que guardar o reciclar durante las partidas.</li>
           </ol>
-          
+
         </div>
       </div>
     </div>
   </div>
 
+  <div id="board-modal" class="board-modal" aria-hidden="true">
+    <div class="board-backdrop" id="board-backdrop"></div>
+    <div class="board-dialog" role="dialog" aria-modal="true" aria-labelledby="board-modal-title">
+      <div class="modal-header">
+        <h2 id="board-modal-title">Nueva board</h2>
+        <button id="board-modal-close" class="guide-close" type="button">Cerrar</button>
+      </div>
+      <form id="board-form" class="modal-body">
+        <label id="board-name-label" for="board-name-input">Nombre de la board</label>
+        <input id="board-name-input" name="board-name-input" type="text" maxlength="48" required>
+        <div id="board-error" class="modal-error is-hidden"></div>
+        <div class="modal-actions">
+          <button id="board-cancel" type="button" class="button ghost small">Cancelar</button>
+          <button id="board-save" type="submit" class="button secondary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
   <script src="data.js"></script>
   <script>
     const DATA = window.ARCDATA;
@@ -1169,7 +1952,40 @@
       guideBackdrop: document.getElementById("guide-backdrop"),
       closeGuide: document.getElementById("close-guide"),
       guideTitle: document.getElementById("guide-title"),
-      langToggle: document.getElementById("toggle-lang")
+      langToggle: document.getElementById("toggle-lang"),
+      // Save/Share buttons
+      saveBoardBtn: document.getElementById("save-board-btn"),
+      shareBoardBtn: document.getElementById("share-board-btn"),
+      // Share banner
+      shareBanner: document.getElementById("share-banner"),
+      shareBannerText: document.getElementById("share-banner-text"),
+      shareSaveBtn: document.getElementById("share-save-btn"),
+      shareDismissBtn: document.getElementById("share-dismiss-btn"),
+      // Boards drawer
+      boardsDrawer: document.getElementById("boards-drawer"),
+      boardsHandle: document.getElementById("boards-handle"),
+      boardsHandleTitle: document.getElementById("boards-handle-title"),
+      currentBoardName: document.getElementById("current-board-name"),
+      boardsList: document.getElementById("boards-list"),
+      boardsTitle: document.getElementById("boards-title"),
+      boardsEmpty: document.getElementById("boards-empty"),
+      newBoardBtn: document.getElementById("new-board-btn"),
+      // Board modal
+      boardModal: document.getElementById("board-modal"),
+      boardBackdrop: document.getElementById("board-backdrop"),
+      boardForm: document.getElementById("board-form"),
+      boardNameInput: document.getElementById("board-name-input"),
+      boardError: document.getElementById("board-error"),
+      boardModalTitle: document.getElementById("board-modal-title"),
+      boardNameLabel: document.getElementById("board-name-label"),
+      boardSave: document.getElementById("board-save"),
+      boardCancel: document.getElementById("board-cancel"),
+      boardModalClose: document.getElementById("board-modal-close"),
+      // Control Panel
+      controlPanel: document.getElementById("control-panel"),
+      controlTrigger: document.getElementById("control-trigger"),
+      shareDropdown: document.getElementById("share-dropdown"),
+      selectionBar: document.getElementById("selection-bar")
     };
 
     let sortMode = "name"; // 'name' or 'rarity'
@@ -1212,8 +2028,129 @@
       recycle: d3.zoomIdentity
     };
 
-    function saveAppState() {
-      const data = {
+    const STORAGE_KEYS = {
+      currentState: "arc_raiders_craft_state",
+      boards: "arc_raiders_boards_v2",
+      currentBoardId: "arc_raiders_current_board"
+    };
+
+    // Track if we're viewing a shared board (not saved locally)
+    let isViewingSharedBoard = false;
+    let sharedBoardData = null;
+    let currentBoardId = null;
+
+    let boardModalMode = "new";
+    let boardModalTarget = null;
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // BOARDS STORAGE (simplified, no user)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function loadBoardsStore() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEYS.boards);
+        if (!saved) {
+          return { boards: [] };
+        }
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Error loading boards:", e);
+        return { boards: [] };
+      }
+    }
+
+    function saveBoardsStore(store) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.boards, JSON.stringify(store));
+      } catch (e) {
+        console.error("Error saving boards:", e);
+      }
+    }
+
+    function loadCurrentBoardId() {
+      return localStorage.getItem(STORAGE_KEYS.currentBoardId) || null;
+    }
+
+    function saveCurrentBoardId(id) {
+      if (id) {
+        localStorage.setItem(STORAGE_KEYS.currentBoardId, id);
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.currentBoardId);
+      }
+    }
+
+    function generateBoardId() {
+      return `board_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    function getDefaultBoardName(store) {
+      const count = store.boards.length + 1;
+      return `Board ${count}`;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // URL SHARING (compress with lz-string)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function compressBoardData(data) {
+      try {
+        const json = JSON.stringify(data);
+        return LZString.compressToEncodedURIComponent(json);
+      } catch (e) {
+        console.error("Error compressing board data:", e);
+        return null;
+      }
+    }
+
+    function decompressBoardData(compressed) {
+      try {
+        const json = LZString.decompressFromEncodedURIComponent(compressed);
+        if (!json) return null;
+        return JSON.parse(json);
+      } catch (e) {
+        console.error("Error decompressing board data:", e);
+        return null;
+      }
+    }
+
+    function generateShareURL() {
+      const data = serializeAppState();
+      const compressed = compressBoardData(data);
+      if (!compressed) return null;
+
+      const url = new URL(window.location.href);
+      url.hash = `board=${compressed}`;
+      return url.toString();
+    }
+
+    function parseShareURL() {
+      const hash = window.location.hash;
+      if (!hash || !hash.startsWith("#board=")) return null;
+
+      const compressed = hash.substring(7); // Remove "#board="
+      return decompressBoardData(compressed);
+    }
+
+    function clearShareURL() {
+      if (window.location.hash.startsWith("#board=")) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+    }
+
+    function createBoard(store, name, data) {
+      const id = generateBoardId();
+      const board = {
+        id,
+        name,
+        updatedAt: new Date().toISOString(),
+        data
+      };
+      store.boards.unshift(board);
+      return board;
+    }
+
+    function serializeAppState() {
+      return {
         selections: {
           craft: Array.from(selections.craft.entries()),
           uses: Array.from(selections.uses.entries()),
@@ -1234,76 +2171,214 @@
         usesDepth: Array.from(state.usesDepth.entries()),
         sortMode: sortMode
       };
-      localStorage.setItem("arc_raiders_craft_state", JSON.stringify(data));
     }
 
-    function loadAppState() {
+    function buildEmptyState() {
+      return {
+        selections: { craft: [], uses: [], recycle: [] },
+        treePositions: { craft: [], uses: [], recycle: [] },
+        zoomTransforms: {
+          craft: { x: 0, y: 0, k: 1 },
+          uses: { x: 0, y: 0, k: 1 },
+          recycle: { x: 0, y: 0, k: 1 }
+        },
+        state: { lang: state.lang, board: "craft" },
+        prevLevels: [],
+        usesDepth: [],
+        sortMode: sortMode
+      };
+    }
+
+    function applyAppState(data) {
+      if (!data) return;
+
+      state.board = "craft";
+      state.prevLevels = new Map();
+      state.usesDepth = new Map();
+      selections.craft = new Map();
+      selections.uses = new Map();
+      selections.recycle = new Map();
+      treePositions.craft = new Map();
+      treePositions.uses = new Map();
+      treePositions.recycle = new Map();
+      zoomTransforms.craft = d3.zoomIdentity;
+      zoomTransforms.uses = d3.zoomIdentity;
+      zoomTransforms.recycle = d3.zoomIdentity;
+      sortMode = "name";
+
+      if (data.state && data.state.lang) state.lang = data.state.lang;
+      if (data.state && data.state.board && ["craft", "uses", "recycle"].includes(data.state.board)) {
+        state.board = data.state.board;
+      }
+      if (data.sortMode) sortMode = data.sortMode;
+      if (Array.isArray(data.prevLevels)) {
+        state.prevLevels = new Map(data.prevLevels);
+      }
+      if (Array.isArray(data.usesDepth)) {
+        state.usesDepth = new Map(data.usesDepth);
+      }
+
+      if (data.selections && data.selections.craft) {
+        selections.craft = new Map(data.selections.craft);
+      }
+      if (data.selections && data.selections.uses) {
+        selections.uses = new Map(data.selections.uses);
+      }
+      if (data.selections && data.selections.recycle) {
+        selections.recycle = new Map(data.selections.recycle);
+      }
+      if (Array.isArray(data.selection)) {
+        selections.craft = new Map(data.selection);
+      }
+
+      if (data.treePositions && data.treePositions.craft) {
+        treePositions.craft = new Map(data.treePositions.craft);
+      }
+      if (data.treePositions && data.treePositions.uses) {
+        treePositions.uses = new Map(data.treePositions.uses);
+      }
+      if (data.treePositions && data.treePositions.recycle) {
+        treePositions.recycle = new Map(data.treePositions.recycle);
+      }
+      if (Array.isArray(data.treePositions)) {
+        treePositions.craft = new Map(data.treePositions);
+      }
+
+      if (data.zoomTransforms && data.zoomTransforms.craft) {
+        zoomTransforms.craft = d3.zoomIdentity
+          .translate(data.zoomTransforms.craft.x, data.zoomTransforms.craft.y)
+          .scale(data.zoomTransforms.craft.k);
+      }
+      if (data.zoomTransforms && data.zoomTransforms.uses) {
+        zoomTransforms.uses = d3.zoomIdentity
+          .translate(data.zoomTransforms.uses.x, data.zoomTransforms.uses.y)
+          .scale(data.zoomTransforms.uses.k);
+      }
+      if (data.zoomTransforms && data.zoomTransforms.recycle) {
+        zoomTransforms.recycle = d3.zoomIdentity
+          .translate(data.zoomTransforms.recycle.x, data.zoomTransforms.recycle.y)
+          .scale(data.zoomTransforms.recycle.k);
+      }
+      if (data.zoomTransform) {
+        zoomTransforms.craft = d3.zoomIdentity
+          .translate(data.zoomTransform.x, data.zoomTransform.y)
+          .scale(data.zoomTransform.k);
+      }
+    }
+
+    function readCurrentState() {
       try {
-        const saved = localStorage.getItem("arc_raiders_craft_state");
-        if (!saved) return;
-        const data = JSON.parse(saved);
-
-        if (data.state && data.state.lang) state.lang = data.state.lang;
-        if (data.state && data.state.board && ["craft", "uses", "recycle"].includes(data.state.board)) {
-          state.board = data.state.board;
-        }
-        if (data.sortMode) sortMode = data.sortMode;
-        if (Array.isArray(data.prevLevels)) {
-          state.prevLevels = new Map(data.prevLevels);
-        }
-        if (Array.isArray(data.usesDepth)) {
-          state.usesDepth = new Map(data.usesDepth);
-        }
-
-        if (data.selections && data.selections.craft) {
-          selections.craft = new Map(data.selections.craft);
-        }
-        if (data.selections && data.selections.uses) {
-          selections.uses = new Map(data.selections.uses);
-        }
-        if (data.selections && data.selections.recycle) {
-          selections.recycle = new Map(data.selections.recycle);
-        }
-        if (Array.isArray(data.selection)) {
-          selections.craft = new Map(data.selection);
-        }
-
-        if (data.treePositions && data.treePositions.craft) {
-          treePositions.craft = new Map(data.treePositions.craft);
-        }
-        if (data.treePositions && data.treePositions.uses) {
-          treePositions.uses = new Map(data.treePositions.uses);
-        }
-        if (data.treePositions && data.treePositions.recycle) {
-          treePositions.recycle = new Map(data.treePositions.recycle);
-        }
-        if (Array.isArray(data.treePositions)) {
-          treePositions.craft = new Map(data.treePositions);
-        }
-
-        if (data.zoomTransforms && data.zoomTransforms.craft) {
-          zoomTransforms.craft = d3.zoomIdentity
-            .translate(data.zoomTransforms.craft.x, data.zoomTransforms.craft.y)
-            .scale(data.zoomTransforms.craft.k);
-        }
-        if (data.zoomTransforms && data.zoomTransforms.uses) {
-          zoomTransforms.uses = d3.zoomIdentity
-            .translate(data.zoomTransforms.uses.x, data.zoomTransforms.uses.y)
-            .scale(data.zoomTransforms.uses.k);
-        }
-        if (data.zoomTransforms && data.zoomTransforms.recycle) {
-          zoomTransforms.recycle = d3.zoomIdentity
-            .translate(data.zoomTransforms.recycle.x, data.zoomTransforms.recycle.y)
-            .scale(data.zoomTransforms.recycle.k);
-        }
-        if (data.zoomTransform) {
-          zoomTransforms.craft = d3.zoomIdentity
-            .translate(data.zoomTransform.x, data.zoomTransform.y)
-            .scale(data.zoomTransform.k);
-        }
+        const saved = localStorage.getItem(STORAGE_KEYS.currentState);
+        if (!saved) return null;
+        return JSON.parse(saved);
       } catch (e) {
         console.error("Error loading saved state:", e);
+        return null;
       }
+    }
+
+    function saveCurrentState() {
+      const data = serializeAppState();
+      localStorage.setItem(STORAGE_KEYS.currentState, JSON.stringify(data));
+
+      // Also update the board if we have one selected
+      if (currentBoardId && !isViewingSharedBoard) {
+        const store = loadBoardsStore();
+        const board = store.boards.find(b => b.id === currentBoardId);
+        if (board) {
+          board.data = data;
+          board.updatedAt = new Date().toISOString();
+          saveBoardsStore(store);
+        }
+      }
+    }
+
+    function loadCurrentState() {
+      const data = readCurrentState();
+      if (!data) return false;
+      applyAppState(data);
+      return true;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // BOARD OPERATIONS (simplified)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function saveAsNewBoard(name) {
+      const store = loadBoardsStore();
+      const data = serializeAppState();
+      const board = createBoard(store, name, data);
+      saveBoardsStore(store);
+
+      currentBoardId = board.id;
+      saveCurrentBoardId(board.id);
+      isViewingSharedBoard = false;
+      sharedBoardData = null;
+
+      updateBoardsUI();
+      hideShareBanner();
+      return board;
+    }
+
+    function switchToBoard(boardId) {
+      if (currentBoardId === boardId && !isViewingSharedBoard) {
+        if (ui.controlPanel) ui.controlPanel.classList.remove("is-open");
+        return;
+      }
+
+      // Save current state if we have an active board
+      if (currentBoardId && !isViewingSharedBoard) {
+        saveCurrentState();
+      }
+
+      const store = loadBoardsStore();
+      const board = store.boards.find(b => b.id === boardId);
+      if (!board) return;
+
+      currentBoardId = boardId;
+      saveCurrentBoardId(boardId);
+      isViewingSharedBoard = false;
+      sharedBoardData = null;
+
+      applyAppState(board.data);
+      applyLanguage();
+      updateBoardsUI();
+      hideShareBanner();
+      if (ui.controlPanel) ui.controlPanel.classList.remove("is-open");
+    }
+
+    function deleteBoard(boardId) {
+      const store = loadBoardsStore();
+      const idx = store.boards.findIndex(b => b.id === boardId);
+      if (idx === -1) return;
+
+      store.boards.splice(idx, 1);
+      saveBoardsStore(store);
+
+      // If we deleted the current board, switch to another or clear
+      if (currentBoardId === boardId) {
+        if (store.boards.length > 0) {
+          switchToBoard(store.boards[0].id);
+        } else {
+          currentBoardId = null;
+          saveCurrentBoardId(null);
+          applyAppState(buildEmptyState());
+          applyLanguage();
+        }
+      }
+
+      updateBoardsUI();
+    }
+
+    function renameBoard(boardId, newName) {
+      const store = loadBoardsStore();
+      const board = store.boards.find(b => b.id === boardId);
+      if (!board) return;
+
+      board.name = newName;
+      board.updatedAt = new Date().toISOString();
+      saveBoardsStore(store);
+      updateBoardsUI();
     }
 
     const uiStrings = {
@@ -1345,7 +2420,31 @@
         prevLevelsHide: "Hide previous levels",
         langLabel: "EN",
         title: "ARC Raiders Crafting, Uses & Recycling | Inventory Planner",
-        centerView: "Center view"
+        centerView: "Center view",
+        // Save/Share
+        saveBoard: "💾 Save",
+        shareBoard: "🔗 Share",
+        shareCopied: "Copied!",
+        shareError: "Error generating share URL",
+        sharePrompt: "Copy this URL:",
+        sharedBoard: "Shared board",
+        sharedBannerText: "Shared board",
+        saveCopy: "Save copy",
+        saved: "Saved!",
+        unsavedBoard: "Unsaved",
+        // Boards
+        boardDrawerTitle: "My Boards",
+        boardDefaultName: "My board",
+        boardNew: "+ New",
+        boardDelete: "Delete",
+        boardDeleteConfirm: "Delete this board?",
+        boardEmpty: "No saved boards",
+        boardNewTitle: "Save board",
+        boardRenameTitle: "Rename board",
+        boardNameLabel: "Board name",
+        boardSave: "Save",
+        boardCancel: "Cancel",
+        modalClose: "Close"
       },
       es: {
         categories: "Categorias",
@@ -1385,12 +2484,248 @@
         prevLevelsHide: "Ocultar niveles anteriores",
         langLabel: "ES",
         title: "ARC Raiders Arboles de crafteo, usos y reciclaje | Inventario",
-        centerView: "Centrar vista"
+        centerView: "Centrar vista",
+        // Save/Share
+        saveBoard: "💾 Guardar",
+        shareBoard: "🔗 Compartir",
+        shareCopied: "¡Copiado!",
+        shareError: "Error generando URL",
+        sharePrompt: "Copia esta URL:",
+        sharedBoard: "Board compartida",
+        sharedBannerText: "Board compartida",
+        saveCopy: "Guardar copia",
+        saved: "¡Guardado!",
+        unsavedBoard: "Sin guardar",
+        // Boards
+        boardDrawerTitle: "Mis Boards",
+        boardDefaultName: "Mi board",
+        boardNew: "+ Nueva",
+        boardDelete: "Eliminar",
+        boardDeleteConfirm: "¿Eliminar esta board?",
+        boardEmpty: "Sin boards guardadas",
+        boardNewTitle: "Guardar board",
+        boardRenameTitle: "Renombrar board",
+        boardNameLabel: "Nombre de la board",
+        boardSave: "Guardar",
+        boardCancel: "Cancelar",
+        modalClose: "Cerrar"
       }
     };
 
     function t(key) {
       return uiStrings[state.lang][key] || key;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // UI UPDATES
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function updateBoardsUI() {
+      const store = loadBoardsStore();
+
+      // Update handle text
+      if (isViewingSharedBoard) {
+        ui.currentBoardName.textContent = t("sharedBoard") || "Board compartida";
+      } else if (currentBoardId) {
+        const board = store.boards.find(b => b.id === currentBoardId);
+        ui.currentBoardName.textContent = board ? board.name : t("unsavedBoard");
+      } else {
+        ui.currentBoardName.textContent = t("unsavedBoard");
+      }
+
+      // Build list
+      ui.boardsList.innerHTML = "";
+      if (!store.boards.length) {
+        ui.boardsEmpty.classList.remove("is-hidden");
+        return;
+      }
+
+      ui.boardsEmpty.classList.add("is-hidden");
+      store.boards.forEach(board => {
+        const row = document.createElement("div");
+        row.className = `board-row${board.id === currentBoardId && !isViewingSharedBoard ? " active" : ""}`;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "board-item";
+        button.textContent = board.name;
+        button.addEventListener("click", () => switchToBoard(board.id));
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
+        deleteBtn.className = "board-delete";
+        deleteBtn.textContent = "×";
+        deleteBtn.title = t("boardDelete");
+        deleteBtn.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (confirm(t("boardDeleteConfirm"))) {
+            deleteBoard(board.id);
+          }
+        });
+
+        row.appendChild(button);
+        row.appendChild(deleteBtn);
+        ui.boardsList.appendChild(row);
+      });
+    }
+
+    function showShareBanner() {
+      ui.shareBanner.classList.remove("is-hidden");
+    }
+
+    function hideShareBanner() {
+      ui.shareBanner.classList.add("is-hidden");
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function loadInitialState() {
+      // Check for shared board in URL first
+      const sharedData = parseShareURL();
+      if (sharedData) {
+        isViewingSharedBoard = true;
+        sharedBoardData = sharedData;
+        applyAppState(sharedData);
+        showShareBanner();
+        clearShareURL();
+        return;
+      }
+
+      // Try to load saved board
+      currentBoardId = loadCurrentBoardId();
+      if (currentBoardId) {
+        const store = loadBoardsStore();
+        const board = store.boards.find(b => b.id === currentBoardId);
+        if (board) {
+          applyAppState(board.data);
+          return;
+        }
+        // Board was deleted, clear the reference
+        currentBoardId = null;
+        saveCurrentBoardId(null);
+      }
+
+      // Load current state from localStorage or start fresh
+      if (!loadCurrentState()) {
+        applyAppState(buildEmptyState());
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SHARE ACTIONS
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function handleShare() {
+      const url = generateShareURL();
+      if (!url) {
+        alert(t("shareError") || "Error generating share URL");
+        return;
+      }
+
+      // Try to copy to clipboard
+      navigator.clipboard.writeText(url).then(() => {
+        // Show temporary feedback
+        const originalText = ui.shareBoardBtn.textContent;
+        ui.shareBoardBtn.textContent = "✓";
+        setTimeout(() => {
+          ui.shareBoardBtn.textContent = originalText;
+        }, 2000);
+      }).catch(() => {
+        // Fallback: show URL in prompt
+        prompt(t("sharePrompt") || "Copia esta URL:", url);
+      });
+    }
+
+    function handleShareAction(action) {
+      const url = generateShareURL();
+      if (!url) {
+        alert(t("shareError") || "Error generating share URL");
+        return;
+      }
+
+      const text = "Check out my ARC Raiders board!";
+
+      switch (action) {
+        case 'copy':
+          navigator.clipboard.writeText(url).then(() => {
+            alert(t("shareCopied") || "¡Enlace copiado!");
+          }).catch(() => {
+            prompt(t("sharePrompt") || "Copia esta URL:", url);
+          });
+          break;
+        case 'whatsapp':
+          window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, '_blank');
+          break;
+        case 'twitter':
+          window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+          break;
+        case 'telegram':
+          window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+          break;
+      }
+    }
+
+    function handleSave() {
+      if (isViewingSharedBoard || !currentBoardId) {
+        // Need to create new board - open modal
+        openBoardModal("new");
+      } else {
+        // Update existing board silently
+        saveCurrentState();
+        // Show feedback
+        const originalText = ui.saveBoardBtn.textContent;
+        ui.saveBoardBtn.textContent = "✓ " + (t("saved") || "Guardado!");
+        setTimeout(() => {
+          ui.saveBoardBtn.textContent = originalText;
+        }, 1500);
+      }
+    }
+
+    function handleSaveSharedBoard() {
+      openBoardModal("new");
+    }
+
+    function openBoardModal(mode, targetId = null) {
+      boardModalMode = mode;
+      boardModalTarget = targetId;
+      ui.boardError.textContent = "";
+      ui.boardError.classList.add("is-hidden");
+      ui.boardModalTitle.textContent = mode === "rename" ? t("boardRenameTitle") : t("boardNewTitle");
+
+      const store = loadBoardsStore();
+      if (mode === "rename") {
+        const board = store.boards.find(b => b.id === targetId);
+        ui.boardNameInput.value = board ? board.name : "";
+      } else {
+        ui.boardNameInput.value = getDefaultBoardName(store);
+      }
+
+      ui.boardModal.classList.add("open");
+      ui.boardModal.setAttribute("aria-hidden", "false");
+      setTimeout(() => ui.boardNameInput.focus(), 50);
+    }
+
+    function closeBoardModal() {
+      ui.boardModal.classList.remove("open");
+      ui.boardModal.setAttribute("aria-hidden", "true");
+    }
+
+    function handleBoardFormSubmit(event) {
+      event.preventDefault();
+      const name = String(ui.boardNameInput.value || "").trim();
+      if (!name) {
+        ui.boardNameInput.focus();
+        return;
+      }
+      if (boardModalMode === "rename") {
+        renameBoard(boardModalTarget, name);
+      } else {
+        // Save current state as new board
+        saveAsNewBoard(name);
+      }
+      closeBoardModal();
     }
 
     function getActiveSelection() {
@@ -1507,7 +2842,7 @@
     function togglePrevLevels(name) {
       const next = !shouldShowPrevLevels(name);
       state.prevLevels.set(name, next);
-      saveAppState();
+      saveCurrentState();
       renderAll();
     }
 
@@ -1519,7 +2854,7 @@
     function adjustUsesDepth(name, delta) {
       const next = Math.max(1, getUsesDepth(name) + delta);
       state.usesDepth.set(name, next);
-      saveAppState();
+      saveCurrentState();
       renderAll();
     }
 
@@ -1688,9 +3023,9 @@
           positions.set(name, { x: dropCoords.x, y: dropCoords.y });
         }
       }
-      saveAppState();
+      saveCurrentState();
       renderAll();
-      
+
       // Auto-center when adding first item to empty board
       if (wasEmpty && selection.size === 1 && isNew) {
         setTimeout(centerViewOnAll, 50);
@@ -1704,50 +3039,50 @@
       positions.clear();
       // Reset zoom to default when clearing
       setActiveZoom(d3.zoomIdentity);
-      saveAppState();
+      saveCurrentState();
       renderAll();
     }
 
     function centerViewOnAll() {
       const positions = getActivePositions();
       if (positions.size === 0) return;
-      
+
       const svg = ui.tree;
       const width = svg.clientWidth || 900;
       const height = svg.clientHeight || 600;
-      
+
       // Calculate bounding box of all tree positions
       const posArray = Array.from(positions.values());
       const minX = Math.min(...posArray.map(p => p.x)) - 150;
       const maxX = Math.max(...posArray.map(p => p.x)) + 500; // Account for tree width
       const minY = Math.min(...posArray.map(p => p.y)) - 150;
       const maxY = Math.max(...posArray.map(p => p.y)) + 400; // Account for tree height
-      
+
       const contentWidth = maxX - minX;
       const contentHeight = maxY - minY;
-      
+
       // Calculate scale to fit all content with some padding
       const padding = 80;
       const scaleX = (width - padding * 2) / contentWidth;
       const scaleY = (height - padding * 2) / contentHeight;
       const scale = Math.min(scaleX, scaleY, 1.2); // Cap max zoom (don't zoom in too much)
       const finalScale = Math.max(scale, 0.3); // Min zoom
-      
+
       // Calculate center of content
       const centerX = (minX + maxX) / 2;
       const centerY = (minY + maxY) / 2;
-      
+
       // Calculate transform to center the content
       const translateX = width / 2 - centerX * finalScale;
       const translateY = height / 2 - centerY * finalScale;
-      
+
       const newTransform = d3.zoomIdentity
         .translate(translateX, translateY)
         .scale(finalScale);
-      
+
       setActiveZoom(newTransform);
-      saveAppState();
-      
+      saveCurrentState();
+
       // Animate the transition with zoom handler
       const svgSel = d3.select(svg);
       const board = svgSel.select(".board");
@@ -1757,7 +3092,7 @@
           setActiveZoom(event.transform);
           board.attr("transform", event.transform);
         });
-      
+
       svgSel.transition()
         .duration(400)
         .call(zoom.transform, newTransform);
@@ -1777,19 +3112,19 @@
     function findNonOverlappingPosition(baseX, baseY, existingPositions) {
       const minDistance = 500; // Minimum distance between tree roots (increased for better spacing)
       const positions = Array.from(existingPositions.values());
-      
+
       // If no existing positions or base position is free, use it
       if (positions.length === 0) return { x: baseX, y: baseY };
-      
+
       // Check if base position is far enough from all others
       const isFree = positions.every(pos => {
         const dx = pos.x - baseX;
         const dy = pos.y - baseY;
         return Math.sqrt(dx * dx + dy * dy) >= minDistance;
       });
-      
+
       if (isFree) return { x: baseX, y: baseY };
-      
+
       // Spiral outward to find a free spot
       const spiralStep = 100;
       for (let radius = spiralStep; radius < 2000; radius += spiralStep) {
@@ -1804,7 +3139,7 @@
           if (testFree) return { x: testX, y: testY };
         }
       }
-      
+
       // Fallback: place below the lowest existing position
       const maxY = Math.max(...positions.map(p => p.y));
       return { x: baseX, y: maxY + 300 };
@@ -1817,7 +3152,7 @@
         if (!selection.has(name)) positions.delete(name);
       });
       const names = Array.from(selection.keys());
-      
+
       names.forEach((name) => {
         if (!positions.has(name)) {
           // New item without position - place in view center, avoiding overlaps
@@ -1961,15 +3296,20 @@
         chip.textContent = `${label}${qty > 1 ? " x" + qty : ""}`;
         const remove = document.createElement("button");
         remove.type = "button";
-        remove.textContent = "x";
+        remove.textContent = "×";
         remove.addEventListener("click", () => {
           selection.delete(name);
-          saveAppState();
+          saveCurrentState();
           renderAll();
         });
         chip.appendChild(remove);
         ui.selectedChips.appendChild(chip);
       });
+
+      // Toggle selection bar visibility
+      if (ui.selectionBar) {
+        ui.selectionBar.classList.toggle("has-items", entries.length > 0);
+      }
     }
 
     function renderTree() {
@@ -2011,25 +3351,25 @@
           // Use raw mouse movement from sourceEvent for precise 1:1 tracking
           const sourceEvent = event.sourceEvent;
           if (!sourceEvent) return;
-          
+
           const currentK = getActiveZoom().k;
           const pos = positions.get(d.name) || { x: 0, y: 0 };
-          
+
           // movementX/Y gives actual pixel movement of mouse
           const dx = sourceEvent.movementX || 0;
           const dy = sourceEvent.movementY || 0;
-          
+
           // Convert screen pixels to board coordinates
           pos.x += dx / currentK;
           pos.y += dy / currentK;
           positions.set(d.name, pos);
           d3.select(this)
             .attr("transform", `translate(${pos.x},${pos.y})`);
-          saveAppState();
+          saveCurrentState();
         })
         .on("end", function () {
           d3.select(this).classed("dragging", false);
-          saveAppState();
+          saveCurrentState();
         });
 
       selection.forEach((qty, name) => {
@@ -2472,22 +3812,24 @@
       function handleOver(event) {
         event.preventDefault();
         ui.dropzone.classList.add("active");
-        ui.tree.parentElement.classList.add("drag-over");
+        const workspace = ui.tree.closest(".workspace");
+        if (workspace) workspace.classList.add("drag-over");
       }
 
       function handleLeave(event) {
         // Only remove if we're actually leaving the workspace
-        const workspace = ui.tree.parentElement;
+        const workspace = ui.tree.closest(".workspace");
         const related = event.relatedTarget;
-        if (!related || !workspace.contains(related)) {
+        if (!workspace || !related || !workspace.contains(related)) {
           ui.dropzone.classList.remove("active");
-          workspace.classList.remove("drag-over");
+          if (workspace) workspace.classList.remove("drag-over");
         }
       }
 
       function handleDropEnd() {
         ui.dropzone.classList.remove("active");
-        ui.tree.parentElement.classList.remove("drag-over");
+        const workspace = ui.tree.closest(".workspace");
+        if (workspace) workspace.classList.remove("drag-over");
       }
 
       ui.dropzone.addEventListener("dragover", handleOver);
@@ -2551,9 +3893,26 @@
       ui.openGuide.textContent = t("openGuide");
       ui.closeGuide.textContent = t("closeGuide");
       ui.guideTitle.textContent = t("guideTitle");
+      // Save/Share buttons
+      ui.saveBoardBtn.textContent = t("saveBoard");
+      ui.shareBoardBtn.textContent = t("shareBoard");
+      ui.shareBannerText.textContent = t("sharedBannerText");
+      ui.shareSaveBtn.textContent = t("saveCopy");
+      // Boards drawer
+      ui.boardsTitle.textContent = t("boardDrawerTitle");
+      if (ui.boardsHandleTitle) ui.boardsHandleTitle.textContent = "📁 " + t("boardDrawerTitle");
+      ui.newBoardBtn.textContent = t("boardNew");
+      ui.boardsEmpty.textContent = t("boardEmpty");
+      // Board modal
+      ui.boardModalTitle.textContent = boardModalMode === "rename" ? t("boardRenameTitle") : t("boardNewTitle");
+      ui.boardNameLabel.textContent = t("boardNameLabel");
+      ui.boardSave.textContent = t("boardSave");
+      ui.boardCancel.textContent = t("boardCancel");
+      ui.boardModalClose.textContent = t("modalClose");
       ui.langToggle.textContent = state.lang === "es" ? "EN" : "ES";
       applyBoardUI();
-      saveAppState();
+      updateBoardsUI();
+      saveCurrentState();
       renderList();
       renderAll();
     }
@@ -2562,13 +3921,13 @@
       if (state.board === board) return;
       state.board = board;
       applyBoardUI();
-      saveAppState();
+      saveCurrentState();
       renderList();
       renderAll();
     }
 
     function init() {
-      loadAppState();
+      loadInitialState();
       bindDrop();
       ui.search.addEventListener("input", renderList);
       ui.clearSelection.addEventListener("click", clearSelection);
@@ -2582,6 +3941,57 @@
       ui.langToggle.addEventListener("click", () => {
         state.lang = state.lang === "es" ? "en" : "es";
         applyLanguage();
+      });
+
+      // Save/Share buttons
+      ui.saveBoardBtn.addEventListener("click", handleSave);
+      ui.shareBoardBtn.addEventListener("click", handleShare);
+      ui.shareSaveBtn.addEventListener("click", handleSaveSharedBoard);
+      ui.shareDismissBtn.addEventListener("click", hideShareBanner);
+
+      // Board modal
+      ui.newBoardBtn.addEventListener("click", () => openBoardModal("new"));
+      ui.boardCancel.addEventListener("click", closeBoardModal);
+      ui.boardModalClose.addEventListener("click", closeBoardModal);
+      ui.boardBackdrop.addEventListener("click", closeBoardModal);
+      ui.boardForm.addEventListener("submit", handleBoardFormSubmit);
+      document.addEventListener("click", (event) => {
+        // Close control panel when clicking outside
+        if (ui.controlPanel && ui.controlPanel.classList.contains("is-open") &&
+          !ui.controlPanel.contains(event.target)) {
+          ui.controlPanel.classList.remove("is-open");
+        }
+        // Close share dropdown when clicking outside
+        if (ui.shareDropdown && ui.shareDropdown.classList.contains("is-open") &&
+          !ui.shareDropdown.contains(event.target) &&
+          !event.target.closest('.share-trigger')) {
+          ui.shareDropdown.classList.remove("is-open");
+        }
+      });
+
+      // Control Panel trigger
+      if (ui.controlTrigger) {
+        ui.controlTrigger.addEventListener("click", (event) => {
+          event.stopPropagation();
+          ui.controlPanel.classList.toggle("is-open");
+        });
+      }
+
+      // Share dropdown toggle
+      if (ui.shareBoardBtn) {
+        ui.shareBoardBtn.addEventListener("click", (event) => {
+          event.stopPropagation();
+          ui.shareDropdown.classList.toggle("is-open");
+        });
+      }
+
+      // Share options
+      document.querySelectorAll('.share-option').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const action = e.currentTarget.dataset.action;
+          handleShareAction(action);
+          ui.shareDropdown.classList.remove("is-open");
+        });
       });
 
       // Resizing logic
@@ -2612,7 +4022,7 @@
       ui.sortSummary.addEventListener("click", () => {
         sortMode = sortMode === "name" ? "rarity" : "name";
         ui.sortSummary.classList.toggle("active", sortMode === "rarity");
-        saveAppState();
+        saveCurrentState();
         renderSummary();
       });
 
@@ -2631,7 +4041,12 @@
 
       window.addEventListener("resize", renderTree);
       window.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeGuideModal();
+        if (event.key === "Escape") {
+          closeGuideModal();
+          closeLoginModal();
+          closeBoardModal();
+          if (ui.controlPanel) ui.controlPanel.classList.remove("is-open");
+        }
       });
       applyLanguage();
     }
