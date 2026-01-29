@@ -614,7 +614,7 @@
       top: 16px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 90;
+      z-index: 130;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -633,27 +633,27 @@
 
     /* Share banner for imported boards */
     .share-banner {
-      position: absolute;
-      top: 70px;
+      position: fixed;
+      top: 72px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 115;
+      z-index: 300;
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 10px 16px;
       border-radius: 14px;
-      border: 1px solid var(--accent-2);
-      background: rgba(0, 255, 163, 0.08);
+      border: 1px solid rgba(120, 170, 160, 0.45);
+      background: rgba(80, 130, 120, 0.18);
       backdrop-filter: blur(20px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      animation: slideDown 0.3s ease;
+      animation: shareSlide 0.25s ease;
     }
 
-    @keyframes slideDown {
+    @keyframes shareSlide {
       from {
         opacity: 0;
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateX(-50%) translateY(-6px);
       }
 
       to {
@@ -665,7 +665,7 @@
     .share-banner span {
       font-size: 0.9rem;
       font-weight: 600;
-      color: var(--accent-2);
+      color: #e6f0ec;
     }
 
     .share-banner .button {
@@ -677,10 +677,14 @@
       background: transparent;
       border: none;
       color: var(--muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 0 4px;
+      width: 32px;
+      height: 32px;
+      font-size: 1.4rem;
       line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
 
     .share-dismiss:hover {
@@ -737,7 +741,7 @@
     .control-trigger {
       width: 56px;
       height: 56px;
-      border-radius: 16px;
+      border-radius: 10px;
       background: linear-gradient(135deg, var(--accent), var(--accent-hi));
       border: none;
       color: #fff;
@@ -784,7 +788,7 @@
       max-height: 500px;
       background: linear-gradient(145deg, rgba(24, 24, 28, 0.98), rgba(16, 16, 20, 0.99));
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      border-radius: 14px;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(40px);
       transform: translateY(20px) scale(0.95);
@@ -836,7 +840,7 @@
 
     .control-btn {
       padding: 8px 14px;
-      border-radius: 10px;
+      border-radius: 8px;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
@@ -883,7 +887,7 @@
       align-items: center;
       gap: 12px;
       padding: 12px 14px;
-      border-radius: 14px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid transparent;
       margin-bottom: 8px;
@@ -904,7 +908,7 @@
     .board-card-icon {
       width: 36px;
       height: 36px;
-      border-radius: 10px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.06);
       display: flex;
       align-items: center;
@@ -957,7 +961,7 @@
     .board-action-btn {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
+      border-radius: 6px;
       background: rgba(255, 255, 255, 0.06);
       border: none;
       color: var(--muted);
@@ -980,23 +984,31 @@
       color: #ff9c9c;
     }
 
+    .board-action-btn svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      fill: currentColor;
+      stroke: none;
+    }
+
     /* Share Dropdown */
     .share-dropdown {
-      position: absolute;
-      bottom: calc(100% + 8px);
-      right: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 180px;
       background: rgba(22, 22, 26, 0.98);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px;
+      border-radius: 10px;
       padding: 8px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(30px);
       opacity: 0;
       pointer-events: none;
       transform: translateY(10px);
-      transition: all 0.2s ease;
-      z-index: 10;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 10050;
     }
 
     .share-dropdown.is-open {
@@ -1010,7 +1022,7 @@
       align-items: center;
       gap: 10px;
       padding: 10px 12px;
-      border-radius: 10px;
+      border-radius: 8px;
       background: transparent;
       border: none;
       color: var(--ink);
@@ -1028,8 +1040,17 @@
 
     .share-option .share-icon {
       width: 24px;
-      text-align: center;
-      font-size: 1rem;
+      min-width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .share-option .share-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
     }
 
     .boards-empty {
@@ -1063,12 +1084,15 @@
     }
 
     .boards-list {
+
       display: flex;
       flex-direction: column;
       gap: 8px;
       max-height: 280px;
       overflow-y: auto;
       padding-right: 6px;
+      padding-bottom: 10px;
+      padding-top: 10px;
     }
 
     .board-row {
@@ -1076,10 +1100,11 @@
       align-items: center;
       gap: 10px;
       padding: 12px 14px;
-      border-radius: 14px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid transparent;
       transition: all 0.2s ease;
+      cursor: grab;
     }
 
     .board-row:hover {
@@ -1118,6 +1143,18 @@
 
     .board-row:hover .board-delete {
       opacity: 1;
+    }
+
+    .board-row.dragging {
+      opacity: 0.55;
+    }
+
+    .board-row.drop-before {
+      box-shadow: 0 -2px 0 var(--accent);
+    }
+
+    .board-row.drop-after {
+      box-shadow: 0 2px 0 var(--accent);
     }
 
     .board-delete:hover {
@@ -1274,7 +1311,7 @@
       width: 100%;
       height: 100%;
       background: transparent;
-      cursor: crosshair;
+      cursor: all-scroll;
     }
 
     /* Summary - Minimal Float & Collapsible */
@@ -1501,6 +1538,23 @@
       cursor: grabbing;
     }
 
+    #tree.is-dragging,
+    .tree-group.dragging,
+    #tree.is-dragging * {
+      cursor: grabbing !important;
+    }
+
+    .tree-group:hover .link {
+      stroke: rgba(120, 20, 20, 0.7);
+      stroke-width: 2px;
+      filter: drop-shadow(0 0 10px rgba(90, 10, 10, 0.55));
+    }
+
+    .tree-group:hover .node circle {
+      stroke: rgba(150, 30, 30, 0.95);
+      filter: drop-shadow(0 0 14px rgba(100, 10, 10, 0.6));
+    }
+
     .node circle {
       stroke: #000;
       stroke-width: 2.5px;
@@ -1719,13 +1773,14 @@
         </div>
       </aside>
 
+      <div class="board-switcher" id="board-switcher">
+        <button id="board-craft" class="board-btn active" data-board="craft">Crafting</button>
+        <button id="board-uses" class="board-btn" data-board="uses">Uses</button>
+        <button id="board-recycle" class="board-btn" data-board="recycle">Recycling</button>
+      </div>
+
       <div class="workspace-canvas">
         <div id="dropzone">Drop to add to tree</div>
-        <div class="board-switcher" id="board-switcher">
-          <button id="board-craft" class="board-btn active" data-board="craft">Crafting</button>
-          <button id="board-uses" class="board-btn" data-board="uses">Uses</button>
-          <button id="board-recycle" class="board-btn" data-board="recycle">Recycling</button>
-        </div>
         <!-- Banner for shared boards -->
         <div id="share-banner" class="share-banner is-hidden">
           <span id="share-banner-text">Board compartida</span>
@@ -1757,22 +1812,26 @@
                   <div class="board-card-meta">Sesión activa</div>
                 </div>
                 <div class="board-card-actions" style="opacity: 1;">
-                  <button class="board-action-btn share-trigger" id="share-board-btn" title="Compartir">🔗</button>
+                  <button class="board-action-btn share-trigger" id="share-board-btn" title="Compartir">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/>
+                    </svg>
+                  </button>
                   <div class="share-dropdown" id="share-dropdown">
                     <button class="share-option" data-action="copy">
-                      <span class="share-icon">📋</span>
+                      <span class="share-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/></svg></span>
                       <span>Copiar enlace</span>
                     </button>
                     <button class="share-option" data-action="whatsapp">
-                      <span class="share-icon">💬</span>
+                      <span class="share-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
                       <span>WhatsApp</span>
                     </button>
                     <button class="share-option" data-action="twitter">
-                      <span class="share-icon">🐦</span>
+                      <span class="share-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
                       <span>Twitter / X</span>
                     </button>
                     <button class="share-option" data-action="telegram">
-                      <span class="share-icon">✈️</span>
+                      <span class="share-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></span>
                       <span>Telegram</span>
                     </button>
                   </div>
@@ -1969,6 +2028,7 @@
       boardsList: document.getElementById("boards-list"),
       boardsTitle: document.getElementById("boards-title"),
       boardsEmpty: document.getElementById("boards-empty"),
+      boardsSection: document.querySelector(".boards-section"),
       newBoardBtn: document.getElementById("new-board-btn"),
       // Board modal
       boardModal: document.getElementById("board-modal"),
@@ -1993,6 +2053,9 @@
     const items = DATA.items || [];
     const itemsMap = new Map(items.map(item => [item.name, item]));
     const categories = DATA.categories || { order: [], labels: {}, members: {} };
+    let shareDropdownHome = null;
+    let shareIconHTML = "";
+    const shareCheckHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>';
     const categoryLabels = {
       en: {
         "Weapons": "Weapons",
@@ -2031,12 +2094,14 @@
     const STORAGE_KEYS = {
       currentState: "arc_raiders_craft_state",
       boards: "arc_raiders_boards_v2",
-      currentBoardId: "arc_raiders_current_board"
+      currentBoardId: "arc_raiders_current_board",
+      uiPrefs: "arc_raiders_ui_prefs"
     };
 
     // Track if we're viewing a shared board (not saved locally)
     let isViewingSharedBoard = false;
     let sharedBoardData = null;
+    let sharedBoardName = "";
     let currentBoardId = null;
 
     let boardModalMode = "new";
@@ -2050,12 +2115,16 @@
       try {
         const saved = localStorage.getItem(STORAGE_KEYS.boards);
         if (!saved) {
-          return { boards: [] };
+          return { boards: [], manualOrder: false };
         }
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        return {
+          boards: Array.isArray(parsed.boards) ? parsed.boards : [],
+          manualOrder: !!parsed.manualOrder
+        };
       } catch (e) {
         console.error("Error loading boards:", e);
-        return { boards: [] };
+        return { boards: [], manualOrder: false };
       }
     }
 
@@ -2064,6 +2133,30 @@
         localStorage.setItem(STORAGE_KEYS.boards, JSON.stringify(store));
       } catch (e) {
         console.error("Error saving boards:", e);
+      }
+    }
+
+    function saveUIPrefs() {
+      try {
+        const prefs = {
+          menuCollapsed: document.body.classList.contains("menu-collapsed"),
+          summaryCollapsed: document.body.classList.contains("summary-collapsed")
+        };
+        localStorage.setItem(STORAGE_KEYS.uiPrefs, JSON.stringify(prefs));
+      } catch (e) {
+        console.error("Error saving UI prefs:", e);
+      }
+    }
+
+    function applyUIPrefs() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEYS.uiPrefs);
+        if (!saved) return;
+        const prefs = JSON.parse(saved);
+        document.body.classList.toggle("menu-collapsed", !!prefs.menuCollapsed);
+        document.body.classList.toggle("summary-collapsed", !!prefs.summaryCollapsed);
+      } catch (e) {
+        console.error("Error loading UI prefs:", e);
       }
     }
 
@@ -2119,7 +2212,14 @@
       if (!compressed) return null;
 
       const url = new URL(window.location.href);
-      url.hash = `board=${compressed}`;
+      let boardName = "";
+      if (currentBoardId) {
+        const store = loadBoardsStore();
+        const board = store.boards.find(b => b.id === currentBoardId);
+        boardName = board ? board.name : "";
+      }
+      const nameParam = boardName ? `&name=${encodeURIComponent(boardName)}` : "";
+      url.hash = `board=${compressed}${nameParam}`;
       return url.toString();
     }
 
@@ -2127,8 +2227,11 @@
       const hash = window.location.hash;
       if (!hash || !hash.startsWith("#board=")) return null;
 
-      const compressed = hash.substring(7); // Remove "#board="
-      return decompressBoardData(compressed);
+      const params = new URLSearchParams(hash.substring(1));
+      const compressed = params.get("board") || "";
+      const name = params.get("name") ? decodeURIComponent(params.get("name")) : "";
+      const data = decompressBoardData(compressed);
+      return data ? { data, name } : null;
     }
 
     function clearShareURL() {
@@ -2145,7 +2248,7 @@
         updatedAt: new Date().toISOString(),
         data
       };
-      store.boards.unshift(board);
+      store.boards.push(board);
       return board;
     }
 
@@ -2339,6 +2442,7 @@
       saveCurrentBoardId(boardId);
       isViewingSharedBoard = false;
       sharedBoardData = null;
+      sharedBoardName = "";
 
       applyAppState(board.data);
       applyLanguage();
@@ -2362,6 +2466,7 @@
         } else {
           currentBoardId = null;
           saveCurrentBoardId(null);
+          sharedBoardName = "";
           applyAppState(buildEmptyState());
           applyLanguage();
         }
@@ -2516,21 +2621,67 @@
       return uiStrings[state.lang][key] || key;
     }
 
+    function sortBoardsOldestFirst(boards) {
+      return boards.slice().sort((a, b) => {
+        const aTime = Date.parse(a.updatedAt || "") || 0;
+        const bTime = Date.parse(b.updatedAt || "") || 0;
+        if (aTime !== bTime) return aTime - bTime;
+        return String(a.name || "").localeCompare(String(b.name || ""));
+      });
+    }
+
+    function normalizeBoardOrder(store) {
+      if (store.manualOrder) return store;
+      const sorted = sortBoardsOldestFirst(store.boards);
+      const changed = sorted.length !== store.boards.length ||
+        sorted.some((b, i) => store.boards[i] && store.boards[i].id !== b.id);
+      if (changed) {
+        store.boards = sorted;
+        saveBoardsStore(store);
+      }
+      return store;
+    }
+
+    function formatSharedName(name) {
+      const base = String(name || "").trim() || t("sharedBoard") || "Board compartida";
+      return `${base} | shared`;
+    }
+
+    function reorderBoards(fromId, toId, insertAfter) {
+      const store = loadBoardsStore();
+      const fromIdx = store.boards.findIndex(b => b.id === fromId);
+      const toIdx = store.boards.findIndex(b => b.id === toId);
+      if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
+
+      const [moved] = store.boards.splice(fromIdx, 1);
+      let insertIndex = toIdx;
+      if (fromIdx < toIdx) insertIndex = toIdx - 1;
+      if (insertAfter) insertIndex += 1;
+      store.boards.splice(insertIndex, 0, moved);
+      store.manualOrder = true;
+      saveBoardsStore(store);
+      updateBoardsUI();
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════
     // UI UPDATES
     // ═══════════════════════════════════════════════════════════════════════════
 
     function updateBoardsUI() {
-      const store = loadBoardsStore();
+      const store = normalizeBoardOrder(loadBoardsStore());
 
       // Update handle text
       if (isViewingSharedBoard) {
-        ui.currentBoardName.textContent = t("sharedBoard") || "Board compartida";
+        const sharedLabel = formatSharedName(sharedBoardName);
+        ui.currentBoardName.textContent = sharedLabel;
+        if (ui.shareBannerText) ui.shareBannerText.textContent = sharedLabel;
       } else if (currentBoardId) {
         const board = store.boards.find(b => b.id === currentBoardId);
         ui.currentBoardName.textContent = board ? board.name : t("unsavedBoard");
+        if (ui.shareBannerText) ui.shareBannerText.textContent = t("sharedBannerText");
       } else {
         ui.currentBoardName.textContent = t("unsavedBoard");
+        if (ui.shareBannerText) ui.shareBannerText.textContent = t("sharedBannerText");
       }
 
       // Build list
@@ -2544,12 +2695,51 @@
       store.boards.forEach(board => {
         const row = document.createElement("div");
         row.className = `board-row${board.id === currentBoardId && !isViewingSharedBoard ? " active" : ""}`;
+        row.draggable = true;
+        row.dataset.id = board.id;
 
         const button = document.createElement("button");
         button.type = "button";
         button.className = "board-item";
         button.textContent = board.name;
         button.addEventListener("click", () => switchToBoard(board.id));
+        button.addEventListener("dblclick", (event) => {
+          event.stopPropagation();
+          openBoardModal("rename", board.id);
+        });
+
+        row.addEventListener("dragstart", (event) => {
+          row.classList.add("dragging");
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", board.id);
+        });
+
+        row.addEventListener("dragend", () => {
+          row.classList.remove("dragging");
+          row.classList.remove("drop-before", "drop-after");
+        });
+
+        row.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          const rect = row.getBoundingClientRect();
+          const after = (event.clientY - rect.top) > rect.height / 2;
+          row.classList.toggle("drop-after", after);
+          row.classList.toggle("drop-before", !after);
+        });
+
+        row.addEventListener("dragleave", () => {
+          row.classList.remove("drop-before", "drop-after");
+        });
+
+        row.addEventListener("drop", (event) => {
+          event.preventDefault();
+          row.classList.remove("drop-before", "drop-after");
+          const fromId = event.dataTransfer.getData("text/plain");
+          if (!fromId || fromId === board.id) return;
+          const rect = row.getBoundingClientRect();
+          const insertAfter = (event.clientY - rect.top) > rect.height / 2;
+          reorderBoards(fromId, board.id, insertAfter);
+        });
 
         const deleteBtn = document.createElement("button");
         deleteBtn.type = "button";
@@ -2586,8 +2776,9 @@
       const sharedData = parseShareURL();
       if (sharedData) {
         isViewingSharedBoard = true;
-        sharedBoardData = sharedData;
-        applyAppState(sharedData);
+        sharedBoardData = sharedData.data;
+        sharedBoardName = sharedData.name || "";
+        applyAppState(sharedData.data);
         showShareBanner();
         clearShareURL();
         return;
@@ -2627,10 +2818,10 @@
       // Try to copy to clipboard
       navigator.clipboard.writeText(url).then(() => {
         // Show temporary feedback
-        const originalText = ui.shareBoardBtn.textContent;
-        ui.shareBoardBtn.textContent = "✓";
+        if (!shareIconHTML) shareIconHTML = ui.shareBoardBtn.innerHTML;
+        ui.shareBoardBtn.innerHTML = shareCheckHTML;
         setTimeout(() => {
-          ui.shareBoardBtn.textContent = originalText;
+          ui.shareBoardBtn.innerHTML = shareIconHTML;
         }, 2000);
       }).catch(() => {
         // Fallback: show URL in prompt
@@ -2699,7 +2890,11 @@
         const board = store.boards.find(b => b.id === targetId);
         ui.boardNameInput.value = board ? board.name : "";
       } else {
-        ui.boardNameInput.value = getDefaultBoardName(store);
+        if (isViewingSharedBoard && sharedBoardName) {
+          ui.boardNameInput.value = formatSharedName(sharedBoardName);
+        } else {
+          ui.boardNameInput.value = getDefaultBoardName(store);
+        }
       }
 
       ui.boardModal.classList.add("open");
@@ -3346,6 +3541,8 @@
         .on("start", function (event) {
           if (event.sourceEvent) event.sourceEvent.stopPropagation();
           d3.select(this).classed("dragging", true);
+          if (ui.tree) ui.tree.classList.add("is-dragging");
+          document.body.style.cursor = "grabbing";
         })
         .on("drag", function (event, d) {
           // Use raw mouse movement from sourceEvent for precise 1:1 tracking
@@ -3369,6 +3566,8 @@
         })
         .on("end", function () {
           d3.select(this).classed("dragging", false);
+          if (ui.tree) ui.tree.classList.remove("is-dragging");
+          document.body.style.cursor = "";
           saveCurrentState();
         });
 
@@ -3802,10 +4001,8 @@
         if (name) {
           // Get drop position in board coordinates
           const dropCoords = screenToBoardCoords(event.clientX, event.clientY);
-          const positions = getActivePositions();
-          // Find non-overlapping position near drop point
-          const freePos = findNonOverlappingPosition(dropCoords.x, dropCoords.y, positions);
-          addSelection(name, 1, freePos);
+          // Place exactly where the cursor is
+          addSelection(name, 1, dropCoords);
         }
       }
 
@@ -3895,7 +4092,8 @@
       ui.guideTitle.textContent = t("guideTitle");
       // Save/Share buttons
       ui.saveBoardBtn.textContent = t("saveBoard");
-      ui.shareBoardBtn.textContent = t("shareBoard");
+      ui.shareBoardBtn.title = t("shareBoard");
+      ui.shareBoardBtn.setAttribute("aria-label", t("shareBoard"));
       ui.shareBannerText.textContent = t("sharedBannerText");
       ui.shareSaveBtn.textContent = t("saveCopy");
       // Boards drawer
@@ -3926,9 +4124,64 @@
       renderAll();
     }
 
+    function positionShareDropdown() {
+      if (!ui.shareDropdown || !ui.shareBoardBtn) return;
+      const btnRect = ui.shareBoardBtn.getBoundingClientRect();
+      const dropdown = ui.shareDropdown;
+
+      dropdown.style.visibility = "hidden";
+      dropdown.style.display = "block";
+      const ddRect = dropdown.getBoundingClientRect();
+      const margin = 8;
+
+      let top = btnRect.top - ddRect.height - margin;
+      if (top < margin) {
+        top = btnRect.bottom + margin;
+      }
+
+      let left = btnRect.right - ddRect.width;
+      left = Math.min(Math.max(margin, left), window.innerWidth - ddRect.width - margin);
+
+      dropdown.style.top = `${top}px`;
+      dropdown.style.left = `${left}px`;
+      dropdown.style.visibility = "";
+      dropdown.style.display = "";
+    }
+
+    function openShareDropdown() {
+      if (!ui.shareDropdown) return;
+      if (!shareDropdownHome) {
+        shareDropdownHome = ui.shareDropdown.parentElement;
+      }
+      if (ui.shareDropdown.parentElement !== document.body) {
+        document.body.appendChild(ui.shareDropdown);
+      }
+      positionShareDropdown();
+      requestAnimationFrame(() => {
+        if (ui.shareDropdown) ui.shareDropdown.classList.add("is-open");
+      });
+    }
+
+    function closeShareDropdown() {
+      if (!ui.shareDropdown) return;
+      ui.shareDropdown.classList.remove("is-open");
+      if (shareDropdownHome && ui.shareDropdown.parentElement !== shareDropdownHome) {
+        shareDropdownHome.appendChild(ui.shareDropdown);
+      }
+    }
+
     function init() {
+      applyUIPrefs();
       loadInitialState();
       bindDrop();
+      if (!shareDropdownHome && ui.shareDropdown) {
+        shareDropdownHome = ui.shareDropdown.parentElement;
+      }
+      if (ui.shareBoardBtn) {
+        shareIconHTML = ui.shareBoardBtn.innerHTML;
+        ui.shareBoardBtn.title = t("shareBoard");
+        ui.shareBoardBtn.setAttribute("aria-label", t("shareBoard"));
+      }
       ui.search.addEventListener("input", renderList);
       ui.clearSelection.addEventListener("click", clearSelection);
       ui.centerView.addEventListener("click", centerViewOnAll);
@@ -3955,6 +4208,12 @@
       ui.boardModalClose.addEventListener("click", closeBoardModal);
       ui.boardBackdrop.addEventListener("click", closeBoardModal);
       ui.boardForm.addEventListener("submit", handleBoardFormSubmit);
+      if (ui.currentBoardName) {
+        ui.currentBoardName.addEventListener("click", () => {
+          if (!currentBoardId || isViewingSharedBoard) return;
+          openBoardModal("rename", currentBoardId);
+        });
+      }
       document.addEventListener("click", (event) => {
         // Close control panel when clicking outside
         if (ui.controlPanel && ui.controlPanel.classList.contains("is-open") &&
@@ -3965,7 +4224,7 @@
         if (ui.shareDropdown && ui.shareDropdown.classList.contains("is-open") &&
           !ui.shareDropdown.contains(event.target) &&
           !event.target.closest('.share-trigger')) {
-          ui.shareDropdown.classList.remove("is-open");
+          closeShareDropdown();
         }
       });
 
@@ -3974,6 +4233,9 @@
         ui.controlTrigger.addEventListener("click", (event) => {
           event.stopPropagation();
           ui.controlPanel.classList.toggle("is-open");
+          if (!ui.controlPanel.classList.contains("is-open")) {
+            closeShareDropdown();
+          }
         });
       }
 
@@ -3981,7 +4243,11 @@
       if (ui.shareBoardBtn) {
         ui.shareBoardBtn.addEventListener("click", (event) => {
           event.stopPropagation();
-          ui.shareDropdown.classList.toggle("is-open");
+          if (ui.shareDropdown.classList.contains("is-open")) {
+            closeShareDropdown();
+          } else {
+            openShareDropdown();
+          }
         });
       }
 
@@ -3990,7 +4256,7 @@
         btn.addEventListener('click', (e) => {
           const action = e.currentTarget.dataset.action;
           handleShareAction(action);
-          ui.shareDropdown.classList.remove("is-open");
+          closeShareDropdown();
         });
       });
 
@@ -4026,13 +4292,29 @@
         renderSummary();
       });
 
+      if (ui.boardsSection) {
+        ui.boardsSection.addEventListener("scroll", () => {
+          if (ui.shareDropdown && ui.shareDropdown.classList.contains("is-open")) {
+            positionShareDropdown();
+          }
+        });
+      }
+
+      window.addEventListener("resize", () => {
+        if (ui.shareDropdown && ui.shareDropdown.classList.contains("is-open")) {
+          positionShareDropdown();
+        }
+      });
+
       const toggleSide = () => {
         document.body.classList.toggle("menu-collapsed");
+        saveUIPrefs();
         setTimeout(renderTree, 400);
       };
 
       const toggleSumm = () => {
         document.body.classList.toggle("summary-collapsed");
+        saveUIPrefs();
         setTimeout(renderTree, 400);
       };
 

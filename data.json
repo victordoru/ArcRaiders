@@ -3870,9 +3870,18 @@
     },
     {
       "name": "Kettle II",
-      "recipe": [],
-      "station": "",
-      "craftable": false,
+      "recipe": [
+        {
+          "item": "Metal Parts",
+          "qty": 8
+        },
+        {
+          "item": "Plastic Parts",
+          "qty": 10
+        }
+      ],
+      "station": "Gunsmith 1",
+      "craftable": true,
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
@@ -3884,9 +3893,18 @@
     },
     {
       "name": "Kettle III",
-      "recipe": [],
-      "station": "",
-      "craftable": false,
+      "recipe": [
+        {
+          "item": "Metal Parts",
+          "qty": 10
+        },
+        {
+          "item": "Simple Gun Parts",
+          "qty": 1
+        }
+      ],
+      "station": "Gunsmith 1",
+      "craftable": true,
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
@@ -3898,9 +3916,18 @@
     },
     {
       "name": "Kettle IV",
-      "recipe": [],
-      "station": "",
-      "craftable": false,
+      "recipe": [
+        {
+          "item": "Mechanical Components",
+          "qty": 3
+        },
+        {
+          "item": "Simple Gun Parts",
+          "qty": 1
+        }
+      ],
+      "station": "Gunsmith 1",
+      "craftable": true,
       "sources": [],
       "type": "Assault Rifle",
       "rarity": "Common",
