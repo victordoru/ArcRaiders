@@ -626,6 +626,40 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
     }
 
+    .tool-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      margin: 0 2px;
+    }
+
+    .annotation-tool {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .annotation-tool:hover {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.15);
+    }
+
+    .annotation-tool.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+      color: #fff;
+      box-shadow: 0 10px 25px var(--accent-glow);
+    }
+
     .session-bar {
       display: none;
       /* Moved to bottom-left-group */
@@ -1193,7 +1227,7 @@
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .selection-bar.has-items {
+    .selection-bar.is-visible {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
       pointer-events: auto;
@@ -1263,6 +1297,15 @@
       transition: all 0.2s;
     }
 
+    .selection-btn.tool-btn {
+      padding: 8px 12px;
+      min-width: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
     .selection-btn.ghost {
       background: rgba(255, 255, 255, 0.06);
       color: var(--ink);
@@ -1272,6 +1315,12 @@
       background: rgba(255, 255, 255, 0.12);
     }
 
+    .selection-btn.tool-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+      color: #fff;
+      box-shadow: 0 10px 25px var(--accent-glow);
+    }
+
     .selection-btn.danger {
       background: linear-gradient(135deg, var(--accent), var(--accent-hi));
       color: #fff;
@@ -1279,6 +1328,12 @@
 
     .selection-btn.danger:hover {
       box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    .selection-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
     @media (max-width: 720px) {
@@ -1312,6 +1367,15 @@
       height: 100%;
       background: transparent;
       cursor: all-scroll;
+    }
+
+    body.annotation-mode-line #tree,
+    body.annotation-mode-text #tree {
+      cursor: crosshair;
+    }
+
+    body.annotation-mode-text .annotation-text {
+      cursor: text;
     }
 
     /* Summary - Minimal Float & Collapsible */
@@ -1530,6 +1594,34 @@
       opacity: 0.6;
     }
 
+    .annotation-line {
+      stroke: rgba(255, 255, 255, 0.4);
+      stroke-width: 2px;
+      stroke-linecap: round;
+      pointer-events: stroke;
+    }
+
+    .annotation-line.is-selected {
+      stroke: var(--accent-hi);
+      stroke-width: 2.6px;
+    }
+
+    .annotation-text {
+      fill: #fff;
+      font-weight: 600;
+      paint-order: stroke;
+      stroke: rgba(0, 0, 0, 0.6);
+      stroke-width: 3px;
+      text-anchor: start;
+      dominant-baseline: middle;
+      user-select: none;
+      cursor: move;
+    }
+
+    .annotation-text.is-selected {
+      fill: var(--accent-hi);
+    }
+
     .node {
       cursor: grab;
     }
@@ -1640,6 +1732,37 @@
       fill: rgba(0, 0, 0, 0.8);
     }
 
+    .recycle-branch-toggle {
+      cursor: pointer;
+    }
+
+    .recycle-branch-toggle circle {
+      fill: rgba(0, 0, 0, 0.6);
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+
+    .recycle-branch-toggle text {
+      fill: var(--ink);
+      font-size: 10px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    .recycle-branch-toggle .branch-btn.is-disabled {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .recycle-branch-toggle .branch-btn.is-muted {
+      opacity: 0.55;
+    }
+
+    .recycle-branch-toggle .branch-btn:hover circle {
+      stroke: var(--accent-2);
+      fill: rgba(0, 0, 0, 0.8);
+    }
+
     /* Rarity Icons / Colors with Transparent backgrounds */
     .rarity-common {
       --r: var(--common);
@@ -1725,6 +1848,27 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
+    .annotation-editor {
+      position: absolute;
+      z-index: 220;
+      transform: translate(6px, 6px);
+    }
+
+    .annotation-editor input {
+      min-width: 180px;
+      max-width: 320px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(18, 18, 20, 0.95);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: "Outfit", sans-serif;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      outline: none;
+    }
+
     /* Center view button */
     #center-view {
       padding: 8px 12px;
@@ -1788,6 +1932,9 @@
           <button id="share-dismiss-btn" class="share-dismiss">×</button>
         </div>
         <svg id="tree"></svg>
+        <div id="annotation-editor" class="annotation-editor is-hidden">
+          <input id="annotation-input" type="text" maxlength="120" placeholder="Type text...">
+        </div>
 
         <!-- Unified Control Panel - Bottom Left -->
         <div class="control-panel" id="control-panel">
@@ -1857,6 +2004,11 @@
         <div class="selection-bar" id="selection-bar">
           <div id="selected-chips" class="selected-chips"></div>
           <div class="selection-actions">
+            <button id="tool-line" class="selection-btn ghost tool-btn" type="button" title="Line (L)" aria-label="Line">/</button>
+            <button id="tool-text" class="selection-btn ghost tool-btn" type="button" title="Text (T)" aria-label="Text">T</button>
+            <button id="text-size-down" class="selection-btn ghost tool-btn" type="button" title="Smaller text" aria-label="Smaller text">A-</button>
+            <button id="text-size-up" class="selection-btn ghost tool-btn" type="button" title="Bigger text" aria-label="Bigger text">A+</button>
+            <span class="tool-divider" aria-hidden="true"></span>
             <button id="center-view" class="selection-btn ghost" title="Centrar vista">⌖</button>
             <button id="clear-selection" class="selection-btn danger">Limpiar</button>
           </div>
@@ -2006,6 +2158,10 @@
       boardCraft: document.getElementById("board-craft"),
       boardUses: document.getElementById("board-uses"),
       boardRecycle: document.getElementById("board-recycle"),
+      toolLine: document.getElementById("tool-line"),
+      toolText: document.getElementById("tool-text"),
+      textSizeDown: document.getElementById("text-size-down"),
+      textSizeUp: document.getElementById("text-size-up"),
       openGuide: document.getElementById("open-guide"),
       guideModal: document.getElementById("guide-modal"),
       guideBackdrop: document.getElementById("guide-backdrop"),
@@ -2045,7 +2201,10 @@
       controlPanel: document.getElementById("control-panel"),
       controlTrigger: document.getElementById("control-trigger"),
       shareDropdown: document.getElementById("share-dropdown"),
-      selectionBar: document.getElementById("selection-bar")
+      selectionBar: document.getElementById("selection-bar"),
+      annotationEditor: document.getElementById("annotation-editor"),
+      annotationInput: document.getElementById("annotation-input"),
+      workspaceCanvas: document.querySelector(".workspace-canvas")
     };
 
     let sortMode = "name"; // 'name' or 'rarity'
@@ -2073,7 +2232,8 @@
       lang: "en",
       board: "craft",
       prevLevels: new Map(),
-      usesDepth: new Map()
+      usesDepth: new Map(),
+      recycleBranches: new Map()
     };
     const selections = {
       craft: new Map(),
@@ -2089,6 +2249,27 @@
       craft: d3.zoomIdentity,
       uses: d3.zoomIdentity,
       recycle: d3.zoomIdentity
+    };
+
+    const annotations = {
+      craft: { lines: [], texts: [] },
+      uses: { lines: [], texts: [] },
+      recycle: { lines: [], texts: [] }
+    };
+
+    const ANNOTATION_DEFAULTS = {
+      textSize: 16,
+      minTextSize: 10,
+      maxTextSize: 48,
+      textStep: 2,
+      minLineLength: 8
+    };
+
+    const annotationState = {
+      mode: "pan",
+      selected: null,
+      draftLineId: null,
+      editing: null
     };
 
     const STORAGE_KEYS = {
@@ -2269,9 +2450,24 @@
           uses: { x: zoomTransforms.uses.x, y: zoomTransforms.uses.y, k: zoomTransforms.uses.k },
           recycle: { x: zoomTransforms.recycle.x, y: zoomTransforms.recycle.y, k: zoomTransforms.recycle.k }
         },
+        annotations: {
+          craft: {
+            lines: annotations.craft.lines.map(line => ({ ...line })),
+            texts: annotations.craft.texts.map(text => ({ ...text }))
+          },
+          uses: {
+            lines: annotations.uses.lines.map(line => ({ ...line })),
+            texts: annotations.uses.texts.map(text => ({ ...text }))
+          },
+          recycle: {
+            lines: annotations.recycle.lines.map(line => ({ ...line })),
+            texts: annotations.recycle.texts.map(text => ({ ...text }))
+          }
+        },
         state: { lang: state.lang, board: state.board },
         prevLevels: Array.from(state.prevLevels.entries()),
         usesDepth: Array.from(state.usesDepth.entries()),
+        recycleBranches: Array.from(state.recycleBranches.entries()),
         sortMode: sortMode
       };
     }
@@ -2285,9 +2481,15 @@
           uses: { x: 0, y: 0, k: 1 },
           recycle: { x: 0, y: 0, k: 1 }
         },
+        annotations: {
+          craft: { lines: [], texts: [] },
+          uses: { lines: [], texts: [] },
+          recycle: { lines: [], texts: [] }
+        },
         state: { lang: state.lang, board: "craft" },
         prevLevels: [],
         usesDepth: [],
+        recycleBranches: [],
         sortMode: sortMode
       };
     }
@@ -2298,6 +2500,7 @@
       state.board = "craft";
       state.prevLevels = new Map();
       state.usesDepth = new Map();
+      state.recycleBranches = new Map();
       selections.craft = new Map();
       selections.uses = new Map();
       selections.recycle = new Map();
@@ -2319,6 +2522,9 @@
       }
       if (Array.isArray(data.usesDepth)) {
         state.usesDepth = new Map(data.usesDepth);
+      }
+      if (Array.isArray(data.recycleBranches)) {
+        state.recycleBranches = new Map(data.recycleBranches);
       }
 
       if (data.selections && data.selections.craft) {
@@ -2366,6 +2572,12 @@
         zoomTransforms.craft = d3.zoomIdentity
           .translate(data.zoomTransform.x, data.zoomTransform.y)
           .scale(data.zoomTransform.k);
+      }
+
+      if (data.annotations) {
+        applyAnnotations(data.annotations);
+      } else {
+        applyAnnotations(null);
       }
     }
 
@@ -2526,6 +2738,15 @@
         langLabel: "EN",
         title: "ARC Raiders Crafting, Uses & Recycling | Inventory Planner",
         centerView: "Center view",
+        toolLine: "Line (L)",
+        toolText: "Text (T)",
+        textPlaceholder: "Type text...",
+        textSizeDown: "Smaller text",
+        textSizeUp: "Bigger text",
+        recycleLeftShow: "Show sources",
+        recycleLeftHide: "Hide sources",
+        recycleRightShow: "Show outputs",
+        recycleRightHide: "Hide outputs",
         // Save/Share
         saveBoard: "💾 Save",
         shareBoard: "🔗 Share",
@@ -2590,6 +2811,15 @@
         langLabel: "ES",
         title: "ARC Raiders Arboles de crafteo, usos y reciclaje | Inventario",
         centerView: "Centrar vista",
+        toolLine: "Linea (L)",
+        toolText: "Texto (T)",
+        textPlaceholder: "Escribe texto...",
+        textSizeDown: "Texto mas pequeño",
+        textSizeUp: "Texto mas grande",
+        recycleLeftShow: "Mostrar entradas",
+        recycleLeftHide: "Ocultar entradas",
+        recycleRightShow: "Mostrar salidas",
+        recycleRightHide: "Ocultar salidas",
         // Save/Share
         saveBoard: "💾 Guardar",
         shareBoard: "🔗 Compartir",
@@ -2943,6 +3173,17 @@
       zoomTransforms[state.board] = transform;
     }
 
+    // ═══════════════════════════════════════════════════════════════════════════
+    // ANNOTATIONS
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function getActiveAnnotations() {
+      if (!annotations[state.board]) {
+        annotations[state.board] = { lines: [], texts: [] };
+      }
+      return annotations[state.board];
+    }
+
     function getItemLabel(item) {
       if (!item) return "";
       if (state.lang === "es" && item.name_es) return item.name_es;
@@ -3049,6 +3290,21 @@
     function adjustUsesDepth(name, delta) {
       const next = Math.max(1, getUsesDepth(name) + delta);
       state.usesDepth.set(name, next);
+      saveCurrentState();
+      renderAll();
+    }
+
+    function getRecycleBranches(name) {
+      const stored = state.recycleBranches.get(name);
+      const left = stored && typeof stored.left === "boolean" ? stored.left : true;
+      const right = stored && typeof stored.right === "boolean" ? stored.right : true;
+      return { left, right };
+    }
+
+    function toggleRecycleBranch(name, side) {
+      const current = getRecycleBranches(name);
+      const next = { ...current, [side]: !current[side] };
+      state.recycleBranches.set(name, next);
       saveCurrentState();
       renderAll();
     }
@@ -3174,6 +3430,35 @@
           .slice()
           .sort((a, b) => getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name)));
         node.children = sources.map(entry => buildRecycleTreeData(entry.name, entry.qty, next, maxDepth, depth + 1));
+      }
+
+      return node;
+    }
+
+    function buildRecycleTargetsTreeData(name, qty = 1, visited = new Set(), maxDepth = 1, depth = 0) {
+      const item = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+      const node = {
+        name: item.name,
+        qty,
+        craftable: !!(Array.isArray(item.recipe) && item.recipe.length),
+        station: item.station || "",
+        recipe: [],
+        image: getItemImage(item.name),
+        rarity: item.rarity || null,
+        hasPrevLevel: false,
+        isPrevLevel: false,
+        children: []
+      };
+
+      if (depth >= maxDepth) return node;
+
+      if (!visited.has(node.name)) {
+        const next = new Set(visited);
+        next.add(node.name);
+        const targets = Object.entries(item.recyclesInto || {})
+          .map(([target, amount]) => ({ name: target, qty: amount }))
+          .sort((a, b) => getItemLabelByName(a.name).localeCompare(getItemLabelByName(b.name)));
+        node.children = targets.map(entry => buildRecycleTargetsTreeData(entry.name, entry.qty, next, maxDepth, depth + 1));
       }
 
       return node;
@@ -3503,18 +3788,401 @@
 
       // Toggle selection bar visibility
       if (ui.selectionBar) {
-        ui.selectionBar.classList.toggle("has-items", entries.length > 0);
+        const shouldShowBar = true;
+        ui.selectionBar.classList.toggle("is-visible", shouldShowBar);
       }
+    }
+
+    function generateAnnotationId() {
+      return `anno_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    }
+
+    function normalizeAnnotationBoard(data) {
+      const source = data && typeof data === "object" ? data : {};
+      const lines = Array.isArray(source.lines) ? source.lines : [];
+      const texts = Array.isArray(source.texts) ? source.texts : [];
+      return {
+        lines: lines.map(line => ({
+          id: line.id || generateAnnotationId(),
+          x1: Number(line.x1) || 0,
+          y1: Number(line.y1) || 0,
+          x2: Number(line.x2) || 0,
+          y2: Number(line.y2) || 0
+        })),
+        texts: texts.map(text => ({
+          id: text.id || generateAnnotationId(),
+          x: Number(text.x) || 0,
+          y: Number(text.y) || 0,
+          text: String(text.text || ""),
+          size: Number(text.size) || ANNOTATION_DEFAULTS.textSize
+        }))
+      };
+    }
+
+    function applyAnnotations(data) {
+      const safe = data || {};
+      annotations.craft = normalizeAnnotationBoard(safe.craft);
+      annotations.uses = normalizeAnnotationBoard(safe.uses);
+      annotations.recycle = normalizeAnnotationBoard(safe.recycle);
+    }
+
+    function setAnnotationMode(mode) {
+      annotationState.mode = annotationState.mode === mode ? "pan" : mode;
+      document.body.classList.toggle("annotation-mode-line", annotationState.mode === "line");
+      document.body.classList.toggle("annotation-mode-text", annotationState.mode === "text");
+      if (ui.toolLine) ui.toolLine.classList.toggle("active", annotationState.mode === "line");
+      if (ui.toolText) ui.toolText.classList.toggle("active", annotationState.mode === "text");
+      if (annotationState.mode === "pan") {
+        cancelLineDraft();
+      }
+    }
+
+    function updateAnnotationControls() {
+      const isTextSelected = annotationState.selected && annotationState.selected.type === "text";
+      if (ui.textSizeDown) ui.textSizeDown.disabled = !isTextSelected;
+      if (ui.textSizeUp) ui.textSizeUp.disabled = !isTextSelected;
+    }
+
+    function isAnnotationSelected(type, id) {
+      return annotationState.selected &&
+        annotationState.selected.type === type &&
+        annotationState.selected.id === id;
+    }
+
+    function updateAnnotationSelectionStyles() {
+      if (!ui.tree) return;
+      ui.tree.querySelectorAll(".annotation-line.is-selected, .annotation-text.is-selected")
+        .forEach(el => el.classList.remove("is-selected"));
+      if (annotationState.selected) {
+        const selectedEl = ui.tree.querySelector(`[data-annotation-id="${annotationState.selected.id}"]`);
+        if (selectedEl) selectedEl.classList.add("is-selected");
+      }
+      updateAnnotationControls();
+    }
+
+    function selectAnnotation(type, id) {
+      annotationState.selected = { type, id };
+      updateAnnotationSelectionStyles();
+    }
+
+    function clearAnnotationSelection() {
+      annotationState.selected = null;
+      updateAnnotationSelectionStyles();
+    }
+
+    function screenToBoardCoords(clientX, clientY) {
+      const svg = ui.tree;
+      const rect = svg.getBoundingClientRect();
+      const screenX = clientX - rect.left;
+      const screenY = clientY - rect.top;
+      const transform = getActiveZoom();
+      const boardX = (screenX - transform.x) / transform.k;
+      const boardY = (screenY - transform.y) / transform.k;
+      return { x: boardX, y: boardY };
+    }
+
+    function boardToScreenCoords(boardX, boardY) {
+      const svg = ui.tree;
+      const rect = svg.getBoundingClientRect();
+      const transform = getActiveZoom();
+      const screenX = boardX * transform.k + transform.x + rect.left;
+      const screenY = boardY * transform.k + transform.y + rect.top;
+      return { x: screenX, y: screenY };
+    }
+
+    function positionAnnotationEditor(boardX, boardY) {
+      if (!ui.annotationEditor || !ui.workspaceCanvas) return;
+      const screen = boardToScreenCoords(boardX, boardY);
+      const canvasRect = ui.workspaceCanvas.getBoundingClientRect();
+      const left = screen.x - canvasRect.left;
+      const top = screen.y - canvasRect.top;
+      ui.annotationEditor.style.left = `${Math.max(12, left)}px`;
+      ui.annotationEditor.style.top = `${Math.max(12, top)}px`;
+    }
+
+    function openAnnotationEditor({ id, x, y, value = "", isNew = true }) {
+      if (!ui.annotationEditor || !ui.annotationInput) return;
+      annotationState.editing = { id, x, y, isNew };
+      ui.annotationInput.value = value;
+      ui.annotationEditor.classList.remove("is-hidden");
+      positionAnnotationEditor(x, y);
+      ui.annotationInput.focus();
+      ui.annotationInput.select();
+      selectAnnotation("text", id);
+    }
+
+    function closeAnnotationEditor(cancelled = false) {
+      if (!annotationState.editing) return;
+      const wasNew = annotationState.editing.isNew;
+      annotationState.editing = null;
+      if (ui.annotationEditor) ui.annotationEditor.classList.add("is-hidden");
+      if (cancelled && wasNew) {
+        clearAnnotationSelection();
+      }
+    }
+
+    function commitAnnotationEditor() {
+      if (!annotationState.editing || !ui.annotationInput) return;
+      const { id, x, y, isNew } = annotationState.editing;
+      const value = String(ui.annotationInput.value || "").trim();
+      const active = getActiveAnnotations();
+
+      if (isNew) {
+        if (value) {
+          active.texts.push({
+            id,
+            x,
+            y,
+            text: value,
+            size: ANNOTATION_DEFAULTS.textSize
+          });
+        } else {
+          clearAnnotationSelection();
+        }
+      } else {
+        const idx = active.texts.findIndex(text => text.id === id);
+        if (idx !== -1) {
+          if (value) {
+            active.texts[idx].text = value;
+          } else {
+            active.texts.splice(idx, 1);
+            clearAnnotationSelection();
+          }
+        }
+      }
+
+      closeAnnotationEditor();
+      saveCurrentState();
+      renderTree();
+    }
+
+    function adjustSelectedTextSize(direction) {
+      if (!annotationState.selected || annotationState.selected.type !== "text") return;
+      const active = getActiveAnnotations();
+      const text = active.texts.find(entry => entry.id === annotationState.selected.id);
+      if (!text) return;
+      const next = text.size + (direction * ANNOTATION_DEFAULTS.textStep);
+      text.size = Math.max(ANNOTATION_DEFAULTS.minTextSize, Math.min(ANNOTATION_DEFAULTS.maxTextSize, next));
+      saveCurrentState();
+      renderTree();
+    }
+
+    function deleteSelectedAnnotation() {
+      if (!annotationState.selected) return false;
+      const active = getActiveAnnotations();
+      const list = annotationState.selected.type === "line" ? active.lines : active.texts;
+      const idx = list.findIndex(entry => entry.id === annotationState.selected.id);
+      if (idx === -1) return false;
+      list.splice(idx, 1);
+      clearAnnotationSelection();
+      saveCurrentState();
+      renderTree();
+      return true;
+    }
+
+    function startLineDraft(x, y) {
+      const active = getActiveAnnotations();
+      const id = generateAnnotationId();
+      active.lines.push({ id, x1: x, y1: y, x2: x, y2: y });
+      annotationState.draftLineId = id;
+      renderTree();
+      selectAnnotation("line", id);
+    }
+
+    function updateLineDraft(x, y) {
+      if (!annotationState.draftLineId) return;
+      const active = getActiveAnnotations();
+      const line = active.lines.find(entry => entry.id === annotationState.draftLineId);
+      if (!line) return;
+      line.x2 = x;
+      line.y2 = y;
+      const el = ui.tree.querySelector(`[data-annotation-id="${line.id}"]`);
+      if (el) {
+        el.setAttribute("x2", line.x2);
+        el.setAttribute("y2", line.y2);
+      }
+    }
+
+    function finishLineDraft() {
+      if (!annotationState.draftLineId) return;
+      const active = getActiveAnnotations();
+      const idx = active.lines.findIndex(entry => entry.id === annotationState.draftLineId);
+      if (idx !== -1) {
+        const line = active.lines[idx];
+        const length = Math.hypot(line.x2 - line.x1, line.y2 - line.y1);
+        if (length < ANNOTATION_DEFAULTS.minLineLength) {
+          active.lines.splice(idx, 1);
+          clearAnnotationSelection();
+        }
+      }
+      annotationState.draftLineId = null;
+      saveCurrentState();
+      renderTree();
+    }
+
+    function cancelLineDraft() {
+      if (!annotationState.draftLineId) return;
+      const active = getActiveAnnotations();
+      const idx = active.lines.findIndex(entry => entry.id === annotationState.draftLineId);
+      if (idx !== -1) {
+        active.lines.splice(idx, 1);
+      }
+      annotationState.draftLineId = null;
+      renderTree();
+    }
+
+    function handleBoardPointerDown(event) {
+      if (!ui.tree) return;
+      if (annotationState.editing) {
+        event.stopPropagation();
+        return;
+      }
+      if (event.button !== 0) return;
+
+      if (annotationState.mode === "line") {
+        event.preventDefault();
+        event.stopPropagation();
+        const start = screenToBoardCoords(event.clientX, event.clientY);
+        startLineDraft(start.x, start.y);
+
+        const handleMove = (moveEvent) => {
+          const point = screenToBoardCoords(moveEvent.clientX, moveEvent.clientY);
+          updateLineDraft(point.x, point.y);
+        };
+
+        const handleUp = () => {
+          finishLineDraft();
+          window.removeEventListener("pointermove", handleMove);
+          window.removeEventListener("pointerup", handleUp);
+        };
+
+        window.addEventListener("pointermove", handleMove);
+        window.addEventListener("pointerup", handleUp);
+        return;
+      }
+
+      if (annotationState.mode === "text") {
+        const target = event.target;
+        const isAnnotation = target && target.closest && target.closest(".annotation-line, .annotation-text");
+        if (isAnnotation) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const point = screenToBoardCoords(event.clientX, event.clientY);
+        openAnnotationEditor({
+          id: generateAnnotationId(),
+          x: point.x,
+          y: point.y,
+          value: "",
+          isNew: true
+        });
+        return;
+      }
+
+      const target = event.target;
+      const isAnnotation = target && target.closest && target.closest(".annotation-line, .annotation-text");
+      const isNode = target && target.closest && target.closest(".node, .tree-group");
+      if (!isAnnotation && !isNode) {
+        clearAnnotationSelection();
+      }
+    }
+
+    function renderAnnotationLines(layer) {
+      const active = getActiveAnnotations();
+      const lineDrag = d3.drag()
+        .on("start", function (event, d) {
+          if (event.sourceEvent) event.sourceEvent.stopPropagation();
+          selectAnnotation("line", d.id);
+        })
+        .on("drag", function (event, d) {
+          const sourceEvent = event.sourceEvent;
+          const currentK = getActiveZoom().k || 1;
+          const dx = (sourceEvent && sourceEvent.movementX) ? sourceEvent.movementX : event.dx || 0;
+          const dy = (sourceEvent && sourceEvent.movementY) ? sourceEvent.movementY : event.dy || 0;
+          d.x1 += dx / currentK;
+          d.y1 += dy / currentK;
+          d.x2 += dx / currentK;
+          d.y2 += dy / currentK;
+          d3.select(this)
+            .attr("x1", d.x1)
+            .attr("y1", d.y1)
+            .attr("x2", d.x2)
+            .attr("y2", d.y2);
+        })
+        .on("end", function () {
+          saveCurrentState();
+        });
+
+      const lines = layer.selectAll("line").data(active.lines, d => d.id);
+      const enter = lines.enter()
+        .append("line")
+        .attr("class", "annotation-line")
+        .attr("data-annotation-id", d => d.id)
+        .on("click", (event, d) => {
+          event.stopPropagation();
+          selectAnnotation("line", d.id);
+        })
+        .call(lineDrag);
+
+      enter.merge(lines)
+        .classed("is-selected", d => isAnnotationSelected("line", d.id))
+        .attr("x1", d => d.x1)
+        .attr("y1", d => d.y1)
+        .attr("x2", d => d.x2)
+        .attr("y2", d => d.y2);
+
+      lines.exit().remove();
+    }
+
+    function renderAnnotationTexts(layer) {
+      const active = getActiveAnnotations();
+      const textDrag = d3.drag()
+        .on("start", function (event, d) {
+          if (event.sourceEvent) event.sourceEvent.stopPropagation();
+          selectAnnotation("text", d.id);
+        })
+        .on("drag", function (event, d) {
+          const sourceEvent = event.sourceEvent;
+          const currentK = getActiveZoom().k || 1;
+          const dx = (sourceEvent && sourceEvent.movementX) ? sourceEvent.movementX : event.dx || 0;
+          const dy = (sourceEvent && sourceEvent.movementY) ? sourceEvent.movementY : event.dy || 0;
+          d.x += dx / currentK;
+          d.y += dy / currentK;
+          d3.select(this)
+            .attr("x", d.x)
+            .attr("y", d.y);
+        })
+        .on("end", function () {
+          saveCurrentState();
+        });
+
+      const texts = layer.selectAll("text").data(active.texts, d => d.id);
+      const enter = texts.enter()
+        .append("text")
+        .attr("class", "annotation-text")
+        .attr("data-annotation-id", d => d.id)
+        .on("click", (event, d) => {
+          event.stopPropagation();
+          selectAnnotation("text", d.id);
+        })
+        .on("dblclick", (event, d) => {
+          event.stopPropagation();
+          event.preventDefault();
+          openAnnotationEditor({ id: d.id, x: d.x, y: d.y, value: d.text, isNew: false });
+        })
+        .call(textDrag);
+
+      enter.merge(texts)
+        .classed("is-selected", d => isAnnotationSelected("text", d.id))
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("font-size", d => `${d.size || ANNOTATION_DEFAULTS.textSize}px`)
+        .text(d => d.text);
+
+      texts.exit().remove();
     }
 
     function renderTree() {
       const selection = getActiveSelection();
-      if (selection.size === 0) {
-        const svg = d3.select(ui.tree);
-        svg.selectAll("*").remove();
-        return;
-      }
-
       syncTreePositions();
       const positions = getActivePositions();
       const currentZoom = getActiveZoom();
@@ -3529,6 +4197,18 @@
       const defs = svg.append("defs");
       const board = svg.append("g").attr("class", "board");
       board.attr("transform", currentZoom);
+
+      if (annotationState.selected) {
+        const active = getActiveAnnotations();
+        const list = annotationState.selected.type === "line" ? active.lines : active.texts;
+        if (!list.some(entry => entry.id === annotationState.selected.id)) {
+          annotationState.selected = null;
+        }
+      }
+      updateAnnotationControls();
+
+      const lineLayer = board.append("g").attr("class", "annotation-lines");
+      renderAnnotationLines(lineLayer);
 
       let clipIndex = 0;
       function makeClipId(name) {
@@ -3572,11 +4252,200 @@
         });
 
       selection.forEach((qty, name) => {
+        const group = board.append("g")
+          .attr("class", "tree-group")
+          .datum({ name })
+          .call(dragTree);
+
+        const pos = positions.get(name) || { x: 60, y: 60 };
+        group.attr("transform", `translate(${pos.x},${pos.y})`);
+
+        if (state.board === "recycle") {
+          const rootItem = itemsMap.get(name) || { name, craftable: false, recipe: [], rarity: null };
+          const rootNodeData = {
+            name: rootItem.name,
+            qty,
+            craftable: !!(Array.isArray(rootItem.recipe) && rootItem.recipe.length),
+            station: rootItem.station || "",
+            recipe: [],
+            image: getItemImage(rootItem.name),
+            rarity: rootItem.rarity || null,
+            hasPrevLevel: false,
+            isPrevLevel: false
+          };
+
+          const leftTreeData = buildRecycleTreeData(name, qty, new Set(), 1, 0);
+          const rightTreeData = buildRecycleTargetsTreeData(name, qty, new Set(), 1, 0);
+          const leftAvailable = (leftTreeData.children || []).length > 0;
+          const rightAvailable = (rightTreeData.children || []).length > 0;
+          const branches = getRecycleBranches(name);
+          const showLeft = leftAvailable && branches.left;
+          const showRight = rightAvailable && branches.right;
+
+          const treeLayout = d3.tree().nodeSize([70, 190]);
+          let leftRoot = null;
+          let rightRoot = null;
+
+          if (showLeft) {
+            leftRoot = d3.hierarchy(leftTreeData, d => d.children);
+            treeLayout(leftRoot);
+            const offsetX = leftRoot.x;
+            const offsetY = leftRoot.y;
+            leftRoot.descendants().forEach(node => {
+              node.x -= offsetX;
+              node.y -= offsetY;
+              node.y = -node.y;
+            });
+          }
+
+          if (showRight) {
+            rightRoot = d3.hierarchy(rightTreeData, d => d.children);
+            treeLayout(rightRoot);
+            const offsetX = rightRoot.x;
+            const offsetY = rightRoot.y;
+            rightRoot.descendants().forEach(node => {
+              node.x -= offsetX;
+              node.y -= offsetY;
+            });
+          }
+
+          const linkPath = d3.linkHorizontal()
+            .x(d => d.y)
+            .y(d => d.x);
+          const linksLayer = group.append("g");
+
+          if (leftRoot) {
+            linksLayer.append("g")
+              .selectAll("path")
+              .data(leftRoot.links())
+              .join("path")
+              .attr("class", "link")
+              .attr("d", linkPath);
+          }
+
+          if (rightRoot) {
+            linksLayer.append("g")
+              .selectAll("path")
+              .data(rightRoot.links())
+              .join("path")
+              .attr("class", "link")
+              .attr("d", linkPath);
+          }
+
+          const nodesLayer = group.append("g");
+
+          const addNodeVisuals = (nodeSel) => {
+            nodeSel.each(function (d) {
+              if (!d.data.image) return;
+              const clipId = makeClipId(d.data.name);
+              d.data.clipId = clipId;
+              defs.append("clipPath")
+                .attr("id", clipId)
+                .append("circle")
+                .attr("r", 14)
+                .attr("cx", 0)
+                .attr("cy", 0);
+            });
+
+            nodeSel.append("circle")
+              .attr("r", 16);
+
+            nodeSel.filter(d => d.data.image)
+              .append("image")
+              .attr("href", d => d.data.image)
+              .attr("width", 28)
+              .attr("height", 28)
+              .attr("x", -14)
+              .attr("y", -14)
+              .attr("clip-path", d => d.data.clipId ? `url(#${d.data.clipId})` : null);
+
+            nodeSel.append("text")
+              .attr("x", 24)
+              .attr("y", -4)
+              .text(d => {
+                if (d.depth > 0 && d.data.qty > 1) {
+                  return `${getItemLabelByName(d.data.name)} -> x${d.data.qty}`;
+                }
+                return `${d.data.qty > 1 ? "x" + d.data.qty + " " : ""}${getItemLabelByName(d.data.name)}`;
+              });
+
+            nodeSel.append("text")
+              .attr("x", 24)
+              .attr("y", 12)
+              .attr("class", "status")
+              .text(d => d.data.craftable ? t("craftable") : t("lootOnly"));
+          };
+
+          const renderRecycleNodes = (nodes) => {
+            if (!nodes.length) return;
+            const nodeSel = nodesLayer.append("g")
+              .selectAll("g")
+              .data(nodes)
+              .join("g")
+              .attr("class", d => {
+                const rarity = normalizeRarity(d.data.rarity);
+                return `node ${d.data.craftable ? "craft" : "loot"}${rarity ? " rarity-" + rarity : ""}`;
+              })
+              .attr("transform", d => `translate(${d.y},${d.x})`);
+            addNodeVisuals(nodeSel);
+          };
+
+          const leftNodes = leftRoot ? leftRoot.descendants().filter(d => d.depth > 0) : [];
+          const rightNodes = rightRoot ? rightRoot.descendants().filter(d => d.depth > 0) : [];
+
+          renderRecycleNodes(leftNodes);
+          renderRecycleNodes(rightNodes);
+
+          const rootDatum = { data: rootNodeData, depth: 0, x: 0, y: 0 };
+          const rootNode = nodesLayer.append("g")
+            .datum(rootDatum)
+            .attr("class", () => {
+              const rarity = normalizeRarity(rootNodeData.rarity);
+              return `node ${rootNodeData.craftable ? "craft" : "loot"}${rarity ? " rarity-" + rarity : ""}`;
+            })
+            .attr("transform", "translate(0,0)");
+          addNodeVisuals(rootNode);
+
+          const toggle = rootNode.append("g")
+            .attr("class", "recycle-branch-toggle")
+            .attr("transform", "translate(0,35)");
+
+          const leftBtn = toggle.append("g")
+            .attr("class", `branch-btn${leftAvailable ? "" : " is-disabled"}${leftAvailable && !branches.left ? " is-muted" : ""}`)
+            .attr("transform", "translate(-16,0)");
+          leftBtn.append("circle").attr("r", 7);
+          leftBtn.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .text("<");
+          leftBtn.append("title").text(branches.left ? t("recycleLeftHide") : t("recycleLeftShow"));
+          leftBtn.on("click", (event) => {
+            event.stopPropagation();
+            if (!leftAvailable) return;
+            toggleRecycleBranch(name, "left");
+          });
+
+          const rightBtn = toggle.append("g")
+            .attr("class", `branch-btn${rightAvailable ? "" : " is-disabled"}${rightAvailable && !branches.right ? " is-muted" : ""}`)
+            .attr("transform", "translate(16,0)");
+          rightBtn.append("circle").attr("r", 7);
+          rightBtn.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .text(">");
+          rightBtn.append("title").text(branches.right ? t("recycleRightHide") : t("recycleRightShow"));
+          rightBtn.on("click", (event) => {
+            event.stopPropagation();
+            if (!rightAvailable) return;
+            toggleRecycleBranch(name, "right");
+          });
+
+          return;
+        }
+
         const rootData = state.board === "uses"
           ? buildUsesTreeData(name, qty, new Set(), getUsesDepth(name), 0)
-          : state.board === "recycle"
-            ? buildRecycleTreeData(name, qty, new Set(), 1, 0)
-            : buildTreeData(name, qty);
+          : buildTreeData(name, qty);
         const root = d3.hierarchy(rootData, d => d.children);
         const treeLayout = d3.tree().nodeSize([70, 190]);
         treeLayout(root);
@@ -3587,14 +4456,6 @@
           node.x -= offsetX;
           node.y -= offsetY;
         });
-
-        const group = board.append("g")
-          .attr("class", "tree-group")
-          .datum({ name })
-          .call(dragTree);
-
-        const pos = positions.get(name) || { x: 60, y: 60 };
-        group.attr("transform", `translate(${pos.x},${pos.y})`);
 
         group.append("g")
           .selectAll("path")
@@ -3645,9 +4506,6 @@
           .attr("x", d => d.data.hasPrevLevel ? 44 : 24)
           .attr("y", -4)
           .text(d => {
-            if (state.board === "recycle" && d.depth > 0 && d.data.qty > 1) {
-              return `${getItemLabelByName(d.data.name)} -> x${d.data.qty}`;
-            }
             return `${d.data.qty > 1 ? "x" + d.data.qty + " " : ""}${getItemLabelByName(d.data.name)}`;
           });
 
@@ -3725,8 +4583,8 @@
           });
         });
       });
-
-
+      const textLayer = board.append("g").attr("class", "annotation-texts");
+      renderAnnotationTexts(textLayer);
 
       const zoom = d3.zoom().scaleExtent([0.4, 2.4]).on("zoom", event => {
         setActiveZoom(event.transform);
@@ -3982,18 +4840,6 @@
     }
 
     function bindDrop() {
-      function screenToBoardCoords(clientX, clientY) {
-        const svg = ui.tree;
-        const rect = svg.getBoundingClientRect();
-        const screenX = clientX - rect.left;
-        const screenY = clientY - rect.top;
-        const transform = getActiveZoom();
-        // Convert screen coordinates to board coordinates
-        const boardX = (screenX - transform.x) / transform.k;
-        const boardY = (screenY - transform.y) / transform.k;
-        return { x: boardX, y: boardY };
-      }
-
       function handleDrop(event) {
         event.preventDefault();
         ui.dropzone.classList.remove("active");
@@ -4087,6 +4933,25 @@
       ui.toggleSidebar.title = t("toggleSidebar");
       ui.toggleSummary.title = t("toggleSummary");
       ui.centerView.title = t("centerView");
+      if (ui.toolLine) {
+        ui.toolLine.title = t("toolLine");
+        ui.toolLine.setAttribute("aria-label", t("toolLine"));
+      }
+      if (ui.toolText) {
+        ui.toolText.title = t("toolText");
+        ui.toolText.setAttribute("aria-label", t("toolText"));
+      }
+      if (ui.textSizeDown) {
+        ui.textSizeDown.title = t("textSizeDown");
+        ui.textSizeDown.setAttribute("aria-label", t("textSizeDown"));
+      }
+      if (ui.textSizeUp) {
+        ui.textSizeUp.title = t("textSizeUp");
+        ui.textSizeUp.setAttribute("aria-label", t("textSizeUp"));
+      }
+      if (ui.annotationInput) {
+        ui.annotationInput.placeholder = t("textPlaceholder");
+      }
       ui.openGuide.textContent = t("openGuide");
       ui.closeGuide.textContent = t("closeGuide");
       ui.guideTitle.textContent = t("guideTitle");
@@ -4119,6 +4984,9 @@
       if (state.board === board) return;
       state.board = board;
       applyBoardUI();
+      clearAnnotationSelection();
+      closeAnnotationEditor(true);
+      cancelLineDraft();
       saveCurrentState();
       renderList();
       renderAll();
@@ -4174,6 +5042,36 @@
       applyUIPrefs();
       loadInitialState();
       bindDrop();
+      if (ui.tree) {
+        ui.tree.addEventListener("pointerdown", handleBoardPointerDown, { capture: true });
+      }
+      if (ui.toolLine) {
+        ui.toolLine.addEventListener("click", () => setAnnotationMode("line"));
+      }
+      if (ui.toolText) {
+        ui.toolText.addEventListener("click", () => setAnnotationMode("text"));
+      }
+      if (ui.textSizeDown) {
+        ui.textSizeDown.addEventListener("click", () => adjustSelectedTextSize(-1));
+      }
+      if (ui.textSizeUp) {
+        ui.textSizeUp.addEventListener("click", () => adjustSelectedTextSize(1));
+      }
+      if (ui.annotationInput) {
+        ui.annotationInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            commitAnnotationEditor();
+          }
+          if (event.key === "Escape") {
+            event.preventDefault();
+            closeAnnotationEditor(true);
+          }
+        });
+        ui.annotationInput.addEventListener("blur", () => {
+          commitAnnotationEditor();
+        });
+      }
       if (!shareDropdownHome && ui.shareDropdown) {
         shareDropdownHome = ui.shareDropdown.parentElement;
       }
@@ -4323,11 +5221,49 @@
 
       window.addEventListener("resize", renderTree);
       window.addEventListener("keydown", (event) => {
+        const target = event.target;
+        const isTyping = target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
+
         if (event.key === "Escape") {
           closeGuideModal();
           closeLoginModal();
           closeBoardModal();
+          closeAnnotationEditor(true);
+          cancelLineDraft();
+          setAnnotationMode("pan");
+          clearAnnotationSelection();
           if (ui.controlPanel) ui.controlPanel.classList.remove("is-open");
+          return;
+        }
+
+        if (isTyping) return;
+
+        if (event.key === "l" || event.key === "L") {
+          setAnnotationMode("line");
+          return;
+        }
+
+        if (event.key === "t" || event.key === "T") {
+          setAnnotationMode("text");
+          return;
+        }
+
+        if (event.key === "+" || event.key === "=") {
+          adjustSelectedTextSize(1);
+          event.preventDefault();
+          return;
+        }
+
+        if (event.key === "-" || event.key === "_") {
+          adjustSelectedTextSize(-1);
+          event.preventDefault();
+          return;
+        }
+
+        if (event.key === "Delete" || event.key === "Backspace") {
+          if (deleteSelectedAnnotation()) {
+            event.preventDefault();
+          }
         }
       });
       applyLanguage();
